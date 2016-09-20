@@ -1,0 +1,1 @@
+uwsgi --socket 127.0.0.1:5000 --wsgi-file flaskplate.py --master --processes 4 --threads 2 --callable app --stats /tmp/stats.socket --py-autoreload 1 --logto /tmp/uwsgi.log
