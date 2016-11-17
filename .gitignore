@@ -1,5 +1,6 @@
 g/*
 *.mp4
+*.mkv
 #config.py
 uploads/*
 backups/*
