@@ -1,5 +1,6 @@
 g/*
 *.mp4
+*.mp3
 *.mkv
 #config.py
 uploads/*
