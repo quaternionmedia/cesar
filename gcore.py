@@ -4,80 +4,80 @@ from tkinter import Tk, Frame, Label, Canvas
 
 class Ion():
 	def __init__(self):
-		self.parents = []
-		self.generators = []
-		self.children = []
-		self.functions = []
+		self.parents = nx.MultiDiGraph()
+		self.generators = nx.MultiDiGraph()
+		self.children = nx.MultiDiGraph()
+		self.functions = nx.MultiDiGraph()
 
 	def printIon(self):
-		for p in self.parents:
+		for p in self.parents.nodes():
 			print('Parent: ', p)
 			for pn in p.nodes():
 				print('nodes: ', pn)
-		for g in self.generators:
+		for g in self.generators.nodes():
 			print(g)
 			for gn in g.nodes():
 				print('nodes: ', gn)
-		for c in self.children:
+		for c in self.children.nodes():
 			print(c)
 			for cn in c.nodes():
 				print('nodes: ', cn)
-		for f in self.functions:
+		for f in self.functions.nodes():
 			print(f)
 			for fn in f.nodes():
 				print('nodes: ', fn)
 
-
-	def showIon(self, window):
-
-		canvas = Canvas(window, bg='black')
-		canvas.pack(fill='both')
-
-		#ion frame
-		ionf = Frame(canvas, bg='grey', borderwidth=2, takefocus=True)
-		ionf.pack()
-		#parent frame
-		ionp = Frame(ionf, bg='red', borderwidth=1)
-		for p in self.parents:
-			pl = Label(ionp, text='p')
-			for pn in p.nodes():
-				pnl = Label(ionp, text='pn')
-		#generator frame
-		iong = Frame(ionf, bg='green', borderwidth=1)
-		#children frame
-		iong = Frame(ionf, bg='blue', borderwidth=1)
-		#function frame
-		ionf = Frame(ionf, bg='white', borderwidth=1)
-
-		canvas.pack()
+	#
+	# def showIon(self, window):
+	#
+	# 	canvas = Canvas(window, bg='black')
+	# 	canvas.pack(fill='both')
+	#
+	# 	#ion frame
+	# 	ionf = Frame(canvas, bg='grey', borderwidth=2, takefocus=True)
+	# 	ionf.pack()
+	# 	#parent frame
+	# 	ionp = Frame(ionf, bg='red', borderwidth=1)
+	# 	for p in self.parents:
+	# 		pl = Label(ionp, text='p')
+	# 		for pn in p.nodes():
+	# 			pnl = Label(ionp, text='pn')
+	# 	#generator frame
+	# 	iong = Frame(ionf, bg='green', borderwidth=1)
+	# 	#children frame
+	# 	iong = Frame(ionf, bg='blue', borderwidth=1)
+	# 	#function frame
+	# 	ionf = Frame(ionf, bg='white', borderwidth=1)
+	#
+	# 	canvas.pack()
 
 	def addParent(self, name, *args, **kwargs):
 		i = nx.MultiDiGraph()
 		i.add_node(name)
 		i.add_nodes_from(args)
 		i.add_edges_from(kwargs)
-		self.parents.append(i)
+		self.parents.add_node(i)
 
 	def addGenerator(self, name, *args, **kwargs):
 		i = nx.MultiDiGraph()
 		i.add_node(name)
 		i.add_nodes_from(args)
 		i.add_edges_from(kwargs)
-		self.generators.append(i)
+		self.generators.add_node(i)
 
 	def addChild(self, name, *args, **kwargs):
 		i = nx.MultiDiGraph()
 		i.add_node(name)
 		i.add_nodes_from(args)
 		i.add_edges_from(kwargs)
-		self.children.append(i)
+		self.children.add_node(i)
 
 	def addFunction(self, name, *args, **kwargs):
 		i = nx.MultiDiGraph()
 		i.add_node(name)
 		i.add_nodes_from(args)
 		i.add_edges_from(kwargs)
-		self.functions.append(i)
+		self.functions.add_node(i)
 
 	def test(self):
 		self.addParent('Parent')
