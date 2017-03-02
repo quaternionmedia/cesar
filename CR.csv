@@ -1,7 +1,7 @@
 number,target,name,prewait,action,postwait,after,notes
 0.1a,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/back-focus-chart 3.jpg,VIDEO TEST CUE (Video Projector Only - Use Other Mac for Title Projector Test),00:00.000,00:00.000,00:00.000,,
 0.1b,0.1a VIDEO TEST CUE (Video Projector Only - Use Other Mac for Title Projector Test),STOP TEST CUE (Video),00:00.000,00:00.000,00:00.000,,
-0.2a,,AUDIO TEST SEQUENCE,00:00.000,00:00.000,00:00.000,,
+0.2a,audio,AUDIO TEST SEQUENCE,00:00.000,00:00.000,00:00.000,,
 ,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/_Pink Noise.aif,PINK NOISE,00:00.000,01:00.000,00:00.000,auto-continue,
 , PINK NOISE,Ch 1 (L+C),00:00.000,00:00.500,00:00.500,auto-follow,
 , PINK NOISE,Ch 2 (R+C),00:00.000,00:00.500,00:00.500,auto-follow,
@@ -252,7 +252,6 @@ AD,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2
 , VIDEO: Silver Dollar Cafe Photo (TBA),FADE OUT: Previous,00:01.000,00:03.000,00:00.000,auto-continue,
 ,"AD VIDEO: Black Hole, Event Horizon",FADE IN: Current,00:00.000,00:03.000,00:00.000,,
 AD.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AD.1a Salazar Not Killed by Gunman.jpg,VIDEO: Headlines Overlaid on Black Hole,00:01.000,00:00.000,00:00.000,auto-continue,PG 74
-Need to be PNG if overlaid on Black Hole,,,,,,,
 ,AD.1 VIDEO: Headlines Overlaid on Black Hole,FADE IN: Current,00:00.000,00:03.000,00:03.000,auto-follow,
 ,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AD.1b cr_headline_scan_139.jpg,AD.1b cr_headline_scan_139.jpg,00:02.000,00:00.000,00:00.000,auto-continue,
 ,AD.1 VIDEO: Headlines Overlaid on Black Hole,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
