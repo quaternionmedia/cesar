@@ -65,45 +65,76 @@ class Ion():
 	def showIon(self, window):
 		#ion canvas
 		canvas = Canvas(window, bg='grey', takefocus=True)
-
 		def drag(event):
-			canvas.geometry('%sx%s', (event.x,event.y))
-			print(event, event.x, event.y)
+			newx = event.x/2
+			newy = event.y/2
+			canvas.place(x=newx,y=newy)#, anchor='center')
+			print(event, newx, newy)
 
 
 
 		canvas.bind('<Enter>', lambda e: canvas.config(bg='dimgrey'))
 		canvas.bind('<Leave>', lambda e: canvas.config(bg='grey'))
 		canvas.bind('<B1-Motion>', drag)
-		canvas.place(relx=0.5, rely=0.5, relheight=0.5, relwidth=0.5, anchor='center')
+		canvas.place(relx=0.5, rely=0.5, relheight=1, relwidth=1, anchor='center')
 
 		#parent canvas
 		ionp = Canvas(canvas, bg='plum')
 		ionp.place(relx=0.5, rely=.25, relheight=0.1, relwidth=0.25, anchor='n')
 		ionp.bind('<Enter>', lambda e: ionp.config(bg='orchid'))
 		ionp.bind('<Leave>', lambda e: ionp.config(bg='plum'))
+		#parents
+		for pi, pe in enumerate(self.parents.nodes()):
+			pl = Label(ionp, text=pe, font=("Helvetica", 6))
+			plen = len(self.parents)
+			pl.place(relx=.5, rely=pi/plen)
+			print(pi,plen)
+
+
 		#children canvas
 		ionch = Canvas(canvas, bg='blue')
 		ionch.place(relx=0.5, rely=.75, relheight=0.1, relwidth=0.25, anchor='s')
 		ionch.bind('<Enter>', lambda e: ionch.config(bg='lightblue'))
 		ionch.bind('<Leave>', lambda e: ionch.config(bg='blue'))
+		#children
+		for ci, ce in enumerate(self.children.nodes()):
+			cl = Label(ionch, text=ce, font=("Helvetica", 6))
+			clen = len(self.children)
+			cl.place(relx=.5, rely=ci/clen)
+			print(ci,clen)
+
+
+
 		#generator canvas
 		iong = Canvas(canvas, bg='lightgreen')
 		iong.place(relx=.25, rely=.5, relheight=0.25, relwidth=0.1, anchor='w')
 		iong.bind('<Enter>', lambda e: iong.config(bg='green'))
 		iong.bind('<Leave>', lambda e: iong.config(bg='lightgreen'))
+		#generators
+		for gi, ge in enumerate(self.generators.nodes()):
+			gl = Label(iong, text=ge, font=("Helvetica", 6))
+			glen = len(self.generators)
+			gl.place(relx=.5, rely=gi/glen)
+			print(gi,glen)
+
 		#function canvas
 		ionf = Canvas(canvas, bg='lavender')
 		ionf.place(relx=.75, rely=.5, relheight=0.25, relwidth=0.1, anchor='e')
 		ionf.bind('<Enter>', lambda e: ionf.config(bg='brown'))
 		ionf.bind('<Leave>', lambda e: ionf.config(bg='lavender'))
+		#functions
+		for fi, pe in enumerate(self.functions.nodes()):
+			fl = Label(ionf, text=pe, font=("Helvetica", 6))
+			flen = len(self.functions)
+			fl.place(relx=.5, rely=fi/flen)
+			print(fi,flen)
 
 
 	def test(self, window):
-		self.addParent('Parent')
-		self.addGenerator('Generator')
-		self.addChild('Child')
-		self.addFunction('Function')
+		# self.addParent('Parent')
+		# self.addGenerator('Generator')
+		# self.addChild('Child')
+		# self.addFunction('Function')
 		self.printIon()
 		self.showIon(window)
 
@@ -121,18 +152,30 @@ class George(Magics):
 		global g, show, control
 		g = Ion()
 
+
+
 		show = Tk()
-		show.geometry('800x400+0+0')
+		g.addGenerator(show)
+		# show.overrideredirect(1) #windowless
+		# show.bind("<Escape>", lambda e: e.widget.quit())
+		show.geometry('920x600+-1875+50')
 		show.config(bg='black')
 		show.title('Show')
-		# showConfig = Label(show, text='w:%s h:%s ')
+		show.state('zoomed')
+		sdatas = Label(show, text='x:%s, y:%s' %( show.winfo_screenwidth(), show.winfo_screenheight()))
+		g.addChild(sdatas)
 
 
 		control = Tk()
-		control.geometry('800x600+0+400')
+		g.addGenerator(show)
+
+		control.geometry('800x600+0+0')
 		control.config(bg='darkgrey')
 		control.title('Control')
-		# controlConfig = Label(control, text='meta')
+		cdatas = Label(control, text='x:%s, y:%s' %( control.winfo_screenwidth(), control.winfo_screenheight()))
+		g.addChild(cdatas)
+
+		sdatas.place(rely=.9,relx=.1)
 
 		g.test(control)
 
