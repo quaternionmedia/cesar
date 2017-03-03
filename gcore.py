@@ -62,6 +62,7 @@ class Ion():
 
 
 	def showIon(self, window):
+		global ionp, ionch, iong, ionf
 		#ion canvas
 		canvas = Canvas(window, bg='grey', takefocus=True)
 		def drag(event):
@@ -79,12 +80,12 @@ class Ion():
 
 		#parent canvas
 		ionp = Canvas(canvas, bg='plum')
-		ionp.place(relx=0.5, rely=.25, relheight=0.1, relwidth=0.25, anchor='n')
+		ionp.place(relx=0.5, rely=0, relheight=0.4, relwidth=0.25, anchor='n')
 		ionp.bind('<Enter>', lambda e: ionp.config(bg='orchid'))
 		ionp.bind('<Leave>', lambda e: ionp.config(bg='plum'))
 		#parents
 		for pi, pe in enumerate(self.parents.nodes()):
-			pl = Label(ionp, text=pe, font=("Helvetica", 6))
+			pl = Label(ionp, text=pe, font=("Helvetica", 16))
 			plen = len(self.parents)
 			pl.place(relx=.5, rely=pi/plen)
 			print(pi,plen)
@@ -92,12 +93,12 @@ class Ion():
 
 		#children canvas
 		ionch = Canvas(canvas, bg='blue')
-		ionch.place(relx=0.5, rely=.75, relheight=0.1, relwidth=0.25, anchor='s')
+		ionch.place(relx=0.5, rely=1, relheight=0.4, relwidth=0.25, anchor='s')
 		ionch.bind('<Enter>', lambda e: ionch.config(bg='lightblue'))
 		ionch.bind('<Leave>', lambda e: ionch.config(bg='blue'))
 		#children
 		for ci, ce in enumerate(self.children.nodes()):
-			cl = Label(ionch, text=ce, font=("Helvetica", 6))
+			cl = Label(ionch, text=ce, font=("Helvetica", 16))
 			clen = len(self.children)
 			cl.place(relx=.5, rely=ci/clen)
 			print(ci,clen)
@@ -106,36 +107,27 @@ class Ion():
 
 		#generator canvas
 		iong = Canvas(canvas, bg='lightgreen')
-		iong.place(relx=.25, rely=.5, relheight=0.25, relwidth=0.1, anchor='w')
+		iong.place(relx=0, rely=.5, relheight=0.25, relwidth=0.4, anchor='w')
 		iong.bind('<Enter>', lambda e: iong.config(bg='green'))
 		iong.bind('<Leave>', lambda e: iong.config(bg='lightgreen'))
 		#generators
 		for gi, ge in enumerate(self.generators.nodes()):
-			gl = Label(iong, text=ge, font=("Helvetica", 6))
+			gl = Label(iong, text=ge, font=("Helvetica", 16))
 			glen = len(self.generators)
 			gl.place(relx=.5, rely=gi/glen)
 			print(gi,glen)
 
 		#function canvas
 		ionf = Canvas(canvas, bg='lavender')
-		ionf.place(relx=.75, rely=.5, relheight=0.25, relwidth=0.1, anchor='e')
+		ionf.place(relx=1, rely=.5, relheight=0.25, relwidth=0.4, anchor='e')
 		ionf.bind('<Enter>', lambda e: ionf.config(bg='brown'))
 		ionf.bind('<Leave>', lambda e: ionf.config(bg='lavender'))
 		#functions
 		for fi, pe in enumerate(self.functions.nodes()):
-			fl = Label(ionf, text=pe, font=("Helvetica", 6))
+			fl = Label(ionf, text=pe, font=("Helvetica", 16))
 			flen = len(self.functions)
 			fl.place(relx=.5, rely=fi/flen)
 			print(fi,flen)
-
-
-	def test(self, window):
-		# self.addParent('Parent')
-		# self.addGenerator('Generator')
-		# self.addChild('Child')
-		# self.addFunction('Function')
-		self.printIon()
-		self.showIon(window)
 
 
 
@@ -157,7 +149,7 @@ class George(Magics):
 		g.addGenerator(show)
 		# show.overrideredirect(1) #windowless
 		# show.bind("<Escape>", lambda e: e.widget.quit())
-		show.geometry('920x600+-1875+50')
+		show.geometry('920x600+0+700')
 		show.config(bg='black')
 		show.title('Show')
 		show.state('zoomed')
@@ -176,7 +168,7 @@ class George(Magics):
 
 		sdatas.place(rely=.9,relx=.1)
 
-		g.test(control)
+		g.showIon(control)
 
 		return line
 
@@ -202,6 +194,19 @@ class George(Magics):
 			print("Called as cell magic")
 			return line, cell
 
+	@line_magic
+	def osc(self, line):
+		import osc
+		global i
+		i = osc.Interface()
+		i.client.send_message('/go')
+		return line
+
+	# @line_magic
+	# def git(self, line):
+	# 	!git commit -a
+	# 	!git push
+	# 	return line
 # In order to actually use these magics, you must register them with a
 # running IPython.  This code must be placed in a file that is loaded once
 # IPython is up and running:

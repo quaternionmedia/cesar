@@ -50,8 +50,8 @@ def draw(graph):
 	#canvas = FigureCanvasTkAgg(fig, master=window)
 	#canvas.get_tk_widget().pack()
 	#canvas.draw()
-
-draw(q)
+q.add_edges_from(enumerate(range(370)))
+#draw(q)
 
 #if __name__ == '__main__':
 	#window.mainloop()
