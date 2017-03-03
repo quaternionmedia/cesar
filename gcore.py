@@ -61,7 +61,6 @@ class Ion():
 		self.functions.add_node(i)
 
 
-
 	def showIon(self, window):
 		#ion canvas
 		canvas = Canvas(window, bg='grey', takefocus=True)

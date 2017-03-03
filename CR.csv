@@ -1,0 +1,373 @@
+number,target,name,prewait,action,postwait,after,notes
+0.1a,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/back-focus-chart 3.jpg,VIDEO TEST CUE (Video Projector Only - Use Other Mac for Title Projector Test),00:00.000,00:00.000,00:00.000,,
+0.1b,0.1a VIDEO TEST CUE (Video Projector Only - Use Other Mac for Title Projector Test),STOP TEST CUE (Video),00:00.000,00:00.000,00:00.000,,
+0.2a,audio,AUDIO TEST SEQUENCE,00:00.000,00:00.000,00:00.000,,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/_Pink Noise.aif,PINK NOISE,00:00.000,01:00.000,00:00.000,auto-continue,
+, PINK NOISE,Ch 1 (L+C),00:00.000,00:00.500,00:00.500,auto-follow,
+, PINK NOISE,Ch 2 (R+C),00:00.000,00:00.500,00:00.500,auto-follow,
+, PINK NOISE,Ch 3 (Sub),00:00.000,00:00.500,00:00.500,auto-follow,
+, PINK NOISE,Ch 4 (FX House LS+LR),00:00.000,00:00.500,00:00.500,auto-follow,
+, PINK NOISE,Ch 5 (FX House RS+RR),00:00.000,00:00.500,00:00.500,auto-follow,
+, PINK NOISE,Ch 6 (FX Stage USR),00:00.000,00:00.500,00:00.500,auto-follow,
+, PINK NOISE,Ch 7 (FX Stage USL),00:00.000,00:00.500,00:00.500,auto-follow,
+, PINK NOISE,Ch 8 (FX Stage Jukebox),00:00.000,00:00.500,00:00.500,auto-follow,
+0.2b,0.2a AUDIO TEST SEQUENCE,STOP TEST CUE (Audio),00:00.000,00:00.000,00:00.000,,
+A,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/01 C&R Preshow.aif,MUSIC: Preshow Loop,00:00.000,40:22.135,00:00.000,auto-continue,Go on this cue just before house open
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/UFW Flag FINAL 4.jpg,VIDEO: UFW Flag,00:00.000,00:00.000,00:00.000,,
+B,A MUSIC: Preshow Loop,FADE DOWN: Music Preshow Loop,00:00.000,00:05.000,00:00.000,auto-continue,
+, VIDEO: UFW Flag,FADE DOWN: UFW Flag,00:00.000,00:05.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/01 Preshow Announce.aif,ANNOUNCE: House Rules Announcement,00:00.000,00:44.825,00:44.825,auto-follow,
+,A MUSIC: Preshow Loop,FADE OUT: Music Preshow Loop,00:00.000,00:05.000,00:00.000,auto-continue,
+, VIDEO: UFW Flag,FADE OUT: UFW Flag,00:00.000,00:05.000,00:00.000,,
+C,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/C (2) Barrio Viejo Longer + Verb + EQ.aif,"MUSIC: ""Barrio Viejo"" From Jukebox",00:00.000,01:46.175,00:00.000,auto-continue,PG 1
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/Old Woman in Rocking Chair.jpg,- STILL: Old Woman in Rocking Chair.jpg,00:00.000,00:00.000,00:00.000,auto-continue,
+, - STILL: Old Woman in Rocking Chair.jpg,FADE IN: Old Woman,00:01.000,00:05.000,00:00.000,auto-continue,
+, - STILL: Old Woman in Rocking Chair.jpg,ZOOM: Old Woman,00:02.000,00:10.000,00:08.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/Hotel California.jpg,- STILL: Hotel California.jpg,00:00.000,00:00.000,00:00.000,auto-continue,
+, - STILL: Hotel California.jpg,FADE IN: Hotel California,00:00.000,00:03.000,00:00.000,auto-continue,
+, - STILL: Old Woman in Rocking Chair.jpg,FADE OUT: Old Woman,00:00.000,00:03.000,00:00.000,auto-continue,
+, - STILL: Hotel California.jpg,ZOOM: Hotel California,00:00.000,00:12.000,00:10.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/Kids on Street.jpg,- STILL: Kids on Street.jpg,00:00.000,00:00.000,00:00.000,auto-continue,
+, - STILL: Kids on Street.jpg,FADE IN: Kids on Street,00:00.000,00:03.000,00:00.000,auto-continue,
+, - STILL: Hotel California.jpg,FADE OUT: Hotel California,00:00.000,00:03.000,00:00.000,auto-continue,
+, - STILL: Kids on Street.jpg,ZOOM: Kids On Street,00:00.000,00:12.000,00:10.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/Old Auto Repair Shed.jpg,- STILL: Old Auto Repair Shed.jpg,00:00.000,00:00.000,00:00.000,auto-continue,
+, - STILL: Old Auto Repair Shed.jpg,FADE IN: Auto Repair,00:00.000,00:03.000,00:00.000,auto-continue,
+, - STILL: Kids on Street.jpg,FADE OUT: Kids in Street,00:00.000,00:03.000,00:00.000,auto-continue,
+, - STILL: Old Auto Repair Shed.jpg,ZOOM: Auto Repair,00:00.000,00:12.000,00:10.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/Kids Play in Alley.jpg,- STILL: Kids Play in Alley.jpg,00:00.000,00:00.000,00:00.000,auto-continue,
+, - STILL: Kids Play in Alley.jpg,FADE IN: Kids Play in Alley,00:00.000,00:03.000,00:00.000,auto-continue,
+, - STILL: Old Auto Repair Shed.jpg,FADE OUT: Auto Repair,00:00.000,00:03.000,00:00.000,auto-continue,
+, - STILL: Kids Play in Alley.jpg,ZOOM: Kids Play in Alley,00:00.000,00:18.000,00:00.000,,
+C.1,"C MUSIC: ""Barrio Viejo"" From Jukebox","FADE OUT: Music ""Barrio Viejo""",00:00.000,00:10.000,00:00.000,auto-continue,PG 1
+, - STILL: Kids Play in Alley.jpg,FADE OUT: Video Latino Neighborhoods,00:00.000,00:10.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE OUT: Matte,00:00.000,00:05.000,00:00.000,,
+D,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/D_TVClickOnIso.wav,SFX: TV Turns On (on remote click),00:00.000,00:01.000,00:00.000,auto-continue,PG 1
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/D TEMP Dani Reporter Export.wav,SFX: News Reporter At Courthouse,00:00.000,00:20.805,00:00.000,auto-continue,PG 2
+, SFX: News Reporter At Courthouse,FADE IN: SFX News Reporter,00:00.000,00:03.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/D.a TV Dark.jpg,D.a TV Dark.jpg,00:00.000,00:00.000,00:00.000,auto-continue,
+, D.a TV Dark.jpg,FADE IN TV,00:00.000,00:18.000,00:00.000,,
+D.1, SFX: News Reporter At Courthouse,STOP: News Reporter,00:00.000,00:00.150,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/D.1_TVClickChange.wav,SFX: TV Channel Change (on remote click),00:00.150,00:00.170,00:00.150,auto-continue,PG 2
+, D.a TV Dark.jpg,STOP TV,00:00.000,00:00.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/shot1_v11_B.mov,VIDEO: Black Hole Sequence,00:00.000,01:12.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/D.1_BlackHole-Rumble.wav,AUDiO: Black Hole Rumble,00:00.000,06:34.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/D.1_BlackHole-Synth.wav,AUDIO: Black Hole Synth,00:00.000,06:34.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/D.1 Black Hole Narrator TEMP.aif,AUDIO: Narrator,00:02.000,00:19.670,00:00.000,auto-continue,
+, AUDIO: Narrator,WIDEN narrator,00:00.000,00:15.000,00:00.000,auto-continue,
+, AUDiO: Black Hole Rumble,FADE UP rumble,00:00.000,00:15.000,00:00.000,auto-continue,
+, AUDIO: Black Hole Synth,WIDEN Black Hole Synth,00:00.000,00:05.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/D.1_Blackhole-FlyThroughSpaceBeforeLanding.wav,AUDIO: Travel Through Space,00:07.700,00:14.000,00:14.000,auto-follow,
+, AUDiO: Black Hole Rumble,FADE OUT: Black Hole Audio,00:00.000,00:05.000,00:00.000,auto-continue,PG 2
+, AUDIO: Black Hole Synth,FADE OUT: Black Hole Audio,00:00.000,00:10.000,00:00.000,auto-continue,
+, VIDEO: Black Hole Sequence,FADE OUT: Black Hole Video,00:03.000,00:05.000,00:00.000,,
+D.2,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/E.3 Silver Dollar Window - Low Contrast.jpg,VIDEO: Silver Dollar,00:00.000,00:00.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+,D.2 VIDEO: Silver Dollar,FADE IN: Silver Dollar,00:00.000,00:05.000,00:00.000,,
+E,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/E_JukeboxButtonsLiftandPlaceRecord.wav,"SFX: Jukebox Buttons Pressed, lift, place, play",00:00.000,00:06.750,00:00.000,auto-continue,Pg 6
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/E_JukeboxScratches.wav,SFX: Record plays with crackle -- need less repetitive crackle,00:06.000,00:17.655,00:00.000,auto-continue,
+, SFX: Record plays with crackle -- need less repetitive crackle,FADE OUT: Record plays with crackle,00:05.000,00:07.000,00:00.000,,
+E.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/E.1 Brown Is Beautiful.jpg,- STILL: Chicano Moratorium ,00:00.000,00:00.000,00:00.000,auto-continue,PG 9
+,D.2 VIDEO: Silver Dollar,FADE OUT: Previous,00:00.000,00:04.000,00:00.000,auto-continue,
+,E.1 - STILL: Chicano Moratorium ,FADE IN: Current,00:00.000,00:04.000,00:00.000,auto-continue,
+,E.1 - STILL: Chicano Moratorium ,ANIMATE: Current,00:02.000,00:15.000,00:00.000,,
+E.2,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/E.2 ArmedPolice@Bar:Danceclub.JPG,- STILL: LA Sheriff Kneeling with Tear Gas Gun,00:00.000,00:00.000,00:00.000,auto-continue,PG 9
+,E.1 - STILL: Chicano Moratorium ,FADE OUT: Previous,00:00.000,00:04.000,00:00.000,auto-continue,
+,E.2 - STILL: LA Sheriff Kneeling with Tear Gas Gun,FADE IN: Current,00:00.000,00:04.000,00:00.000,auto-continue,
+,E.2 - STILL: LA Sheriff Kneeling with Tear Gas Gun,ZOOM IN: Current,00:02.000,00:15.000,00:00.000,,
+E.3,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/E.3 SheriffStakeout@Bar.JPG,- STILL: Silver Dollar Cafe,00:00.000,00:00.000,00:00.000,auto-continue,PG 10
+,E.2 - STILL: LA Sheriff Kneeling with Tear Gas Gun,FADE OUT: Previous,00:00.000,00:04.000,00:00.000,auto-continue,
+,E.3 - STILL: Silver Dollar Cafe,FADE IN: Current,00:00.000,00:04.000,00:00.000,auto-continue,
+,E.3 - STILL: Silver Dollar Cafe,ZOOM OUT: Current,00:02.000,00:15.000,00:00.000,,
+E.4,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/shot2_v11_h264.mov,VIDEO: Event Horizon,00:00.000,01:15.000,00:00.000,auto-continue,PG 10
+, _C&R Matte FINAL.png,FADE OUT: Matte,00:00.000,00:03.000,00:00.000,auto-continue,
+,E.3 - STILL: Silver Dollar Cafe,FADE OUT: Previous,00:01.000,00:03.000,00:00.000,auto-continue,
+,E.4 VIDEO: Event Horizon,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+E.5,E.4 VIDEO: Event Horizon,FADE OUT: Event Horizon,00:00.000,00:05.000,00:05.000,auto-follow,PG 10
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/E.3 Silver Dollar Window - Low Contrast.jpg,VIDEO: Silver Dollar Window,00:00.000,00:00.000,00:00.000,auto-continue,PG 10
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+, VIDEO: Silver Dollar Window,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+E.6, VIDEO: Silver Dollar Window,FADE OUT: Silver Dollar Window,00:00.000,00:05.000,00:00.000,auto-continue,PG 13
+, _C&R Matte FINAL.png,FADE OUT: Matte,00:00.000,00:05.000,00:00.000,,PG 13
+F.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/F.1 Old House.jpg,VIDEO: Old House,00:00.000,00:00.000,00:00.000,auto-continue,PG 19
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+, VIDEO: Silver Dollar Window,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,F.1 VIDEO: Old House,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+F.2,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/F.2 Welcome_to_California FINAL.jpg,"VIDEO: Sign, ""Welcome to California""",00:00.000,00:00.000,00:00.000,auto-continue,PG 20
+,F.1 VIDEO: Old House,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,"F.2 VIDEO: Sign, ""Welcome to California""",FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+F.3,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/F.3a ruben in nam.jpg,VIDEO: Stills of Ruben in Vietnam,00:00.000,00:00.000,00:00.000,auto-continue,PG 21
+,"F.2 VIDEO: Sign, ""Welcome to California""",FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,F.3 VIDEO: Stills of Ruben in Vietnam,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+F.4,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/Moratorium BW Darker.mov,VIDEO: Sheriffs Clubbing People at Chicano Moratorium,00:00.000,00:38.622,00:00.000,auto-continue,PG 21
+,F.3 VIDEO: Stills of Ruben in Vietnam,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,F.4 VIDEO: Sheriffs Clubbing People at Chicano Moratorium,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+F.5,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/F.5 Workers in Pesticide Cloud.jpg,VIDEO: Pesticides Used on Fields,00:00.000,00:00.000,00:00.000,auto-continue,PG 22
+,F.4 VIDEO: Sheriffs Clubbing People at Chicano Moratorium,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,F.5 VIDEO: Pesticides Used on Fields,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+F.6,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/F.6a Immigrants by boat.jpg,VIDEO: Immigrants Arrive By Boat,00:00.000,00:00.000,00:00.000,auto-continue,PG 22
+,F.5 VIDEO: Pesticides Used on Fields,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,F.6 VIDEO: Immigrants Arrive By Boat,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+F.7,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/F.7 Don't Serve Mexicans FINAL.jpg,"VIDEO: Sign, ""We Don't Serve Mexicans""",00:00.000,00:00.000,00:00.000,auto-continue,PG 23
+,F.6 VIDEO: Immigrants Arrive By Boat,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,"F.7 VIDEO: Sign, ""We Don't Serve Mexicans""",FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+F.8,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/F.8 One Room School 1930's.jpg,VIDEO: 1930's One Room School,00:00.000,00:00.000,00:00.000,auto-continue,PG 23
+,"F.7 VIDEO: Sign, ""We Don't Serve Mexicans""",FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,F.8 VIDEO: 1930's One Room School,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+F.9,F.8 VIDEO: 1930's One Room School,FADE OUT: 1930's School (to black),00:00.000,00:05.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE OUT: Matte,00:00.000,00:05.000,00:00.000,,
+H,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.500,auto-continue,PG 25
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/C&R Movie Theater.mov,VIDEO: Movie Theater Effect,00:00.000,01:26.332,00:00.000,auto-continue,PG 25
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/H_Tear Jerk Projector Long.aif,SFX: Movie Projector,00:01.000,07:05.495,00:00.000,,
+I,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/I_JailDoorSlam.wav,SFX: Jail Door Clanks Shut,00:00.000,00:04.843,00:00.000,auto-continue,PG 26
+, VIDEO: Movie Theater Effect,STOP Movie,00:00.000,00:00.000,00:00.000,auto-continue,
+, SFX: Movie Projector,FADE OUT: Movie Projector,00:00.000,00:03.500,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/jail-bars.jpg,VIDEO: Jail Bars,00:01.000,00:00.000,00:00.000,auto-continue,
+, VIDEO: Jail Bars,FADE IN: Jail Bars,00:00.000,00:05.000,00:00.000,,
+J,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/E.3 Silver Dollar Window - Low Contrast.jpg,VIDEO: Silver Dollar Window,00:00.000,00:00.000,00:00.000,auto-continue,
+,H _C&R Matte FINAL.png,FADE OUT: Matte,00:00.000,00:05.000,00:00.000,auto-continue,
+, VIDEO: Jail Bars,FADE OUT: Jail Bars,00:00.000,00:05.000,00:05.000,auto-follow,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+,J VIDEO: Silver Dollar Window,FADE IN: Silver Dollar Window,00:01.000,00:04.000,00:00.000,,
+J.1, _C&R Matte FINAL.png,FADE OUT: Matte,00:00.000,00:03.000,00:00.000,auto-continue,PG 32 (Go Navy!)
+,J VIDEO: Silver Dollar Window,FADE OUT: Window,00:00.000,00:03.000,00:00.000,,
+J.2,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_UFW Flag FINAL 4.jpg,VIDEO: UFW Flag,00:00.000,00:00.000,00:00.000,auto-continue,PG 36
+,J.2 VIDEO: UFW Flag,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+K.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/cr_boycottgrapes_bookscan_1.jpg,VIDEO: Farm Workers' Modest Dwellings,00:00.000,00:00.000,00:00.000,auto-continue,PG 33
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+,J.2 VIDEO: UFW Flag,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,K.1 VIDEO: Farm Workers' Modest Dwellings,FADE IN: Current,00:00.000,00:03.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE IN: Matte,00:00.000,00:03.000,00:00.000,,
+K.2,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/FarmworkrsCarringBoxes.jpg,VIDEO: Photos of Farm Workers,00:00.000,00:00.000,00:00.000,auto-continue,PG 34
+,K.1 VIDEO: Farm Workers' Modest Dwellings,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,K.2 VIDEO: Photos of Farm Workers,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+K.3,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_UFW Flag FINAL 4.jpg,VIDEO: UFW Flag,00:00.000,00:00.000,00:00.000,auto-continue,PG 36
+,K.2 VIDEO: Photos of Farm Workers,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE OUT: Matte,00:00.000,00:03.000,00:00.000,auto-continue,
+,K.3 VIDEO: UFW Flag,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+L,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/L.1 HEROE Title Overlay.png,"VIDEO OVERLAY: Title ""I Want to Be Your Hero""",00:00.000,00:00.000,00:00.000,auto-continue,PG 42
+,"L VIDEO OVERLAY: Title ""I Want to Be Your Hero""",FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+L.1,"L VIDEO OVERLAY: Title ""I Want to Be Your Hero""","FADE OUT: Video Overlay Title ""Hero""",00:00.000,00:05.000,00:00.000,auto-continue,PG 42
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/UFW Flag NO LOGO.jpg,UFW Flag NO LOGO.jpg,00:00.000,00:00.000,00:00.000,auto-continue,
+, UFW Flag NO LOGO.jpg,FADE IN: Flag No logo,00:00.000,00:05.000,00:00.000,auto-continue,
+,K.3 VIDEO: UFW Flag,FADE OUT: UFW Flag,00:00.000,00:05.000,00:00.000,,
+L.2,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_UFW Flag FINAL 4.jpg,VIDEO: UFW Flag,00:00.000,00:00.000,00:00.000,auto-continue,PG 47
+, UFW Flag NO LOGO.jpg,FADE OUT: Previous (stays running),00:00.000,00:03.000,00:00.000,auto-continue,
+,L.2 VIDEO: UFW Flag,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+N,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/N_ChurchBellsOutside.aiff,SFX: Church Environment,00:00.000,03:02.093,00:00.000,,PG 51
+N.1,N SFX: Church Environment,FADE OUT: Church Environment,00:00.000,00:05.000,00:00.000,,PG 52
+N.2, UFW Flag NO LOGO.jpg,FADE IN: Flag No logo,00:00.000,00:05.000,00:00.000,auto-continue,PG 53
+,L.2 VIDEO: UFW Flag,FADE OUT: UFW Flag,00:00.000,00:05.000,00:00.000,,
+N.3, UFW Flag NO LOGO.jpg,FADE OUT: Flag no logo,00:00.000,00:03.000,00:00.000,auto-continue,PG 55 
+,L.2 VIDEO: UFW Flag,FADE IN: Flag with logo,00:00.000,00:03.000,00:00.000,,
+O.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/dolores cowboyhat.jpg,VIDEO: Young Dolores in Stockton,00:00.000,00:00.000,00:00.000,auto-continue,PG 57
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+,L.2 VIDEO: UFW Flag,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE IN: Matte,00:00.000,00:03.000,00:00.000,auto-continue,
+,O.1 VIDEO: Young Dolores in Stockton,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+O.2,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_UFW Flag FINAL 4.jpg,VIDEO: UFW Flag,00:00.000,00:00.000,00:00.000,auto-continue,PG 58
+,O.1 VIDEO: Young Dolores in Stockton,FADE OUT: Previous,00:00.000,00:01.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE DOWN: Matte (stays running),00:00.000,00:01.000,00:00.000,auto-continue,
+,O.2 VIDEO: UFW Flag,FADE IN: Current,00:00.000,00:01.000,00:00.000,,
+O.3,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/jail-bars.jpg,VIDEO: Jail Bars,00:00.000,00:00.000,00:00.000,auto-continue,PG 60
+,O.2 VIDEO: UFW Flag,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE IN: Matte,00:00.000,00:03.000,00:00.000,auto-continue,
+,O.3 VIDEO: Jail Bars,FADE IN: Jail Bars,00:00.000,00:03.000,00:00.000,,
+O.4,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/US Senate BW Seal.png,VIDEO: US Senate BW Seal,00:00.000,00:00.000,00:00.000,auto-continue,PG 60
+,O.3 VIDEO: Jail Bars,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE OUT: Matte,00:00.000,00:03.000,00:00.000,auto-continue,
+,O.4 VIDEO: US Senate BW Seal,FADE IN: Senate Seal,00:00.000,00:03.000,00:00.000,,
+O.5,O.4 VIDEO: US Senate BW Seal,FADE OUT: Senate Seal,00:00.000,00:00.500,00:00.000,,PG 61
+R.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/20th cent boat.jpg,VIDEO: Immigrants of All Types,00:00.000,00:00.000,00:00.000,auto-continue,PG 61
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+,R.1 VIDEO: Immigrants of All Types,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+R.2,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/cr_boycottgrapes_bookscan_8.jpg,VIDEO: Strike,00:00.000,00:00.000,00:00.000,auto-continue,PG 64
+,R.1 VIDEO: Immigrants of All Types,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,R.2 VIDEO: Strike,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+S,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/S (2) Ambassador BW Positive.jpg,VIDEO: Ambassador Hotel Photo,00:00.000,00:00.000,00:00.000,auto-continue,PG 66
+,R.2 VIDEO: Strike,FADE OUT: Previous,00:00.000,00:05.000,00:05.000,auto-follow,
+,S VIDEO: Ambassador Hotel Photo,FADE IN: Current,00:00.000,00:05.000,00:00.000,,
+S.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/S.1_GunShot-RFK.wav,"SFX: Gunshots, Thunder, RFK Dead",00:00.000,00:04.062,00:00.000,auto-continue,PG 67
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/S.1_GunShot-Sub.wav,SFX: Gunshot Sub,00:00.000,00:05.405,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/S.1 Ambassador BW Negative.jpg,VIDEO: Ambassador Hotel Photo Goes Negative,00:00.000,00:00.000,00:00.000,auto-continue,
+,S VIDEO: Ambassador Hotel Photo,FADE OUT: Previous,00:00.000,00:00.250,00:00.000,auto-continue,
+, VIDEO: Ambassador Hotel Photo Goes Negative,FADE IN: Current,00:00.000,00:00.250,00:00.000,auto-continue,
+, VIDEO: Ambassador Hotel Photo Goes Negative,FADE OUT: Ambassador,00:03.000,00:05.000,00:05.000,auto-follow,
+, _C&R Matte FINAL.png,FADE OUT: Matte,00:00.000,00:02.000,00:00.000,,
+T,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/E.3 Silver Dollar Window - Low Contrast.jpg,VIDEO: Silver Dollar Cafe Photo,00:00.000,00:00.000,00:00.000,auto-continue,PG 68
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+,T VIDEO: Silver Dollar Cafe Photo,FADE IN: Current,00:00.000,00:05.000,00:00.000,,
+U,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/shot2_v11_h264.mov,VIDEO: Black Hole,00:00.000,01:15.000,00:00.000,auto-continue,PG 69
+,T VIDEO: Silver Dollar Cafe Photo,FADE OUT: Silver Dollar window,00:01.000,00:05.000,00:00.000,auto-continue,
+,U VIDEO: Black Hole,FADE IN: Black Hole,00:01.000,00:05.000,00:05.000,auto-follow,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/U_DistortedBullhorn.wav,SFX: Distorted Sound of Bullhorn,00:00.000,00:26.000,00:00.000,auto-continue,PG 69
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/E.1 moratorium FINAL.jpg,VIDEO: Chicano Moratorium ,00:00.000,00:00.000,00:00.000,auto-continue,PG 9
+, VIDEO: Chicano Moratorium ,FADE IN: Moratorium Poster,00:00.000,00:04.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/D.1_BlackHole-Synth.wav,SFX: Black Hole Synth,00:00.000,06:34.000,00:00.000,auto-continue,
+, VIDEO: Chicano Moratorium ,ZOOM: Moratorium Poster,00:00.000,00:15.000,00:00.000,auto-continue,
+, VIDEO: Chicano Moratorium ,FADE OUT: Moratorium Poster,00:10.000,00:04.000,00:00.000,,
+X,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/ChicanoMoratorium.jpg,"VIDEO: Laguna Park 1970, Series",00:00.000,00:00.000,00:00.000,auto-continue,PG 70
+,U VIDEO: Black Hole,FADE OUT: Black Hole,00:00.000,00:05.000,00:00.000,auto-continue,
+,"X VIDEO: Laguna Park 1970, Series",FADE IN: Laguna Park,00:00.000,00:05.000,00:00.000,auto-continue,
+, SFX: Black Hole Synth,FADE OUT: Black Hole Synth,00:00.000,00:05.000,00:00.000,,
+Y.2,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/Y.2_SingleFireMissileHigh.wav,SFX: Ruben shot,00:00.000,00:02.530,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/Y.2_SingleFiredMissileLow.wav,Y.2_SingleFiredMissileLow.wav,00:00.000,00:02.530,00:00.000,auto-continue,
+,"X VIDEO: Laguna Park 1970, Series",STOP: Video,00:00.000,00:00.500,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,STOP: Matte,00:00.000,00:00.500,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/Y.2_FireAfterMissile.wav,SFX: Burning Cafe,00:03.000,00:23.351,00:00.000,,
+Z,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/Z.a Ruben in Memorium.png,"VIDEO: Photos of the Dead (Ruben, two others)",00:00.000,00:00.000,00:00.000,auto-continue,PG 71
+,"Z VIDEO: Photos of the Dead (Ruben, two others)",FADE IN: Current,00:00.000,00:03.000,00:03.000,auto-follow,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/Z.b2 Ruben in Memorium.png,Z.b2 Ruben in Memorium.png,00:00.000,00:00.000,00:00.000,auto-continue,
+, Z.b2 Ruben in Memorium.png,FADE IN: Current,00:00.000,00:03.000,00:03.000,auto-follow,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/Z.c2 Ruben in Memorium.png,Z.c2 Ruben in Memorium.png,00:00.000,00:00.000,00:00.000,auto-continue,
+, Z.c2 Ruben in Memorium.png,FADE IN: Current,00:00.000,00:02.000,00:02.000,auto-follow,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/Z.d2 Ruben in Memorium.png,Z.d2 Ruben in Memorium.png,00:00.000,00:00.000,00:00.000,auto-continue,
+, Z.d2 Ruben in Memorium.png,FADE IN: Current,00:00.000,00:02.000,00:02.000,auto-follow,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/Z.e2 Ruben in Memorium.png,Z.e2 Ruben in Memorium.png,00:00.000,00:00.000,00:00.000,auto-continue,
+, Z.e2 Ruben in Memorium.png,FADE IN: Current,00:00.000,00:02.000,00:00.000,,
+Z.1,"Z VIDEO: Photos of the Dead (Ruben, two others)",FADE OUT: Photos,00:00.000,00:07.000,00:00.000,auto-continue,PG 71
+, Z.b2 Ruben in Memorium.png,FADE OUT: Photos,00:00.000,00:07.000,00:00.000,auto-continue,PG 71
+, Z.c2 Ruben in Memorium.png,FADE OUT: Photos,00:00.000,00:07.000,00:00.000,auto-continue,PG 71
+, Z.d2 Ruben in Memorium.png,FADE OUT: Photos,00:00.000,00:07.000,00:00.000,auto-continue,PG 71
+, Z.e2 Ruben in Memorium.png,FADE OUT: Photos,00:00.000,00:07.000,00:00.000,,PG 71
+AA,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/02 C&R Intermission.aif,MUSIC: Intermission Music Loop,00:00.000,24:35.117,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_UFW Flag FINAL 4.jpg,VIDEO: Intermission Video,00:00.000,00:00.000,00:00.000,auto-continue,
+, VIDEO: Intermission Video,FADE IN: Video,00:00.000,00:05.000,00:00.000,auto-continue,
+,AA MUSIC: Intermission Music Loop,FADE DOWN: Intermission Music,10:00.000,00:05.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/02 5 Min Warning.aif,ANNOUNCE: 5 Minute Warning,00:00.000,00:19.088,00:19.088,auto-follow,
+,AA MUSIC: Intermission Music Loop,FADE UP: Intermission Music,00:00.000,00:05.000,00:00.000,,
+AB,AA MUSIC: Intermission Music Loop,FADE DOWN: Intermission Music,00:00.000,00:05.000,00:05.000,auto-follow,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/03 Act 2 Announce.aif,"ANNOUNCE: Thanks for Attending, Wait Outside",00:00.000,00:42.367,00:00.000,,
+,AA MUSIC: Intermission Music Loop,FADE OUT: Music,00:00.000,00:05.000,00:00.000,auto-continue,
+, VIDEO: Intermission Video,FADE OUT: Video,00:00.000,00:05.000,00:00.000,,
+AC,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/-AC_CrimeSceneFireTruckAndFire.wav,SFX: Crime Scene Environment Fire and Fire Truck,00:00.000,00:28.151,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/-AC_CrimeScenePoliceAmbulance.wav,SFX: Crime Scene Environment Ambulance and Police,00:00.000,00:18.011,00:00.000,auto-continue,
+, SFX: Crime Scene Environment Ambulance and Police,MOVE Ambulance to surround speakers,00:05.000,00:08.000,00:00.000,auto-continue,
+,AC SFX: Crime Scene Environment Fire and Fire Truck,fade and stop SFX: Crime Scene Environment Fire and Fire Truck,00:00.000,00:05.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/E.3 Silver Dollar Window - Low Contrast.jpg,VIDEO: Silver Dollar Cafe Photo (TBA),00:05.000,00:00.000,00:00.000,auto-continue,
+, VIDEO: Silver Dollar Cafe Photo (TBA),FADE IN: Current,00:00.000,00:05.000,00:00.000,,
+AD,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/shot2_v11_h264.mov,"VIDEO: Black Hole, Event Horizon",00:00.000,01:15.000,00:00.000,auto-continue,PG 73
+, VIDEO: Silver Dollar Cafe Photo (TBA),FADE OUT: Previous,00:01.000,00:03.000,00:00.000,auto-continue,
+,"AD VIDEO: Black Hole, Event Horizon",FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+AD.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AD.1a Salazar Not Killed by Gunman.jpg,VIDEO: Headlines Overlaid on Black Hole,00:01.000,00:00.000,00:00.000,auto-continue,PG 74
+,AD.1 VIDEO: Headlines Overlaid on Black Hole,FADE IN: Current,00:00.000,00:03.000,00:03.000,auto-follow,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AD.1b cr_headline_scan_139.jpg,AD.1b cr_headline_scan_139.jpg,00:02.000,00:00.000,00:00.000,auto-continue,
+,AD.1 VIDEO: Headlines Overlaid on Black Hole,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+, AD.1b cr_headline_scan_139.jpg,FADE IN: Current,00:00.000,00:03.000,00:03.000,auto-follow,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AD.1c Tear Gas Missle.jpg,AD.1c Tear Gas Missle.jpg,00:02.000,00:00.000,00:00.000,auto-continue,
+, AD.1b cr_headline_scan_139.jpg,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+, AD.1c Tear Gas Missle.jpg,FADE IN: Current,00:00.000,00:03.000,00:00.000,auto-continue,
+, AD.1c Tear Gas Missle.jpg,FADE OUT: Previous,00:05.000,00:03.000,00:00.000,,
+AE,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_UFW Flag FINAL 4.jpg,VIDEO: UFW Flag,00:00.000,00:00.000,00:00.000,auto-continue,PG 75
+,"AD VIDEO: Black Hole, Event Horizon",FADE OUT: Previous,00:00.000,00:05.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE OUT: Previous,00:00.000,00:05.000,00:00.000,auto-continue,
+,AE VIDEO: UFW Flag,FADE IN: Current,00:00.000,00:05.000,00:00.000,,
+AE.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/UFW Flag NO LOGO.jpg,UFW Flag NO LOGO.jpg,00:00.000,00:00.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+,AE.1 UFW Flag NO LOGO.jpg,FADE IN: Flag No logo,00:00.000,00:05.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE IN: Matte,00:00.000,00:05.000,00:00.000,auto-continue,
+,AE VIDEO: UFW Flag,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,,
+AF.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/Gunshots3.wav,SFX: Gunshots 5 -- needs verb tail,00:00.000,00:02.780,00:00.000,,PG 81
+AF.2,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AF.2 Worker Shot FINAL.png,"VIDEO: Headline, ""Worker Shot...""",00:00.000,00:00.000,00:00.000,auto-continue,PG 81
+,"AF.2 VIDEO: Headline, ""Worker Shot...""",FADE IN: Current,00:00.000,00:01.500,00:00.000,,
+AF.4,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AF.4 Worker Beaten.jpg,"VIDEO: Headline, ""Worker Beaten...""",00:00.000,00:00.000,00:00.000,auto-continue,PG 81
+,"AF.2 VIDEO: Headline, ""Worker Shot...""",FADE OUT: Previous,00:00.000,00:01.500,00:00.000,auto-continue,
+,"AF.4 VIDEO: Headline, ""Worker Beaten...""",FADE IN: Current,00:00.000,00:01.500,00:00.000,,
+AF.5,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/cr_boycottgrapes_bookscan_49.jpg,"VIDEO: Teamsters, Arrests, Bloody Picketers",00:00.000,00:00.000,00:00.000,auto-continue,PG 81
+,"AF.4 VIDEO: Headline, ""Worker Beaten...""",FADE OUT: Previous,00:00.000,00:01.500,00:00.000,auto-continue,
+,"AF.5 VIDEO: Teamsters, Arrests, Bloody Picketers",FADE IN: Current,00:00.000,00:01.500,00:00.000,,
+AF.6,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/cr_boycottgrapes_bookscan_113.jpg,VIDEO: Battle gives way to success (???),00:00.000,00:00.000,00:00.000,auto-continue,PG 81
+,"AF.5 VIDEO: Teamsters, Arrests, Bloody Picketers",FADE OUT: Previous,00:00.000,00:01.500,00:00.000,auto-continue,
+,AF.6 VIDEO: Battle gives way to success (???),FADE IN: Current,00:00.000,00:01.500,00:00.000,,
+AF.7,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AF.7 El cortito no mas FINAL.jpg,"VIDEO: ""El Cortito, No Mas!""",00:00.000,00:00.000,00:00.000,auto-continue,PG 82
+,AF.6 VIDEO: Battle gives way to success (???),FADE OUT: Previous,00:00.000,00:01.500,00:00.000,auto-continue,
+,"AF.7 VIDEO: ""El Cortito, No Mas!""",FADE IN: Current,00:00.000,00:01.500,00:00.000,,
+AF.10,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AF.10 Boycott Over Headline.jpg,"VIDEO: ""UFW 100,000 Strong""",00:00.000,00:00.000,00:00.000,auto-continue,PG 82
+,"AF.7 VIDEO: ""El Cortito, No Mas!""",FADE OUT: Previous,00:00.000,00:01.500,00:00.000,auto-continue,
+,"AF.10 VIDEO: ""UFW 100,000 Strong""",FADE IN: Current,00:00.000,00:01.500,00:00.000,,
+AF.11,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AF.11 Brown Carter Comp.jpg,VIDEO: Young Jerry Brown & Jimmy Carter,00:00.000,00:00.000,00:00.000,auto-continue,PG 83
+,"AF.10 VIDEO: ""UFW 100,000 Strong""",FADE OUT: Previous,00:00.000,00:01.500,00:00.000,auto-continue,
+,AF.11 VIDEO: Young Jerry Brown & Jimmy Carter,FADE IN: Current,00:00.000,00:01.500,00:00.000,,
+AF.12,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AF.12 Reagan and Deuk FINAL.jpg,VIDEO: Ronald Reagan & George Deukmejian,00:00.000,00:00.000,00:00.000,auto-continue,PG 84
+,AF.11 VIDEO: Young Jerry Brown & Jimmy Carter,FADE OUT: Previous,00:00.000,00:01.500,00:00.000,auto-continue,
+,AF.12 VIDEO: Ronald Reagan & George Deukmejian,FADE IN: Current,00:00.000,00:01.500,00:00.000,,
+AF.14,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_UFW Flag FINAL 4.jpg,VIDEO: UFW Flag,00:00.000,00:00.000,00:00.000,auto-continue,PG 84
+,AF.12 VIDEO: Ronald Reagan & George Deukmejian,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,AE.1 UFW Flag NO LOGO.jpg,FADE OUT: Red,00:00.000,00:03.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE OUT: Matte,00:00.000,00:03.000,00:00.000,auto-continue,
+,AF.14 VIDEO: UFW Flag,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+AG,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/-AG_sprayingOffStage.wav,"SFX: Spraying Sound, Offstage",00:00.000,00:18.382,00:00.000,,PG 86
+AI,AF.14 VIDEO: UFW Flag,FADE OUT: Previous,00:00.000,00:05.000,00:00.000,,
+AI.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AI.1 Manifest Destiny.jpg,"VIDEO: Stills, ""Manifest Destiny, Go West Young Man"" etc",00:00.000,00:00.000,00:00.000,auto-continue,PG 88
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE IN: Matte,00:00.000,00:03.000,00:00.000,auto-continue,
+,"AI.1 VIDEO: Stills, ""Manifest Destiny, Go West Young Man"" etc",FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+AI.2,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AI.2 Sweatshop.jpg,"VIDEO: Stills, Immigrants Doing Jobs Others Won't Do",00:00.000,00:00.000,00:00.000,auto-continue,PG 90
+,"AI.1 VIDEO: Stills, ""Manifest Destiny, Go West Young Man"" etc",FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,"AI.2 VIDEO: Stills, Immigrants Doing Jobs Others Won't Do",FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+AI.3,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/F.5 Workers in Pesticide Cloud.jpg,VIDEO: Farm Workers Getting Sprayed With Pesticides,00:00.000,00:00.000,00:00.000,auto-continue,PG 91
+,"AI.2 VIDEO: Stills, Immigrants Doing Jobs Others Won't Do",FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,AI.3 VIDEO: Farm Workers Getting Sprayed With Pesticides,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+AJ,"/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/-AJ_Helicopter Bell Jet Ranger: Approach, Land, Idle, Take Off.aiff","SFX: Helicopter Fly By, Spraying Pesticide",00:00.000,00:18.388,00:00.000,auto-continue,PG 91
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/-AG_sprayingOffStage.wav,"SFX: Spraying Sound, Offstage",00:01.000,00:12.261,00:00.000,auto-continue,PG 86
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AJ McFarland Sign.jpg,"VIDEO: Helicopter, Sign ""McFarland""",00:00.000,00:00.000,00:00.000,auto-continue,
+,AI.3 VIDEO: Farm Workers Getting Sprayed With Pesticides,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+," VIDEO: Helicopter, Sign ""McFarland""",FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+AK,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AK Earlimart.jpg,"VIDEO: Sign, ""Earlimart, California""",00:00.000,00:00.000,00:00.000,auto-continue,PG 93
+," VIDEO: Helicopter, Sign ""McFarland""",FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,"AK VIDEO: Sign, ""Earlimart, California""",FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+AK.1,"AK VIDEO: Sign, ""Earlimart, California""",FADE OUT: Earlimart Sign,00:00.000,00:10.000,00:00.000,auto-continue,PG 94
+, _C&R Matte FINAL.png,FADE OUT: Matte,00:00.000,00:01.000,00:00.000,,
+AL,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AL Yuma Courthouse.jpg,VIDEO: Courthouse,00:00.000,00:00.000,00:00.000,auto-continue,PG 98
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+,AL VIDEO: Courthouse,FADE IN: Current,00:00.000,00:03.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE IN: Matte,00:00.000,00:03.000,00:00.000,,
+AM,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AM Protest.jpg,VIDEO: Anti-Mexican Discrimination,00:00.000,00:00.000,00:00.000,auto-continue,PG 100
+,AL VIDEO: Courthouse,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,AM VIDEO: Anti-Mexican Discrimination,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+AN.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/shot3_v11_H264.mov,VIDEO: Black Hole Turns Into Supernova,00:00.000,00:30.000,00:00.000,auto-continue,PG 100
+,AM VIDEO: Anti-Mexican Discrimination,FADE OUT: Previous,00:01.000,00:05.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE OUT: Matte,00:01.000,00:05.000,00:00.000,auto-continue,
+,AN.1 VIDEO: Black Hole Turns Into Supernova,FADE IN: Current,00:00.000,00:05.000,00:00.000,,
+AN.2,AN.1 VIDEO: Black Hole Turns Into Supernova,FADE OUT: Supernova White Screen,00:00.000,00:10.000,00:00.000,,
+AN.3,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AN.3 Courtroom.jpg,VIDEO: Courtroom,00:00.000,00:00.000,00:00.000,auto-continue,PG 100
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/_C&R Matte FINAL.png,_C&R Matte FINAL.png,00:00.000,00:00.000,00:00.000,auto-continue,
+,AN.3 VIDEO: Courtroom,FADE IN: Current,00:00.000,00:05.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE IN: Matte,00:00.000,00:05.000,00:00.000,,
+AN.4,AN.3 VIDEO: Courtroom,FADE OUT: Previous,00:00.000,00:05.000,00:00.000,,
+AO,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/-AO_POMONA Birds.aif,"SFX: Outdoor, Nice Day Environment, Birds -- edit out loud ones",00:00.000,00:20.121,00:00.000,auto-continue,PG 101
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AO (NEW) Gravesite 2.jpg,VIDEO: Cesar's Grave,00:00.000,00:00.000,00:00.000,auto-continue,PG 101
+, VIDEO: Cesar's Grave,FADE IN: Current,00:00.000,00:05.000,00:00.000,,
+AO.1, VIDEO: Cesar's Grave,FADE OUT: Grave,00:00.000,00:08.000,00:00.000,auto-continue,
+, _C&R Matte FINAL.png,FADE OUT: Matte,00:01.000,00:08.000,00:00.000,,
+AP.1,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AP.1a Cesar.png,"VIDEO: Cesar's Face, then His Stamp Over Flag",00:00.000,00:00.000,00:00.000,auto-continue,PG 104
+,"AP.1 VIDEO: Cesar's Face, then His Stamp Over Flag",FADE IN: Current,00:00.000,00:03.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AP.1b Stamp.png,AP.1b Stamp.png,00:05.000,00:00.000,00:00.000,auto-continue,
+, AP.1b Stamp.png,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+AP.2,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AP.2a USS chavez.jpg,"VIDEO: USS Cesar Chavez, Him In Navy Uniform Over the Flag",00:00.000,00:00.000,00:00.000,auto-continue,PG 106
+,"AP.1 VIDEO: Cesar's Face, then His Stamp Over Flag",FADE OUT: Previous,00:01.000,00:03.000,00:00.000,auto-continue,
+,"AP.2 VIDEO: USS Cesar Chavez, Him In Navy Uniform Over the Flag",FADE IN: Current,00:00.000,00:03.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AP.2b Cesar Sailor.png,AP.2b Cesar Sailor.png,00:05.000,00:00.000,00:00.000,auto-continue,
+, AP.1b Stamp.png,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+, AP.2b Cesar Sailor.png,FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+AP.3,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/UFW Flag NO LOGO.jpg,UFW Flag NO LOGO.jpg,00:00.000,00:00.000,00:00.000,auto-continue,
+,"AP.2 VIDEO: USS Cesar Chavez, Him In Navy Uniform Over the Flag",FADE OUT: Previous,00:01.000,00:03.000,00:00.000,auto-continue,
+, AP.2b Cesar Sailor.png,FADE OUT: Previous,00:00.000,00:03.000,00:00.000,auto-continue,
+,AP.3 UFW Flag NO LOGO.jpg,FADE IN: Current,00:00.000,00:03.000,00:00.000,auto-continue,
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AP.3a Cesar Stamp.png,"VIDEO: Ruben Salazar Stamp Over Flag (Cesar stamp L, Ruben stamp R)",00:02.000,00:00.000,00:00.000,auto-continue,PG 107
+,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AP.3b Ruben Stamp.png,AP.3b Ruben Stamp.png,00:00.000,00:00.000,00:00.000,auto-continue,
+," VIDEO: Ruben Salazar Stamp Over Flag (Cesar stamp L, Ruben stamp R)",FADE IN: Current,00:01.000,00:03.000,00:00.000,auto-continue,
+, AP.3b Ruben Stamp.png,FADE IN: Current,00:03.000,00:03.000,00:00.000,,
+AP.4,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/AP.4 Richard Chavez Dedication.jpg,VIDEO: Richard Chavez Still w/Dedication,00:00.000,00:00.000,00:00.000,auto-continue,PG 107
+,AP.3 UFW Flag NO LOGO.jpg,FADE OUT: Previous,00:00.000,00:05.000,00:00.000,auto-continue,
+," VIDEO: Ruben Salazar Stamp Over Flag (Cesar stamp L, Ruben stamp R)",FADE OUT: Previous,00:00.000,00:05.000,00:00.000,auto-continue,
+, AP.3b Ruben Stamp.png,FADE OUT: Previous,00:00.000,00:05.000,00:00.000,auto-continue,
+,AP.4 VIDEO: Richard Chavez Still w/Dedication,FADE IN: Current,00:00.000,00:05.000,00:00.000,,
+AP.5,AP.4 VIDEO: Richard Chavez Still w/Dedication,FADE OUT: Previous video cues,00:00.000,00:07.000,00:00.000,,PG 107
+AR,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/UFW Flag FINAL 4.jpg,VIDEO: UFW Flag (Curtain Call),00:00.000,00:00.000,00:00.000,auto-continue,
+,AR VIDEO: UFW Flag (Curtain Call),FADE IN: Current,00:00.000,00:03.000,00:00.000,,
+AS,/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/audio/03 C&R Post Show.aif,MUSIC: Postshow Loop,00:00.000,09:25.327,00:00.000,,
+AS.1,AR VIDEO: UFW Flag (Curtain Call),FADE OUT: UFW Flag,00:00.000,00:10.000,00:00.000,auto-continue,
+,AS MUSIC: Postshow Loop,FADE OUT: Postshow Music,00:00.000,00:10.000,00:00.000,,
