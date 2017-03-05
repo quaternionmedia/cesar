@@ -27,11 +27,6 @@ class Ion():
 			# for fn in f.nodes():
 			# 	print('nodes: ', fn)
 
-
-
-
-
-
 	def addParent(self, name, *args, **kwargs):
 		i = self.parents
 		i.add_node(name)
@@ -143,13 +138,11 @@ class George(Magics):
 		global g, show, control
 		g = Ion()
 
-
-
 		show = Tk()
 		g.addGenerator(show)
 		# show.overrideredirect(1) #windowless
 		# show.bind("<Escape>", lambda e: e.widget.quit())
-		show.geometry('920x600+0+700')
+		show.geometry('1920x1080+-1920+0')
 		show.config(bg='black')
 		show.title('Show')
 		show.state('zoomed')
@@ -160,7 +153,7 @@ class George(Magics):
 		control = Tk()
 		g.addGenerator(show)
 
-		control.geometry('800x600+0+0')
+		control.geometry('1920x1080+0+0')
 		control.config(bg='darkgrey')
 		control.title('Control')
 		cdatas = Label(control, text='x:%s, y:%s' %( control.winfo_screenwidth(), control.winfo_screenheight()))
