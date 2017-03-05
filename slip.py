@@ -3,6 +3,7 @@ END = b'\xc0'
 ESC = b'\xdb'
 ESC_END = b'\xdc'
 ESC_ESC = b'\xdd'
+NULL = b'\x00'
 
 #
 # def encode(msg):
@@ -14,8 +15,6 @@ ESC_ESC = b'\xdd'
 # 	print(encoded)
 
 def encode(packet):
-	# Encode an initial END character to flush out any data that
-	# may have accumulated in the receiver due to line noise
 	encoded = END
 	for char in packet:
 		# SLIP_END
@@ -26,6 +25,11 @@ def encode(packet):
 			encoded += ESC + ESC_ESC
 		# the rest can simply be appended
 		else:
-			encoded += bytes(char, 'UTF-8')	
+			encoded += char.encode()
+	print('encoding: ', encoded, (len(encoded)-1) % 4)
+	#encoded += NULL * (4 - (len(encoded)+1) % 4)
+	#encoded += NULL * ((len(encoded)+1)%4)
+	encoded += NULL * ((len(encoded) % 4 )+ 3)
 	encoded += END
+	print('encoded! ', encoded, len(encoded) % 4)
 	return encoded

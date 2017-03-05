@@ -43,9 +43,10 @@ class Listener:
 
 class Client:
 	def __init__(self):
-		self.client = udp_client.UDPClient('localhost', 12345)
-		#self.client = socket.socket(socket.AF_INET)#, socket.SOCK_DGRAM)#, socket.SOCK_STREAM)
-		#self.client.connect(('127.0.0.1', 53000))
+		#self.client = udp_client.UDPClient('localhost', 51365)
+		self.client = socket.socket()#socket.AF_INET)#, socket.SOCK_DGRAM)#, socket.SOCK_STREAM)
+		self.client.connect(('127.0.0.1', 53000))
+		self.last_message = None
 
 	def send_message(self, address='/go', value=None):
 		msg = osc_message_builder.OscMessageBuilder(address=address)
@@ -53,10 +54,9 @@ class Client:
 		if value:
 			msg.add_arg(value)
 		#self.client.send(msg.build())
-		#sl = slip.encode(str(msg.build()))
-		#sl = b'/go'
-		print('sending: ', msg)
-		self.client.send(msg.build())
+		sl = slip.encode(msg.build().address)
+		print('sending: ', sl)
+		self.client.send(sl)
 
 
 class Interface:
