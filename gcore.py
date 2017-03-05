@@ -156,6 +156,10 @@ class George(Magics):
 		control.geometry('1920x1080+0+0')
 		control.config(bg='darkgrey')
 		control.title('Control')
+		def action(event):
+			print('firing thing')
+			i.client.send_message()
+		control.bind('<space>', action)
 		cdatas = Label(control, text='x:%s, y:%s' %( control.winfo_screenwidth(), control.winfo_screenheight()))
 		g.addChild(cdatas)
 
@@ -192,14 +196,10 @@ class George(Magics):
 		import osc
 		global i
 		i = osc.Interface()
-		i.client.send_message('/go')
+		#i.client.send_message('/go')
 		return line
 
-	# @line_magic
-	# def git(self, line):
-	# 	!git commit -a
-	# 	!git push
-	# 	return line
+
 # In order to actually use these magics, you must register them with a
 # running IPython.  This code must be placed in a file that is loaded once
 # IPython is up and running:
