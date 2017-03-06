@@ -194,9 +194,9 @@ class George(Magics):
 	@line_magic
 	def osc(self, line):
 		import osc
-		global i
-		i = osc.Interface()
-		#i.client.send_message('/go')
+		global q
+		q = osc.Qlab()
+		#q.send('/go')
 		return line
 
 
