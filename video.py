@@ -4,14 +4,16 @@ import time
 import PIL.Image as Image
 import PIL.ImageTk as ImageTk
 
+class Video:
+	def __init__(self, path, label):
+		self.path = path
+		self.video = self.loadVideo(self.path)
 
-
-
-		#self.width, self.height = 1280, 720
+		self.vlabel = label # must be tk label
+		self.width = self.vlabel.winfo_width()
+		self.height = self.vlabel.winfo_height()
 		#self.window.overrideredirect(1)
 		#self.window.geometry("%dx%d+0+0" % (self.width, self.height))
-		self.path = path
-		self.video = self.loadVideo()
 		self.frameDelay = 26
 		self.frameNumber = self.video.get(1)
 		self.ratio = self.video.get(2)
@@ -28,20 +30,20 @@ import PIL.ImageTk as ImageTk
 		self.res = 0
 		self.delays = []
 
-	def loadVideo(self):
-		return cv2.VideoCapture(self.path)
+	def loadVideo(self, path):
+		return cv2.VideoCapture(path)
 
 	def play(self):
 		if self.playing:
 			self.ret, self.frame = self.video.read()
 			if self.ret:
-				self.resized = cv2.resize(self.frame, (self.w, self.h))
+				self.resized = cv2.resize(self.frame, (self.width, self.height))
 				self.cv2image = cv2.cvtColor(self.resized, cv2.COLOR_BGR2RGBA)
 				#self.resized = Image.fromarray(self.cv2image).resize((self.w, self.h))
 				if self.fading:
 					self.bret, self.bframe = self.b.read()
 					if self.bret:
-						self.bresized = cv2.resize(self.bframe, (self.w, self.h))
+						self.bresized = cv2.resize(self.bframe, (self.width, self.height))
 						self.bimage = cv2.cvtColor(self.bresized, cv2.COLOR_BGR2RGBA)
 						#self.bresized = Image.fromarray(self.bimage).resize((self.w, self.h))
 						self.alpha = self.alpha*self.fadeDuration/(self.fadeDuration+1)
@@ -57,20 +59,20 @@ import PIL.ImageTk as ImageTk
 							self.fadeDuration -= 1
 				#self.cv2image = cv2.resize(self.cv2image, (self.width, self.height), interpolation=cv2.INTER_LANCZOS4)
 				#self.img = Image.fromarray(self.cv2image)#.resize((self.width, self.height), resample=Image.NEAREST)
-				self.big = np.zeros((self.w*self.res, self.h*self.res, 4), dtype = np.uint8)
-				self.big = cv2.pyrUp(self.cv2image)
-				for i in range(self.res):
-					self.big = cv2.pyrUp(self.big)
-				self.img = Image.fromarray(self.big)
+				#self.big = np.zeros((self.width*self.res, self.height*self.res, 4), dtype = np.uint8)
+				#self.big = cv2.pyrUp(self.cv2image)
+				#for i in range(self.res):
+				#	self.big = cv2.pyrUp(self.big)
+				self.img = Image.fromarray(self.cv2image)
 				#self.fullscreen.putdata('RGBA', self.img)
 				self.imgtk = ImageTk.PhotoImage(image=self.img)
 				#self.pimgtk = tk.PhotoImage(self.imgtk)#.zoom(2)
 				#self.lmain.imgtk = self.imgtk
-				self.lmain.configure(image=self.imgtk)
+				self.vlabel.configure(image=self.imgtk)
 				# figure out next time
 				self.frameNumber += 1
 				self.frameDelay = int(1000*((self.frameNumber/self.fps) - (time.perf_counter() - self.startTime)))
-				self.meta.configure(text='frame: %s frameDelay: %s fps: %s perf: %.3f startTime %s' %(self.frameNumber, self.frameDelay, self.fps, time.perf_counter(), self.startTime))
+				# self.meta.configure(text='frame: %s frameDelay: %s fps: %s perf: %.3f startTime %s' %(self.frameNumber, self.frameDelay, self.fps, time.perf_counter(), self.startTime))
 				self.delays.append(self.frameDelay)
 				#print('setting delay', self.frameDelay)
 				if self.frameDelay < 0:
@@ -92,7 +94,7 @@ import PIL.ImageTk as ImageTk
 				self.seek(0)
 				#self.playing = False
 				#self.fading = False
-			self.lmain.after(self.frameDelay, self.play)
+			self.vlabel.after(self.frameDelay, self.play)
 
 	def seek(self, f):
 		self.video.set(1, f)

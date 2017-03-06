@@ -4,60 +4,14 @@ from tkinter import Tk, Frame, Label, Canvas
 
 class Ion():
 	def __init__(self):
-		self.parents = nx.MultiDiGraph()
-		self.generators = nx.MultiDiGraph()
-		self.children = nx.MultiDiGraph()
-		self.functions = nx.MultiDiGraph()
+		self.ion = nx.MultiDiGraph()
 
 	def printIon(self):
-		for p in self.parents.nodes():
-			print('Parent: ', p)
-			# for pn in p.nodes():
-			# 	print('nodes: ', pn)
-		for g in self.generators.nodes():
-			print(g)
-			# for gn in g.nodes():
-			# 	print('nodes: ', gn)
-		for c in self.children.nodes():
-			print(c)
-			# for cn in c.nodes():
-			# 	print('nodes: ', cn)
-		for f in self.functions.nodes():
-			print(f)
-			# for fn in f.nodes():
-			# 	print('nodes: ', fn)
-
-	def addParent(self, name, *args, **kwargs):
-		i = self.parents
-		i.add_node(name)
-		i.add_nodes_from(args)
-		i.add_edges_from(kwargs)
-		self.parents.add_node(i)
-
-	def addGenerator(self, name, *args, **kwargs):
-		i = self.generators
-		i.add_node(name)
-		i.add_nodes_from(args)
-		i.add_edges_from(kwargs)
-		self.generators.add_node(i)
-
-	def addChild(self, name, *args, **kwargs):
-		i = self.children
-		i.add_node(name)
-		i.add_nodes_from(args)
-		i.add_edges_from(kwargs)
-		self.children.add_node(i)
-
-	def addFunction(self, name, *args, **kwargs):
-		i = self.functions
-		i.add_node(name)
-		i.add_nodes_from(args)
-		i.add_edges_from(kwargs)
-		self.functions.add_node(i)
-
+		for i in self.ion.nodes():
+			print(i)
 
 	def showIon(self, window):
-		global ionp, ionch, iong, ionf
+		global ionp, ionch, iong, ionf, canvas
 		#ion canvas
 		canvas = Canvas(window, bg='grey', takefocus=True)
 		def drag(event):
@@ -74,60 +28,32 @@ class Ion():
 		canvas.place(relx=0.5, rely=0.5, relheight=1, relwidth=1, anchor='center')
 
 		#parent canvas
-		ionp = Canvas(canvas, bg='plum')
-		ionp.place(relx=0.5, rely=0, relheight=0.4, relwidth=0.25, anchor='n')
+		ionp = Label(control, bg='plum')
+		ionp.place(relx=0.5, rely=0, relheight=0.1, relwidth=0.1)
 		ionp.bind('<Enter>', lambda e: ionp.config(bg='orchid'))
 		ionp.bind('<Leave>', lambda e: ionp.config(bg='plum'))
-		#parents
-		for pi, pe in enumerate(self.parents.nodes()):
-			pl = Label(ionp, text=pe, font=("Helvetica", 16))
-			plen = len(self.parents)
-			pl.place(relx=.5, rely=pi/plen)
-			print(pi,plen)
-
-
 		#children canvas
 		ionch = Canvas(canvas, bg='blue')
-		ionch.place(relx=0.5, rely=1, relheight=0.4, relwidth=0.25, anchor='s')
+		ionch.place(relx=0.5, rely=1, relheight=0.1, relwidth=0.1)
 		ionch.bind('<Enter>', lambda e: ionch.config(bg='lightblue'))
 		ionch.bind('<Leave>', lambda e: ionch.config(bg='blue'))
-		#children
-		for ci, ce in enumerate(self.children.nodes()):
-			cl = Label(ionch, text=ce, font=("Helvetica", 16))
-			clen = len(self.children)
-			cl.place(relx=.5, rely=ci/clen)
-			print(ci,clen)
-
-
-
 		#generator canvas
 		iong = Canvas(canvas, bg='lightgreen')
-		iong.place(relx=0, rely=.5, relheight=0.25, relwidth=0.4, anchor='w')
+		iong.place(relx=0, rely=.5, relheight=0.1, relwidth=0.1)
 		iong.bind('<Enter>', lambda e: iong.config(bg='green'))
 		iong.bind('<Leave>', lambda e: iong.config(bg='lightgreen'))
-		#generators
-		for gi, ge in enumerate(self.generators.nodes()):
-			gl = Label(iong, text=ge, font=("Helvetica", 16))
-			glen = len(self.generators)
-			gl.place(relx=.5, rely=gi/glen)
-			print(gi,glen)
-
 		#function canvas
 		ionf = Canvas(canvas, bg='lavender')
-		ionf.place(relx=1, rely=.5, relheight=0.25, relwidth=0.4, anchor='e')
+		ionf.place(relx=1, rely=.5, relheight=0.1, relwidth=0.1)
 		ionf.bind('<Enter>', lambda e: ionf.config(bg='brown'))
 		ionf.bind('<Leave>', lambda e: ionf.config(bg='lavender'))
-		#functions
-		for fi, pe in enumerate(self.functions.nodes()):
-			fl = Label(ionf, text=pe, font=("Helvetica", 16))
-			flen = len(self.functions)
-			fl.place(relx=.5, rely=fi/flen)
-			print(fi,flen)
-
-
-
 
 from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, line_cell_magic)
+
+def resize(event):
+	w,h = event.width, event.height
+	#show.config(width=w, height=h)
+	vi.width, vi.height = w, h
 
 # The class MUST call this class decorator at creation time
 @magics_class
@@ -135,25 +61,36 @@ class George(Magics):
 
 	@line_magic
 	def cesar(self, line):
-		global g, show, control
+		global g, show, control, v
 		g = Ion()
 
 		show = Tk()
-		g.addGenerator(show)
+		v = Label(show)
+		v.place(x=0,y=5,relheight=1,relwidth=1)
+		
+		import video
+		global vi
+		# label = Label(show)
+		vi = video.Video('/Users/harpo/Movies/reduced_1.mp4', v)
+		vi.play()
+
+		show.bind('<Configure>', resize)
+
+		#g.addGenerator(show)
 		# show.overrideredirect(1) #windowless
 		# show.bind("<Escape>", lambda e: e.widget.quit())
-		show.geometry('1920x1080+-1920+0')
-		show.config(bg='black')
+		show.geometry('600x400+0+0')
+		# show.config(bg='black')
 		show.title('Show')
-		show.state('zoomed')
+		# show.state('zoomed')
 		sdatas = Label(show, text='x:%s, y:%s' %( show.winfo_screenwidth(), show.winfo_screenheight()))
-		g.addChild(sdatas)
+		#g.addChild(sdatas)
 
 
 		control = Tk()
-		g.addGenerator(show)
+		#g.addGenerator(show)
 
-		control.geometry('1920x1080+0+0')
+		control.geometry('320x240+0+0')
 		control.config(bg='darkgrey')
 		control.title('Control')
 		def action(event):
@@ -161,7 +98,7 @@ class George(Magics):
 			i.client.send_message()
 		control.bind('<space>', action)
 		cdatas = Label(control, text='x:%s, y:%s' %( control.winfo_screenwidth(), control.winfo_screenheight()))
-		g.addChild(cdatas)
+		#g.addChild(cdatas)
 
 		sdatas.place(rely=.9,relx=.1)
 
@@ -191,13 +128,23 @@ class George(Magics):
 			print("Called as cell magic")
 			return line, cell
 
-	@line_magic
+	@line_cell_magic
 	def osc(self, line):
 		import osc
 		global q
 		q = osc.Qlab()
-		#q.send('/go')
+		q.send('/workspaces')
+		q.send('/go')
+		q.send('/version')
 		return line
+
+	@line_magic
+	def video(self, line):
+		import video
+		global vi
+		# label = Label(show)
+		vi = video.Video('/Users/harpo/Movies/reduced_1.mp4', v)
+		vi.play()
 
 
 # In order to actually use these magics, you must register them with a
