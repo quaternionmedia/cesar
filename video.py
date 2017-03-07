@@ -33,68 +33,79 @@ class Video:
 	def loadVideo(self, path):
 		return cv2.VideoCapture(path)
 
+	def loadImage(self, path):
+		return cv2.imread(path)
+
+	def convertImage(self, img):
+		r = cv2.resize(img, (self.width, self.height))
+		return cv2.cvtColor(r, cv2.COLOR_BGR2RGBA)
+
 	def play(self):
 		if self.playing:
 			self.ret, self.frame = self.video.read()
-			if self.ret:
-				self.resized = cv2.resize(self.frame, (self.width, self.height))
-				self.cv2image = cv2.cvtColor(self.resized, cv2.COLOR_BGR2RGBA)
-				#self.resized = Image.fromarray(self.cv2image).resize((self.w, self.h))
-				if self.fading:
-					self.bret, self.bframe = self.b.read()
-					if self.bret:
-						self.bresized = cv2.resize(self.bframe, (self.width, self.height))
-						self.bimage = cv2.cvtColor(self.bresized, cv2.COLOR_BGR2RGBA)
-						#self.bresized = Image.fromarray(self.bimage).resize((self.w, self.h))
-						self.alpha = self.alpha*self.fadeDuration/(self.fadeDuration+1)
-						self.cv2image = cv2.addWeighted(self.cv2image, self.alpha, self.bimage, 1-self.alpha, 0)
-						#self.cv2image = Image.blend(self.resized, self.bresized, self.alpha)
-						if self.fadeDuration == 0:
-							self.fading = False
-							self.video = self.b
-							#self.b.release()
-							self.frameNumber = self.video.get(1)
-							self.startTime = time.perf_counter() - (self.frameNumber/self.fps)
-						else:
-							self.fadeDuration -= 1
-				#self.cv2image = cv2.resize(self.cv2image, (self.width, self.height), interpolation=cv2.INTER_LANCZOS4)
-				#self.img = Image.fromarray(self.cv2image)#.resize((self.width, self.height), resample=Image.NEAREST)
-				#self.big = np.zeros((self.width*self.res, self.height*self.res, 4), dtype = np.uint8)
-				#self.big = cv2.pyrUp(self.cv2image)
-				#for i in range(self.res):
-				#	self.big = cv2.pyrUp(self.big)
-				self.img = Image.fromarray(self.cv2image)
-				#self.fullscreen.putdata('RGBA', self.img)
-				self.imgtk = ImageTk.PhotoImage(image=self.img)
-				#self.pimgtk = tk.PhotoImage(self.imgtk)#.zoom(2)
-				#self.lmain.imgtk = self.imgtk
-				self.vlabel.configure(image=self.imgtk)
-				# figure out next time
-				self.frameNumber += 1
-				self.frameDelay = int(1000*((self.frameNumber/self.fps) - (time.perf_counter() - self.startTime)))
-				# self.meta.configure(text='frame: %s frameDelay: %s fps: %s perf: %.3f startTime %s' %(self.frameNumber, self.frameDelay, self.fps, time.perf_counter(), self.startTime))
-				self.delays.append(self.frameDelay)
-				#print('setting delay', self.frameDelay)
-				if self.frameDelay < 0:
-					s = -((self.frameNumber/self.fps) - (time.perf_counter() - self.startTime))
-					print('video is behind schedule by %.2f ms' % (s*1000))
-					if s > .2:
-						self.video.set(1, self.frameNumber + int(s*self.fps) + 10 )
-						self.frameNumber += int(s*self.fps) + 10
-						print('seeking forward ', int(s*self.fps) + 10 )
-					elif s > .01:
-						self.video.read()
-						self.frameNumber += 1
-						if self.fading:
-							self.b.read()
-					self.frameDelay = 1
-
-			else:
-				print('no image')
+			if not self.ret and self.frameNumber == self.frames:
+				#self.frame = self.cv2image = imread(self.path)
 				self.seek(0)
-				#self.playing = False
-				#self.fading = False
-			self.vlabel.after(self.frameDelay, self.play)
+			self.resized = self.convertImage(self.frame)
+			#self.resized = Image.fromarray(self.cv2image).resize((self.w, self.h))
+
+			if self.fading:
+				self.bret, self.bframe = self.b.read()
+				if not self.bret:
+					self.bframe = cv2.imread(self.bpath)
+				self.bresized = self.convertImage(self.bframe)
+				#self.bresized = Image.fromarray(self.bimage).resize((self.w, self.h))
+				self.alpha = self.alpha*self.fadeDuration/(self.fadeDuration+1)
+				self.cv2image = cv2.addWeighted(self.cv2image, self.alpha, self.bimage, 1-self.alpha, 0)
+				#self.cv2image = Image.blend(self.resized, self.bresized, self.alpha)
+				if self.fadeDuration == 0:
+					self.fading = False
+					self.video = self.b
+					#self.b.release()
+					self.frameNumber = self.video.get(1)
+					self.startTime = time.perf_counter() - (self.frameNumber/self.fps)
+				else:
+					self.fadeDuration -= 1
+
+			#self.cv2image = cv2.resize(self.cv2image, (self.width, self.height), interpolation=cv2.INTER_LANCZOS4)
+			#self.img = Image.fromarray(self.cv2image)#.resize((self.width, self.height), resample=Image.NEAREST)
+			#self.big = np.zeros((self.width*self.res, self.height*self.res, 4), dtype = np.uint8)
+			#self.big = cv2.pyrUp(self.cv2image)
+			#for i in range(self.res):
+			#	self.big = cv2.pyrUp(self.big)
+			self.img = Image.fromarray(self.cv2image)
+			#self.fullscreen.putdata('RGBA', self.img)
+			self.imgtk = ImageTk.PhotoImage(image=self.img)
+			#self.pimgtk = tk.PhotoImage(self.imgtk)#.zoom(2)
+			#self.lmain.imgtk = self.imgtk
+			self.vlabel.configure(image=self.imgtk)
+			# figure out next time
+			self.frameNumber += 1
+			self.frameDelay = int(1000*((self.frameNumber/self.fps) - (time.perf_counter() - self.startTime)))
+			# self.meta.configure(text='frame: %s frameDelay: %s fps: %s perf: %.3f startTime %s' %(self.frameNumber, self.frameDelay, self.fps, time.perf_counter(), self.startTime))
+			self.delays.append(self.frameDelay)
+			#print('setting delay', self.frameDelay)
+			if self.frameDelay < 0:
+				s = -((self.frameNumber/self.fps) - (time.perf_counter() - self.startTime))
+				print('video is behind schedule by %.2f ms' % (s*1000))
+				if s > .2:
+					skip = int(s*self.fps) + 10
+					self.video.set(1, self.frameNumber + skip )
+					self.frameNumber += skip
+					print('seeking forward ', skip )
+				elif s > .01:
+					self.video.read()
+					self.frameNumber += 1
+					if self.fading:
+						self.b.read()
+				self.frameDelay = 1
+
+		else:
+			print('no image')
+			self.seek(0)
+			#self.playing = False
+			#self.fading = False
+		self.vlabel.after(self.frameDelay, self.play)
 
 	def seek(self, f):
 		self.video.set(1, f)
@@ -122,7 +133,8 @@ class Video:
 		#if self.playing:
 		#self.playing = False
 		self.fading = True
-		self.b = cv2.VideoCapture(new)
+		self.bpath = new
+		self.b = self.loadVideo(new)
 		self.alpha = 1
 		self.fadeDuration = length
 	def stats(self):

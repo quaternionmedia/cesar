@@ -67,7 +67,7 @@ class George(Magics):
 		show = Tk()
 		v = Label(show)
 		v.place(x=0,y=5,relheight=1,relwidth=1)
-		
+
 		import video
 		global vi
 		# label = Label(show)
@@ -146,7 +146,15 @@ class George(Magics):
 		vi = video.Video('/Users/harpo/Movies/reduced_1.mp4', v)
 		vi.play()
 
-
+	@line_magic
+	def vid(self, line):
+		import v
+		global window
+		window = Tk()
+		z = v.Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		z.assignWindow(window)
+		z.makeBuffer()
+		z.play()
 # In order to actually use these magics, you must register them with a
 # running IPython.  This code must be placed in a file that is loaded once
 # IPython is up and running:
