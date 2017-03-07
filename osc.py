@@ -35,10 +35,13 @@ class Client:
 			self.messages.append(None)
 		else:
 			data = data.replace(b'\xc0', b'')
+			data = data.replace(b'\xd7', b'')
+			data = data.replace(b'\x85', b'')
+			data = data.replace(b'\x80', b'')
 			print('recieved message: ', data)
 			raw = data.decode('utf8')
 			parts = list(filter(bool, raw.split('\x00')))
-			json_message = parts[2]
+			json_message = parts[1]
 			try:
 				self.last_message = json.loads(json_message)
 				self.messages.append(self.last_message)
@@ -75,10 +78,8 @@ class Qlab:
 		if response:
 			return response.get('data')
 
-
 	def set_cue_property(self, cue_no, name, value):
 		self.client.send_message('/cue/{cue_no}/{name}'.format(**locals()), value=value)
-
 
 	def select_next_cue(self):
 		old = self.get_cue_property('selected', 'number')

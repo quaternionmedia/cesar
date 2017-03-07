@@ -149,11 +149,10 @@ class George(Magics):
 	@line_magic
 	def vid(self, line):
 		import v
-		global window
+		global window, z
 		window = Tk()
 		z = v.Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
 		z.assignWindow(window)
-		z.makeBuffer()
 		z.play()
 # In order to actually use these magics, you must register them with a
 # running IPython.  This code must be placed in a file that is loaded once
