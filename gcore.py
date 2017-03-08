@@ -53,7 +53,9 @@ from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, li
 def resize(event):
 	w,h = event.width, event.height
 	#show.config(width=w, height=h)
-	vi.width, vi.height = w, h
+	z.width, z.height = w, h
+	z.buffer = []
+	print('resizing to ', w, h)
 
 # The class MUST call this class decorator at creation time
 @magics_class
@@ -65,16 +67,22 @@ class George(Magics):
 		g = Ion()
 
 		show = Tk()
-		v = Label(show)
-		v.place(x=0,y=5,relheight=1,relwidth=1)
-
-		import video
-		global vi
+		#l = Label(show)
+		#l.place(x=0,y=5,relheight=1,relwidth=1)
+		import v
+		global z
+		z = v.Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		c = Canvas(show)
+		c.place(x=0,y=5,relheight=1,relwidth=1)
+		z.assignWindow(c)
+		z.play()
+		#import video
+		#global vi
 		# label = Label(show)
-		vi = video.Video('/Users/harpo/Movies/reduced_1.mp4', v)
-		vi.play()
+		#vi = video.Video('/Users/harpo/Movies/reduced_1.mp4', l)
+		#vi.play()
 
-		show.bind('<Configure>', resize)
+		c.bind('<Configure>', resize)
 
 		#g.addGenerator(show)
 		# show.overrideredirect(1) #windowless
@@ -141,6 +149,7 @@ class George(Magics):
 	@line_magic
 	def video(self, line):
 		import video
+<<<<<<< HEAD
 		global vi
 		# label = Label(show)
 		vi = video.Video('/Users/peterkagstrom/Media/_toSort/bbaj.mp4', v)
@@ -150,11 +159,13 @@ class George(Magics):
 	def vid(self, line):
 		import v
 		global window
+=======
+		global window, z
+>>>>>>> c80cf5d3cd91c7faf7aba8cb49a0c146d4287629
 		window = Tk()
-		z = v.Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
-		z.assignWindow(window)
-		z.makeBuffer()
-		z.play()
+		v = video.Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		v.assignWindow(show)
+		v.play()
 # In order to actually use these magics, you must register them with a
 # running IPython.  This code must be placed in a file that is loaded once
 # IPython is up and running:
