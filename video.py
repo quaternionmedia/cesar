@@ -43,9 +43,9 @@ class Video:
 	def play(self):
 		if self.playing:
 			self.ret, self.frame = self.video.read()
-			if not self.ret and self.frameNumber == self.frames:
-				#self.frame = self.cv2image = imread(self.path)
-				self.seek(0)
+			# if not self.ret and self.frameNumber == self.frames:
+			# 	#self.frame = self.cv2image = imread(self.path)
+			# 	self.seek(0)
 			self.resized = self.convertImage(self.frame)
 			#self.resized = Image.fromarray(self.cv2image).resize((self.w, self.h))
 

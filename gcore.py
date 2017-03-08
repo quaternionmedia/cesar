@@ -143,7 +143,7 @@ class George(Magics):
 		import video
 		global vi
 		# label = Label(show)
-		vi = video.Video('/Users/harpo/Movies/reduced_1.mp4', v)
+		vi = video.Video('/Users/peterkagstrom/Media/_toSort/bbaj.mp4', v)
 		vi.play()
 
 	@line_magic
