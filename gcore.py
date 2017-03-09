@@ -53,8 +53,8 @@ from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, li
 def resize(event):
 	w,h = event.width, event.height
 	#show.config(width=w, height=h)
-	z.width, z.height = w, h
-	z.buffer = []
+	v.width, v.height = w, h
+	v.buffer = []
 	print('resizing to ', w, h)
 
 # The class MUST call this class decorator at creation time
@@ -69,13 +69,13 @@ class George(Magics):
 		show = Tk()
 		#l = Label(show)
 		#l.place(x=0,y=5,relheight=1,relwidth=1)
-		import v
-		global z
-		z = v.Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		import video
+		global v
+		v = video.Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
 		c = Canvas(show)
 		c.place(x=0,y=5,relheight=1,relwidth=1)
-		z.assignWindow(c)
-		z.play()
+		v.assignWindow(c)
+		v.play()
 		#import video
 		#global vi
 		# label = Label(show)
@@ -149,7 +149,7 @@ class George(Magics):
 	@line_magic
 	def video(self, line):
 		import video
-		global window, z
+		global window, v
 		window = Tk()
 		v = video.Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
 		v.assignWindow(show)

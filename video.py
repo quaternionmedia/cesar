@@ -81,8 +81,8 @@ class Video:
 			self.timeUntilNext()
 			self.label.after(self.frameDelay, self.playNext)
 			t = self.frameDelay / 1000
-			stdout.write('\rtimeLeft/timeTakes = %.02f buffer length = %d \r' % (t/self.frameBuildTime, len(self.buffer)))
-			stdout.flush()
+			#stdout.write('\rtimeLeft/timeTakes = %.02f buffer length = %d \r' % (t/self.frameBuildTime, len(self.buffer)))
+			#stdout.flush()
 			if t < 0:
 				if -t*self.fps > len(self.buffer) - 2:
 					self.buffer = []
