@@ -149,27 +149,20 @@ class George(Magics):
 	@line_magic
 	def video(self, line):
 		import video
-<<<<<<< HEAD
 		global window, v
-=======
-<<<<<<< HEAD
-		global vi
-		# label = Label(show)
-		vi = video.Video('/Users/peterkagstrom/Media/_toSort/bbaj.mp4', v)
-		vi.play()
-
-	@line_magic
-	def vid(self, line):
-		import v
-		global window
-=======
-		global window, z
->>>>>>> c80cf5d3cd91c7faf7aba8cb49a0c146d4287629
->>>>>>> cc93dde4f5bac060dd02af94b7e261940fbadef5
 		window = Tk()
 		v = video.Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
 		v.assignWindow(show)
 		v.play()
+
+	@line_magic
+	def sound(self, line):
+		import osc
+		import mido
+		global r, s
+		s = osc.Sound()
+
+
 # In order to actually use these magics, you must register them with a
 # running IPython.  This code must be placed in a file that is loaded once
 # IPython is up and running:

@@ -68,7 +68,10 @@ class Qlab:
 		self.client.send_message(message)
 		self.client.messages.append(None)
 		return self.client.get_message()
-
+	def cue(self, cue):
+		self.send('/cue/%s/start' % cue)
+	def select(self, select):
+		self.send('/select/%s' % select)
 	def get_cue_text(self, cue_no):
 		return self.get_cue_property(cue_no, 'text')
 
@@ -88,3 +91,54 @@ class Qlab:
 		cue_no = self.get_cue_property('selected', 'number')
 		print(old, cue_no)
 		return cue_no
+
+import mido
+
+class Sound:
+	def __init__(self):
+		self.backend = mido.Backend('mido.backends.rtmidi')
+		#self.input = self.backend.open_input('QU-32 MIDI Out')
+		self.output = self.backend.open_output('QU-32 MIDI In')
+		self.last_message = None
+		self.messages = [None]
+	def mute(self, channel):
+		m = mido.Message('note_on', note=31+channel, velocity=127)
+		self.output.send(m)
+	def unmute(self, channel):
+		m = mido.Message('note_on', note=31+channel, velocity=1)
+		self.output.send(m)
+	def fader(self, channel, value):
+		m1 = mido.Message('control_change', channel=0, control=0x63, value=31+channel)
+		m2 = mido.Message('control_change', channel=0, control=0x62, value=0x17)
+		m3 = mido.Message('control_change', channel=0, control=0x6, value=value)
+		m4 = mido.Message('control_change', channel=0, control=0x26, value=0x7)
+		message = [m1, m2, m3, m4]
+		for m in message:
+			self.output.send(m)
+			#ime.sleep(.01)
+
+
+	def scene(self, scene):
+		m = mido.Message('control_change', channel=0, control=0, value=0)
+		n = mido.Message('program_change', channel=0, program=scene)
+		self.output.send(m)
+		#time.sleep(.1)
+		self.output.send(n)
+
+	def _get_message(self):
+		with self.backend.open_input('QU-32 MIDI Out') as inp:
+			for msg in inp:
+				print(msg)
+				self.messages.append(msg)
+	def get_message(self):
+		t = threading.Thread(target=self._get_message, daemon=True)
+		t.start()
+		t.join(timeout=.1)
+		#time.sleep(.3)
+		return self.messages[-1]
+
+class Lights:
+	def __init__(self):
+		self.client = Client('192.168.1.38', 3032)
+	def cue(self, cue):
+		self.client.send_message('/eos/cue/%s/fire' % cue)
