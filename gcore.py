@@ -161,6 +161,19 @@ class George(Magics):
 		global s
 		s = osc.Sound()
 
+	@line_cell_magic
+	def ksp(self, line, cell=None):
+		if cell is None:
+			import krpc
+			print(krpc.__version__)
+			conn = krpc.connect(name='Hello World')
+			print(conn.krpc.get_status().version)
+			vessel = conn.space_center.active_vessel
+			print(vessel.name)
+			return line
+		else:
+			return line, cell
+
 
 # In order to actually use these magics, you must register them with a
 # running IPython.  This code must be placed in a file that is loaded once
