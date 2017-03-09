@@ -7,7 +7,7 @@ from pythonosc import osc_message_builder
 from pythonosc import udp_client
 import slip
 
-import threading
+from multiprocessing import Process
 
 
 class Client:
@@ -35,9 +35,9 @@ class Client:
 			self.messages.append(None)
 		else:
 			data = data.replace(b'\xc0', b'')
-			data = data.replace(b'\xd7', b'')
-			data = data.replace(b'\x85', b'')
-			data = data.replace(b'\x80', b'')
+			#data = data.replace(b'\xd7', b'')
+			#data = data.replace(b'\x85', b'')
+			#data = data.replace(b'\x80', b'')
 			print('recieved message: ', data)
 			raw = data.decode('utf8')
 			parts = list(filter(bool, raw.split('\x00')))
@@ -98,7 +98,9 @@ class Sound:
 	def __init__(self):
 		self.backend = mido.Backend('mido.backends.rtmidi')
 		#self.input = self.backend.open_input('QU-32 MIDI Out')
-		self.output = self.backend.open_output('QU-32 MIDI In')
+		#self.output = self.backend.open_output('QU-32 MIDI In')
+		self.header = b'\xF0\x00\x00\x1A\x50\x11\x01\x00\x00'
+		self.parser = mido.Parser()
 		self.last_message = None
 		self.messages = [None]
 	def mute(self, channel):
@@ -107,16 +109,21 @@ class Sound:
 	def unmute(self, channel):
 		m = mido.Message('note_on', note=31+channel, velocity=1)
 		self.output.send(m)
-	def fader(self, channel, value):
+	def nrpn(self, parameter, channel, value=0):
 		m1 = mido.Message('control_change', channel=0, control=0x63, value=31+channel)
-		m2 = mido.Message('control_change', channel=0, control=0x62, value=0x17)
+		m2 = mido.Message('control_change', channel=0, control=0x62, value=parameter)
 		m3 = mido.Message('control_change', channel=0, control=0x6, value=value)
 		m4 = mido.Message('control_change', channel=0, control=0x26, value=0x7)
 		message = [m1, m2, m3, m4]
 		for m in message:
 			self.output.send(m)
 			#ime.sleep(.01)
-
+	def fade(self, channel, value):
+		self.nrpn(0x17, channel, value)
+	def pan(self, channel, value):
+		self.nrpn(0x16, channel, value)
+	#def mixAssign(self, channel, value):
+	#	self.nrpn(0x55, channel, value)
 
 	def scene(self, scene):
 		m = mido.Message('control_change', channel=0, control=0, value=0)
@@ -125,13 +132,29 @@ class Sound:
 		#time.sleep(.1)
 		self.output.send(n)
 
+	def meters(self):
+		self.parser.feed(self.header+b'\x10\x00\xF7')
+		return self.parser.get_message()
+
+	def name(self, channel, name=None):
+		if name: # set name
+			self.parser.feed(self.header + b'\x03' + channel.encode() + name.encode() + b'\xF7')
+		else: # get name
+			self.parser.feed(self.header + b'\x03' + channel.encode() + name.encode() + b'\xF7')
+		finally:
+			self.output.send(self.parser.get_message())
+			self.get_message()
+
+	def
+
 	def _get_message(self):
 		with self.backend.open_input('QU-32 MIDI Out') as inp:
 			for msg in inp:
 				print(msg)
 				self.messages.append(msg)
 	def get_message(self):
-		t = threading.Thread(target=self._get_message, daemon=True)
+
+		t = Process(target=self._get_message, daemon=True)
 		t.start()
 		t.join(timeout=.1)
 		#time.sleep(.3)
