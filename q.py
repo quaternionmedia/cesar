@@ -18,13 +18,14 @@ l = list(csv.reader(f, delimiter=','))
 s = nx.MultiDiGraph()# sources
 q = nx.MultiDiGraph()# queue graph
 
-#qcount = 0
+Q = 0
+
 qnum = 0
 qname = None
-for n in l:
-	if n[0]:
-		q.add_edge(qnum, n[0])
-		qname = n[0]
+for n in l: # for every item in list
+	if n[0]: # if it has a q number
+		q.add_edge(qnum, n[0]) # connect qnum to qname
+		qname = n[0] # needed to connect the next lines to this cue
 		qnum += 1
 	#if n[6] == 'auto-follow':
 
@@ -44,7 +45,6 @@ for n in l:
 				q.add_edge(n[2], i[1]) # add an edge from the name to the source
 				break
 
-#	qcount += 1
 
 qcount = 0
 for i in range(111):
@@ -59,21 +59,52 @@ for i in range(111):
 # 	else:
 # 		print(n)
 
-def get_neighbors(thing):
-	if thing.__class__ == list:
-		for i in thing:
-			print(get_neighbors(i))
-	else:
-		print(thing)
-
 #nx.write_gml(q, 'CR.gml')
 #window = tk.Tk()
 
+def walk(graph):
+	for i in nx.strongly_connected_components(q.q):
+		print(i)
+
+def cue(n):
+	c, next = q.neighbors(n)
+	graph = get_edges(c)
+
+def get_edges(source, thing):
+	graph = nx.MultiDiGraph()
+	if thing.__class__ == int:
+		graph.add_edge(thing, thing+1)
+		graph.add_edge(thing, source.neighbors(thing)[0])
+		graph = nx.compose(graph, get_edges(source, source.neighbors(thing)[0]))
+	elif thing.__class__ == list:
+		for i in thing:
+			subthing = get_edges(source.out_edges(i), i)
+			graph = nx.compose(graph, subthing)
+			print('adding subthing: ', subthing)
+	elif thing.__class__ == tuple:
+		print('copying edge', thing)
+		graph.add_edge(thing)
+	elif thing.__class__ == str:
+		for i in source.neighbors(thing):
+			graph.add_edge(thing, i)
+			print('adding edge from string', i)
+		if source.neighbors(thing):
+			for j in l: # for each thing in list of sources
+				if i == j[0]+' '+j[2]: # if target == qnum + qname
+					#graph = nx.compose(graph, get_edges(source, i))
+					graph.add_edge(i, j[1])
+					print('adding neighbors', source.edges(i))
+					break
+	print('adding thing: ', thing)
+	return graph
 
 
 def draw(graph):
+	plt.clf()
 	#viz = graphviz_layout(graph)
-	nx.draw_networkx(graph, font_size=9)
+	labels = nx.draw_networkx_labels(graph, pos=nx.spring_layout(graph))
+	nx.draw_networkx(graph, labels=labels, font_size=9)
+	plt.draw()
 	#nx.draw_spring(viz)
 	#fig = Figure()
 	#sub = fig.add_subplot(111)
@@ -81,7 +112,8 @@ def draw(graph):
 	#canvas = FigureCanvasTkAgg(fig, master=window)
 	#canvas.get_tk_widget().pack()
 	#canvas.draw()
-#draw(q)
 
-#if __name__ == '__main__':
-	#window.mainloop()
+def show(num):
+	cue = get_edges(q, num)
+	draw(cue)
+	#Q += 1
