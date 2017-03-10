@@ -1,6 +1,7 @@
 from __future__ import print_function
 import networkx as nx
 from tkinter import Tk, Frame, Label, Canvas
+import ksp
 
 class Ion():
 	def __init__(self):
@@ -163,14 +164,10 @@ class George(Magics):
 		s = osc.Sound()
 
 	@line_cell_magic
-	def ksp(self, line, cell=None):
+	def kerbal(self, line, cell=None):
 		if cell is None:
-			import krpc
-			print(krpc.__version__)
-			conn = krpc.connect(name='Hello World')
-			print(conn.krpc.get_status().version)
-			vessel = conn.space_center.active_vessel
-			print(vessel.name)
+			ksp.pilot()
+
 			return line
 		else:
 			return line, cell
