@@ -154,13 +154,20 @@ class George(Magics):
 		v = video.Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
 		v.assignWindow(show)
 		v.play()
-
+		return line
 	@line_magic
 	def sound(self, line):
 		import osc
 		global s
 		s = osc.Sound()
-
+		return line
+	@line_magic
+	def cue(self, line):
+		import q
+		global go
+		def go(num=1):
+			q.show(num)
+		return line
 	@line_cell_magic
 	def ksp(self, line, cell=None):
 		if cell is None:
