@@ -159,8 +159,7 @@ class George(Magics):
 	@line_magic
 	def sound(self, line):
 		import osc
-		import mido
-		global r, s
+		global s
 		s = osc.Sound()
 
 	@line_cell_magic
