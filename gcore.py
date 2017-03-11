@@ -176,6 +176,7 @@ class George(Magics):
 
 			return line
 		else:
+			ksp.controlpanel()
 			return line, cell
 
 
