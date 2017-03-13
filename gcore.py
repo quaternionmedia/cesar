@@ -3,7 +3,7 @@ import networkx as nx
 from tkinter import Tk, Frame, Label, Canvas
 from multiprocessing import Process
 
-import ksp
+import kerbal
 
 class Ion():
 	def __init__(self):
