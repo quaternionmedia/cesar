@@ -181,11 +181,11 @@ class George(Magics):
 	@line_cell_magic
 	def ksp(self, line, cell=None):
 		if cell is None:
-			ksp.pilot()
+			kerbal.pilot()
 
 			return line
 		else:
-			ksp.controlpanel()
+			kerbal.controlpanel()
 			return line, cell
 
 
