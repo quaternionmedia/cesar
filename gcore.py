@@ -1,7 +1,9 @@
 from __future__ import print_function
 import networkx as nx
 from tkinter import Tk, Frame, Label, Canvas
-import ksp
+from multiprocessing import Process
+
+import kerbal
 
 class Ion():
 	def __init__(self):
@@ -57,6 +59,13 @@ def resize(event):
 	v.width, v.height = w, h
 	v.buffer = []
 	print('resizing to ', w, h)
+
+
+def task(thing, *args):
+	t = Process(target=thing, args=args)
+	return t
+
+# def
 
 # The class MUST call this class decorator at creation time
 @magics_class
@@ -170,12 +179,13 @@ class George(Magics):
 			q.show(num)
 		return line
 	@line_cell_magic
-	def kerbal(self, line, cell=None):
+	def ksp(self, line, cell=None):
 		if cell is None:
-			ksp.pilot()
+			kerbal.pilot()
 
 			return line
 		else:
+			kerbal.controlpanel()
 			return line, cell
 
 
