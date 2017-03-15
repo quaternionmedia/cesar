@@ -33,6 +33,8 @@ class Qlab:
 		cue_no = self.get_cue_property('selected', 'number')
 		print(old, cue_no)
 		return cue_no
+	def go(self):
+		self.send()
 
 import mido
 
@@ -96,6 +98,6 @@ class Sound:
 
 class Lights:
 	def __init__(self):
-		self.client = Client('192.168.1.38', 3032)
+		self.client = Client('192.168.1.57', 3032)
 	def cue(self, cue):
 		self.client.send_message('/eos/cue/%s/fire' % cue)

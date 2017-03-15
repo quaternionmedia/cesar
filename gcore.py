@@ -1,6 +1,9 @@
 from __future__ import print_function
 import networkx as nx
 from tkinter import Tk, Frame, Label, Canvas
+import matplotlib
+matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
+from matplotlib import pyplot as plt
 from multiprocessing import Process
 
 import kerbal
@@ -73,24 +76,27 @@ class George(Magics):
 
 	@line_magic
 	def cesar(self, line):
-		global g, show, control, v
+		global g, show, control, q, v, s, l
 		g = Ion()
-
+		from video import Video
+		from cr import Qlab, Sound, Lights
 		show = Tk()
-		#l = Label(show)
-		#l.place(x=0,y=5,relheight=1,relwidth=1)
-		import video
-		global v
-		v = video.Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		#label = Label(show)
+		#label.place(x=0,y=5,relheight=1,relwidth=1)
+		q = Qlab()
+		
+		v = Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		try:
+			s = Sound()
+		except:
+			print('no sound module available')
+
+
+		#l = Lights()
+
 		c = Canvas(show)
 		c.place(x=0,y=5,relheight=1,relwidth=1)
 		v.assignWindow(c)
-		v.play()
-		#import video
-		#global vi
-		# label = Label(show)
-		#vi = video.Video('/Users/harpo/Movies/reduced_1.mp4', l)
-		#vi.play()
 
 		c.bind('<Configure>', resize)
 
@@ -113,7 +119,7 @@ class George(Magics):
 		control.title('Control')
 		def action(event):
 			print('firing thing')
-			i.client.send_message()
+			q.go()
 		control.bind('<space>', action)
 		cdatas = Label(control, text='x:%s, y:%s' %( control.winfo_screenwidth(), control.winfo_screenheight()))
 		#g.addChild(cdatas)
@@ -121,7 +127,7 @@ class George(Magics):
 		sdatas.place(rely=.9,relx=.1)
 
 		g.showIon(control)
-
+		v.play()
 		return line
 
 	@line_magic
@@ -146,38 +152,6 @@ class George(Magics):
 			print("Called as cell magic")
 			return line, cell
 
-	@line_cell_magic
-	def osc(self, line):
-		import osc
-		global q
-		q = osc.Qlab()
-		q.send('/workspaces')
-		q.send('/go')
-		q.send('/version')
-		return line
-
-	@line_magic
-	def video(self, line):
-		import video
-		global window, v
-		window = Tk()
-		v = video.Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
-		v.assignWindow(show)
-		v.play()
-		return line
-	@line_magic
-	def sound(self, line):
-		import osc
-		global s
-		s = osc.Sound()
-		return line
-	@line_magic
-	def cue(self, line):
-		import q
-		global go
-		def go(num=1):
-			q.show(num)
-		return line
 	@line_cell_magic
 	def ksp(self, line, cell=None):
 		if cell is None:

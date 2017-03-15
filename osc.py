@@ -2,7 +2,7 @@ import json
 from socket import socket
 from pythonosc import osc_message_builder
 #from pythonosc import udp_client
-
+from threading import Thread
 from multiprocessing import Process
 
 END = b'\xc0'
@@ -32,6 +32,7 @@ class Client: # TCP SLIP client
 		self.client.connect((addr, port))
 		self.last_message = None
 		self.messages = [None]
+		self.get_message()
 
 	def send_message(self, message, value=None):
 		msg = osc_message_builder.OscMessageBuilder(address=message)
@@ -45,30 +46,31 @@ class Client: # TCP SLIP client
 
 	def _get_message(self):
 		data, address = self.client.recvfrom(8192)
-		print('data = ', data, address)
-		if data == None:
-			self.messages.append(None)
-		else:
-			data = data.replace(b'\xc0', b'')
-			#data = data.replace(b'\xd7', b'')
-			#data = data.replace(b'\x85', b'')
-			#data = data.replace(b'\x80', b'')
-			print('recieved message: ', data)
-			raw = data.decode('utf8')
-			parts = list(filter(bool, raw.split('\x00')))
-			json_message = parts[1]
+		#print('data = ', data, address)
+		#if data == None:
+		#	self.messages.append(None)
+		#else:
+		data = data.replace(b'\xc0', b'')
+		#data = data.replace(b'\xd7', b'')
+		#data = data.replace(b'\x85', b'')
+		#data = data.replace(b'\x80', b'')
+		#print('recieved message: ', data)
+		raw = data.decode('utf8')
+		parts = list(filter(bool, raw.split('\x00')))
+		self.messages.append(parts)
+		for part in parts:
 			try:
-				self.last_message = json.loads(json_message)
-				self.messages.append(self.last_message)
+				self.last_message = json.loads(part)
 			except json.decoder.JSONDecodeError as e:
-				print('Error. server raw response:', repr(raw))
-				print('parts', parts)
-				print(e)
-				self.last_message = None
+				print(part)
+				self.last_message = part
+			self.messages.append(self.last_message)
+
 
 	def get_message(self):
 		#self.last_message = None
-		t = threading.Thread(target=self._get_message, daemon=True)
+		t = Thread(target=self._get_message, daemon=True) # properly returns stuff
+		#t = Process(target=self._get_message, daemon=True) # returns none for some resason
 		t.start()
 		t.join(timeout=.1)
 		return self.messages[-1]
