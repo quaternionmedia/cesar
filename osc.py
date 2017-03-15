@@ -1,5 +1,5 @@
 import json
-from socket import socket
+from socket import socket, AF_INET, SOCK_DGRAM
 from pythonosc import osc_message_builder
 #from pythonosc import udp_client
 from threading import Thread
@@ -66,6 +66,48 @@ class Client: # TCP SLIP client
 				self.last_message = part
 			self.messages.append(self.last_message)
 
+	def get_message(self):
+		#self.last_message = None
+		t = Thread(target=self._get_message, daemon=True) # properly returns stuff
+		#t = Process(target=self._get_message, daemon=True) # returns none for some resason
+		t.start()
+		t.join(timeout=.1)
+		return self.messages[-1]
+
+class Server:
+	def __init__(self, addr, port):
+		self.sock = socket(AF_INET, SOCK_DGRAM)
+		self.sock.bind((addr, port))
+		self.messages = [None]
+		self.get_message()
+
+	def _get_message(self):
+		data, address = self.sock.recvfrom(8192)
+		print('data = ', data, address)
+		if data is not None:
+			data = data.replace(b'\xc0', b'')
+			#data = data.replace(b'\xd7', b'')
+			#data = data.replace(b'\x85', b'')
+			#data = data.replace(b'\x80', b'')
+			#print('recieved message: ', data)
+			#raw = data.decode('utf8')
+			parts = list(filter(bool, data.split(b'\x00')))
+			#self.messages.append(parts)
+			for part in parts:
+				try:
+					self.last_message = part.decode('utf8')
+				except Exception as e:
+					print(e, part)
+				try:
+					self.last_message = json.loads(part)
+				except json.decoder.JSONDecodeError as e:
+					print(part)
+					self.last_message = part
+				except Exception as e:
+					print(e, part)
+				self.messages.append(self.last_message)
+				self.last_message = None
+			#return
 
 	def get_message(self):
 		#self.last_message = None
@@ -74,3 +116,10 @@ class Client: # TCP SLIP client
 		t.start()
 		t.join(timeout=.1)
 		return self.messages[-1]
+		self.get_message()
+	def wait_for_message(self):
+		t = Thread(target=self._get_message, daemon=True)
+		t.start()
+		t.join()
+		return self.messages[-1]
+		self.wait_for_message()
