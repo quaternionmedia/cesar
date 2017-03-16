@@ -68,6 +68,16 @@ def task(thing, *args):
 	t = Process(target=thing, args=args)
 	return t
 
+
+def waitForQ():
+	while True:
+		q.server.wait_for_message()
+		try:
+			exec(q.server.oscParse(q.server.messages[-1]), globals())
+		except Exception as e:
+			print('osc exec error: ', e, q.server.oscParse(q.server.messages[-1]))
+
+
 # def
 
 # The class MUST call this class decorator at creation time
@@ -80,17 +90,17 @@ class George(Magics):
 		g = Ion()
 		from video import Video
 		from cr import Qlab, Sound, Lights
+		#import osc
 		show = Tk()
 		#label = Label(show)
 		#label.place(x=0,y=5,relheight=1,relwidth=1)
 		q = Qlab()
-		
+
 		v = Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
 		try:
 			s = Sound()
 		except:
 			print('no sound module available')
-
 
 		#l = Lights()
 
@@ -128,6 +138,8 @@ class George(Magics):
 
 		g.showIon(control)
 		v.play()
+
+
 		return line
 
 	@line_magic

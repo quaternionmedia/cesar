@@ -45,14 +45,17 @@ class Sound:
 		try:
 			self.input = self.backend.open_input('QU-32 MIDI Out')
 			self.output = self.backend.open_output('QU-32 MIDI In')
-		except Exception as e:
-			self.input, self.output = None
-			print('WARNING - Not connected to sound board!!!', e)
+		except:
+			self.input = self.backend.open_input()
+			self.output = self.backend.open_output()
+		# except Exception as e:
+		# 	self.input, self.output = None
+			print('WARNING - Not connected to sound board!!!')
 		self.header = b'\xF0\x00\x00\x1A\x50\x11\x01\x00\x00'
 		self.parser = mido.Parser()
 		self.last_message = None
 		self.messages = [None]
-		self.patches = {1:'cesar', 2:'ruben', 3:'helen'}
+		self.patches = {'cesar':1, 'ruben':2, 'helen':3, 'naylor':4, 'doc':5}
 	def patch(self, channel, *assignment):
 		if channel.__class__ == str:
 			return self.patches[channel]
@@ -67,6 +70,9 @@ class Sound:
 			self.output.send(m)
 	def unmute(self, *channels):
 		for channel in channels:
+			if channel.__class__ == str:
+				channel = self.patch(channel)
+			print('unmuting channel: ', channel)
 			m = mido.Message('note_on', note=31+channel, velocity=1)
 			self.output.send(m)
 	def nrpn(self, parameter, channel, value=0):
@@ -79,6 +85,9 @@ class Sound:
 			self.output.send(m)
 			#ime.sleep(.01)
 	def mix(self, channel, value):
+		if channel.__class__ == str:
+			channel = self.patch(channel)
+		print('mixing channel %s to %s' % (channel, value))
 		self.nrpn(0x17, channel, value)
 	def pan(self, channel, value):
 		self.nrpn(0x16, channel, value)

@@ -130,17 +130,20 @@ class Server:
 		t = Thread(target=self._get_message, daemon=True)
 		t.start()
 		t.join()
-		self.oscParse(self.messages[-1])
-		self.wait_for_message()
+		# try:
+		# 	exec(self.oscParse(self.messages[-1]), globals())
+		# except Exception as e:
+		# 	print('osc exec error: ', e, self.oscParse(self.messages[-1]))
+		# self.wait_for_message()
 	def oscParse(self, thing):
 		cmd = ''
-		print('parsing thing: ', thing)
+		#print('parsing thing: ', thing)
 		address = list(filter(bool, thing[0].split('/')))
 		#print('address: ', address)
 		l = len(address)
 		cmd = address[0]
 		if cmd in commands:
-			cmd = cmd + '('
+			cmd = 's.' + cmd + '('
 			i = 0
 			for m in address:
 				if m == address[0]:
@@ -155,5 +158,5 @@ class Server:
 					cmd += str(ord(thing[-1]))
 					break
 			cmd = cmd + ')'
-			print('Parsed! ', cmd)
-			exec('s.'+cmd)
+			#print('Parsed! ', cmd)
+			return cmd
