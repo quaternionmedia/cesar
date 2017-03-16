@@ -42,18 +42,33 @@ import mido
 class Sound:
 	def __init__(self):
 		self.backend = mido.Backend('mido.backends.rtmidi')
-		self.input = self.backend.open_input('QU-32 MIDI Out')
-		self.output = self.backend.open_output('QU-32 MIDI In')
+		try:
+			self.input = self.backend.open_input('QU-32 MIDI Out')
+			self.output = self.backend.open_output('QU-32 MIDI In')
+		except Exception as e:
+			self.input, self.output = None
+			print('WARNING - Not connected to sound board!!!', e)
 		self.header = b'\xF0\x00\x00\x1A\x50\x11\x01\x00\x00'
 		self.parser = mido.Parser()
 		self.last_message = None
 		self.messages = [None]
-	def mute(self, channel):
-		m = mido.Message('note_on', note=31+channel, velocity=127)
-		self.output.send(m)
-	def unmute(self, channel):
-		m = mido.Message('note_on', note=31+channel, velocity=1)
-		self.output.send(m)
+		self.patches = {1:'cesar', 2:'ruben', 3:'helen'}
+	def patch(self, channel, *assignment):
+		if channel.__class__ == str:
+			return self.patches[channel]
+		if channel.__class__ == int:
+			return self.patches[channel]
+	def mute(self, *channels):
+		for channel in channels:
+			if channel.__class__ == str:
+				channel = self.patch(channel)
+			print('muting channel: ', channel)
+			m = mido.Message('note_on', note=31+channel, velocity=127)
+			self.output.send(m)
+	def unmute(self, *channels):
+		for channel in channels:
+			m = mido.Message('note_on', note=31+channel, velocity=1)
+			self.output.send(m)
 	def nrpn(self, parameter, channel, value=0):
 		m1 = mido.Message('control_change', channel=0, control=0x63, value=31+channel)
 		m2 = mido.Message('control_change', channel=0, control=0x62, value=parameter)
@@ -63,7 +78,7 @@ class Sound:
 		for m in message:
 			self.output.send(m)
 			#ime.sleep(.01)
-	def fade(self, channel, value):
+	def mix(self, channel, value):
 		self.nrpn(0x17, channel, value)
 	def pan(self, channel, value):
 		self.nrpn(0x16, channel, value)
@@ -99,6 +114,6 @@ class Sound:
 
 class Lights:
 	def __init__(self):
-		self.client = Client('192.168.1.57', 3032)
+		self.client = Client('192.168.1.38', 3032)
 	def cue(self, cue):
 		self.client.send_message('/eos/cue/%s/fire' % cue)

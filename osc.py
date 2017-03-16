@@ -1,4 +1,5 @@
 import json
+from codecs import encode
 from socket import socket, AF_INET, SOCK_DGRAM
 from pythonosc import osc_message_builder
 #from pythonosc import udp_client
@@ -10,6 +11,8 @@ ESC = b'\xdb'
 ESC_END = b'\xdc'
 ESC_ESC = b'\xdd'
 NULL = b'\x00'
+
+commands = ['mix', 'mute', 'unmute']
 
 def slip(packet):
 	encoded = END
@@ -79,7 +82,7 @@ class Server:
 		self.sock = socket(AF_INET, SOCK_DGRAM)
 		self.sock.bind((addr, port))
 		self.messages = [None]
-		self.get_message()
+		#self.get_message()
 
 	def _get_message(self):
 		data, address = self.sock.recvfrom(8192)
@@ -93,21 +96,27 @@ class Server:
 			#raw = data.decode('utf8')
 			parts = list(filter(bool, data.split(b'\x00')))
 			#self.messages.append(parts)
+			message = []
 			for part in parts:
-				try:
-					self.last_message = part.decode('utf8')
-				except Exception as e:
-					print(e, part)
+				if part == b',':
+					continue
 				try:
 					self.last_message = json.loads(part)
 				except json.decoder.JSONDecodeError as e:
-					print(part)
-					self.last_message = part
+					#print('json error', part)
+					#self.last_message = part
+					pass
 				except Exception as e:
 					print(e, part)
-				self.messages.append(self.last_message)
+				try:
+					self.last_message = part.decode('utf8')
+				except Exception as e:
+					print('decode error', e, part)
+				if self.last_message is not None:
+					message.append(self.last_message)
 				self.last_message = None
-			#return
+			self.messages.append(message)
+			return
 
 	def get_message(self):
 		#self.last_message = None
@@ -121,5 +130,30 @@ class Server:
 		t = Thread(target=self._get_message, daemon=True)
 		t.start()
 		t.join()
-		return self.messages[-1]
+		self.oscParse(self.messages[-1])
 		self.wait_for_message()
+	def oscParse(self, thing):
+		cmd = ''
+		print('parsing thing: ', thing)
+		address = list(filter(bool, thing[0].split('/')))
+		#print('address: ', address)
+		l = len(address)
+		cmd = address[0]
+		if cmd in commands:
+			cmd = cmd + '('
+			i = 0
+			for m in address:
+				if m == address[0]:
+					continue
+				elif m.__class__ is str:
+					cmd += '\'' + m + '\'' + ','
+				i += 1
+			for t in thing:
+				if t == thing[0]:
+					continue
+				elif t == ',i':
+					cmd += str(ord(thing[-1]))
+					break
+			cmd = cmd + ')'
+			print('Parsed! ', cmd)
+			exec('s.'+cmd)
