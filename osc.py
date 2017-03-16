@@ -86,7 +86,7 @@ class Server:
 
 	def _get_message(self):
 		data, address = self.sock.recvfrom(8192)
-		print('data = ', data, address)
+		#print('data = ', data, address)
 		if data is not None:
 			data = data.replace(b'\xc0', b'')
 			#data = data.replace(b'\xd7', b'')
@@ -98,7 +98,7 @@ class Server:
 			#self.messages.append(parts)
 			message = []
 			for part in parts:
-				if part == b',':
+				if part == ',':
 					continue
 				try:
 					self.last_message = json.loads(part)
@@ -110,6 +110,9 @@ class Server:
 					print(e, part)
 				try:
 					self.last_message = part.decode('utf8')
+					#self.last_message = ord(part)
+					#self.last_message = part.decode('unicode-escape')
+					#self.last_message = part.encode('utf8')
 				except Exception as e:
 					print('decode error', e, part)
 				if self.last_message is not None:
@@ -137,9 +140,9 @@ class Server:
 		# self.wait_for_message()
 	def oscParse(self, thing):
 		cmd = ''
-		#print('parsing thing: ', thing)
+		print('parsing thing: ', thing)
 		address = list(filter(bool, thing[0].split('/')))
-		#print('address: ', address)
+		print('address: ', address)
 		l = len(address)
 		cmd = address[0]
 		if cmd in commands:
@@ -155,8 +158,15 @@ class Server:
 				if t == thing[0]:
 					continue
 				elif t == ',i':
-					cmd += str(ord(thing[-1]))
+					if len(thing[-1]) > 1:
+						total = 0
+						for h in thing[-1]:
+							total = ord(h)
+							print(h, total)
+						cmd += str(total)
+					else:
+						cmd += str(ord(thing[-1]))
 					break
 			cmd = cmd + ')'
-			#print('Parsed! ', cmd)
+			print('Parsed! ', cmd)
 			return cmd

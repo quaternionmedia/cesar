@@ -70,12 +70,16 @@ def task(thing, *args):
 
 
 def waitForQ():
+	#t = task(q.server.wait_for_message)
+	#t.start()
+	#return t
 	while True:
 		q.server.wait_for_message()
-		try:
-			exec(q.server.oscParse(q.server.messages[-1]), globals())
-		except Exception as e:
-			print('osc exec error: ', e, q.server.oscParse(q.server.messages[-1]))
+		if q.server.messages[-1] is not None:
+			try:
+				exec(q.server.oscParse(q.server.messages[-1]), globals())
+			except Exception as e:
+				print('osc exec error: ', e, q.server.oscParse(q.server.messages[-1]))
 
 
 # def
