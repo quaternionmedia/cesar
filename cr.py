@@ -55,7 +55,7 @@ class Sound:
 		self.parser = mido.Parser()
 		self.last_message = None
 		self.messages = [None]
-		self.patches = {'cesar':1, 'ruben':2, 'helen':3, 'naylor':4, 'doc':5}
+		self.patches = { 'cesar':39, 'ruben':40, 'helen':38, 'naylor':41, 'doc':35, 'sherrif':35, 'woman': 36, 'carlos':32, 'rfk':32, 'gray':32, 'leads':16, 'choir':17, 'band':19, 'fx':0, 'god':34, 'tomas': 42 }
 	def patch(self, channel, *assignment):
 		if channel.__class__ == str:
 			return self.patches[channel]
@@ -66,17 +66,17 @@ class Sound:
 			if channel.__class__ == str:
 				channel = self.patch(channel)
 			print('muting channel: ', channel)
-			m = mido.Message('note_on', note=31+channel, velocity=127)
+			m = mido.Message('note_on', note=channel, velocity=127)
 			self.output.send(m)
 	def unmute(self, *channels):
 		for channel in channels:
 			if channel.__class__ == str:
 				channel = self.patch(channel)
 			print('unmuting channel: ', channel)
-			m = mido.Message('note_on', note=31+channel, velocity=1)
+			m = mido.Message('note_on', note=channel, velocity=38)
 			self.output.send(m)
 	def nrpn(self, parameter, channel, value=0):
-		m1 = mido.Message('control_change', channel=0, control=0x63, value=31+channel)
+		m1 = mido.Message('control_change', channel=0, control=0x63, value=channel)
 		m2 = mido.Message('control_change', channel=0, control=0x62, value=parameter)
 		m3 = mido.Message('control_change', channel=0, control=0x6, value=value)
 		m4 = mido.Message('control_change', channel=0, control=0x26, value=0x7)
