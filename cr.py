@@ -55,7 +55,7 @@ class Sound:
 		self.parser = mido.Parser()
 		self.last_message = None
 		self.messages = [None]
-		self.patches = { 'cesar':39, 'ruben':40, 'helen':38, 'naylor':41, 'doc':35, 'sherrif':35, 'woman': 36, 'carlos':32, 'rfk':32, 'gray':32, 'leads':16, 'choir':17, 'band':19, 'fx':0, 'god':34, 'tomas': 42 }
+		self.patches = { 'cesar':39, 'ruben':40, 'helen':38, 'naylor':34, 'doc':34, 'sherrif':35, 'woman': 36, 'carlos':41, 'rfk':32, 'gray':34, 'father':35, 'leads':16, 'choir':17, 'band':19, 'fx':0, 'god':33, 'tomas': 32, 'fred':34, 'dolores':34, 'jim':42, 'danny':32, 'charles':32 }
 	def patch(self, channel, *assignment):
 		if channel.__class__ == str:
 			return self.patches[channel]
