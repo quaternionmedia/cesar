@@ -6,6 +6,8 @@ matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
 from matplotlib import pyplot as plt
 from multiprocessing import Process
 
+import osc
+
 import kerbal
 
 class Ion():
@@ -69,19 +71,20 @@ def task(thing, *args):
 	return t
 
 
-def waitForQ():
+def activateSoundBoard():
 	#t = task(q.server.wait_for_message)
 	#t.start()
 	#return t
 	while True:
-		q.server.wait_for_message()
+		mes = q.server.get_message()
+
 		#(clientsocket, address) = q.server.sock.accept()
 		#print('socket connected', clientsocket, address)
-		if q.server.messages[-1] is not None:
+		if mes is not None:
 			try:
-				exec(q.server.oscParse(q.server.messages[-1]), globals())
+				exec(osc.oscParse(mes), globals())
 			except Exception as e:
-				print('osc exec error: ', e, q.server.oscParse(q.server.messages[-1]))
+				print('osc exec error: ', e, mes)
 
 
 # def

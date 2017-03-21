@@ -1,4 +1,4 @@
-from osc import Client, Server
+from osc import Server, Client
 
 class Qlab:
 	def __init__(self):
@@ -132,4 +132,3 @@ class Lights:
 		self.client.send_message('/eos/get/cuelist/count')
 	def count_cues_in_list(self, cuelist=0):
 		self.client.send_message('/eos/get/cue/%s/count' % (cuelist))
-	
