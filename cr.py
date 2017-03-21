@@ -126,3 +126,10 @@ class Lights:
 		self.client = Client('192.168.1.38', 3032)
 	def cue(self, cue):
 		self.client.send_message('/eos/cue/%s/fire' % cue)
+	def get_cmd(self):
+		self.client.send_message('/eos/out/cmd')
+	def count_lists(self):
+		self.client.send_message('/eos/get/cuelist/count')
+	def count_cues_in_list(self, cuelist=0):
+		self.client.send_message('/eos/get/cue/%s/count' % (cuelist))
+	

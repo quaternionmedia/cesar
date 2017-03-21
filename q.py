@@ -11,8 +11,9 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from matplotlib.figure import Figure
 
 
-PATH = '/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/'
-f = open('CR.csv', 'r').readlines()
+#PATH = '/Users/harpo/Desktop/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/'
+PATH = '/george/'
+f = open('cr-post tech.csv', 'r').readlines()
 l = list(csv.reader(f, delimiter=','))
 
 s = nx.MultiDiGraph()# sources

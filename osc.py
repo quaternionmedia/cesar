@@ -1,10 +1,10 @@
 import json
 from codecs import encode
-from socket import socket, AF_INET, SOCK_DGRAM
+from socket import socket, AF_INET, SOCK_DGRAM, SOCK_STREAM, create_connection
 from pythonosc import osc_message_builder
 #from pythonosc import udp_client
 from threading import Thread
-from multiprocessing import Process
+from multiprocessing import Process, Queue
 
 END = b'\xc0'
 ESC = b'\xdb'
@@ -27,27 +27,30 @@ def slip(packet):
 	encoded += END
 	return encoded
 
+def build(message, value=None):
+	msg = osc_message_builder.OscMessageBuilder(address=message)
+	if value:
+		msg.add_arg(value)
+	return(slip(msg.build().address))
 
 class Client: # TCP SLIP client
 	def __init__(self, addr, port):
 		#self.client = udp_client.UDPClient('127.0.0.1', port) # for udp
-		self.client = socket()
-		self.client.connect((addr, port))
+		#self.client = socket()
+		#self.client.connect((addr, port))
+		self.client = create_connection((addr, port))
+		self.queue = Queue()
 		self.last_message = None
 		self.messages = [None]
 		self.get_message()
 
 	def send_message(self, message, value=None):
-		msg = osc_message_builder.OscMessageBuilder(address=message)
-		if value:
-			msg.add_arg(value)
-		#self.client.send(msg.build()) # for udp
-		encoded = slip(msg.build().address)
+		encoded = build(message, value)
 		print('sending: ', encoded)
 		self.client.send(encoded)
 		#self.get_message()
 
-	def _get_message(self):
+	def _get_message(self, queue):
 		data, address = self.client.recvfrom(8192)
 		#print('data = ', data, address)
 		#if data == None:
@@ -61,26 +64,35 @@ class Client: # TCP SLIP client
 		raw = data.decode('utf8')
 		parts = list(filter(bool, raw.split('\x00')))
 		self.messages.append(parts)
+		queue.put(parts)
 		for part in parts:
 			try:
 				self.last_message = json.loads(part)
-			except json.decoder.JSONDecodeError as e:
+			except json.decoder.JSONDecodeError:
 				print(part)
 				self.last_message = part
 			self.messages.append(self.last_message)
 
 	def get_message(self):
 		#self.last_message = None
-		t = Thread(target=self._get_message, daemon=True) # properly returns stuff
+		t = Thread(target=self._get_message, args=[self.queue], daemon=True) # properly returns stuff
 		#t = Process(target=self._get_message, daemon=True) # returns none for some resason
 		t.start()
 		t.join(timeout=.1)
-		return self.messages[-1]
+		try:
+			results = self.queue.get(False, 1)
+		except Exception as e:
+			print(e)
+			results = None
+		return results
+		#return self.messages[-1]
+
 
 class Server:
 	def __init__(self, addr, port):
 		self.sock = socket(AF_INET, SOCK_DGRAM)
 		self.sock.bind((addr, port))
+		#self.sock.listen(5)
 		self.messages = [None]
 		#self.get_message()
 

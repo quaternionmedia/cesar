@@ -75,6 +75,8 @@ def waitForQ():
 	#return t
 	while True:
 		q.server.wait_for_message()
+		#(clientsocket, address) = q.server.sock.accept()
+		#print('socket connected', clientsocket, address)
 		if q.server.messages[-1] is not None:
 			try:
 				exec(q.server.oscParse(q.server.messages[-1]), globals())
@@ -99,7 +101,7 @@ class George(Magics):
 		#label = Label(show)
 		#label.place(x=0,y=5,relheight=1,relwidth=1)
 		q = Qlab()
-
+		q.send('/version')
 		v = Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
 		try:
 			s = Sound()
