@@ -10,10 +10,21 @@ from tkinter import Tk, Label
 from multiprocessing import Pool
 
 class Video:
-	def __init__(self, path):
+	def __init__(self, path=None):
 		self.path = path
-		self.video = self.loadVideo(self.path)
+		if self.path == None:
+			self.video = cv2.VideoCapture(0)
+			self.frameNumber = 0
+			self.frames = 100
+		else:
+			self.video = self.loadVideo(self.path)
+			self.frameNumber = int(self.video.get(1))
 
+			self.frames = int(self.video.get(7)*.9) # bad safety factor
+		self.ratio = self.video.get(2)
+		self.width = int(self.video.get(3))
+		self.height = int(self.video.get(4))
+		self.fps = int(100*self.video.get(5))/100
 		#self.vlabel = label # must be tk label
 		#self.width = self.vlabel.winfo_width()
 		#self.height = self.vlabel.winfo_height()
@@ -22,12 +33,7 @@ class Video:
 		self.playing = False
 		self.startTime = time.perf_counter()
 		self.frameDelay = 26
-		self.frameNumber = int(self.video.get(1))
-		self.ratio = self.video.get(2)
-		self.width = int(self.video.get(3))
-		self.height = int(self.video.get(4))
-		self.fps = int(100*self.video.get(5))/100
-		self.frames = 9160#self.video.get(7)
+
 		self.delays = []
 		self.buffer = [] #np.array()
 		self.bufferFrames = 24
