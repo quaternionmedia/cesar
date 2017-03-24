@@ -101,7 +101,7 @@ class Osc:
 			return results
 		#return self.messages[-1]
 
-	def get_messages(self): # recursive thread to listen to all messages
+	def get_messages(self): # recursive Thread to listen to all messages
 		t = Thread(target=self._get_message, args=[self.queue], daemon=True)
 		t.start()
 		t.join()

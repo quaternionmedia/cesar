@@ -106,7 +106,10 @@ class George(Magics):
 		#label.place(x=0,y=5,relheight=1,relwidth=1)
 		q = Qlab()
 		q.send('/version')
-		v = Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		# v = Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		#v = Video('/Users/peterkagstrom/Media/TV & Movies/Futurama - Seasons 1-7/Futurama - Season 1')
+		#v = Video('/Users/peterkagstrom/Dropbox/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/shot3_v11_H264.mov')
+		v = Video(0)
 		try:
 			s = Sound()
 		except:
