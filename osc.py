@@ -35,9 +35,9 @@ def build(message, value=None):
 
 def oscParse(thing):
 	cmd = ''
-	print('parsing thing: ', thing)
+	#print('parsing thing: ', thing)
 	address = list(filter(bool, thing[0].split('/')))
-	print('address: ', address)
+	#print('address: ', address)
 	l = len(address)
 	cmd = address[0]
 	if cmd in commands:
@@ -63,7 +63,7 @@ def oscParse(thing):
 					cmd += str(ord(thing[-1]))
 				break
 		cmd = cmd + ')'
-		print('Parsed! ', cmd)
+		#print('Parsed! ', cmd)
 		return cmd
 	#try:
 	#	j = json.loads(address[2])
@@ -91,13 +91,14 @@ class Osc:
 		t = Thread(target=self._get_message, args=[self.queue], daemon=True) # properly returns stuff
 		#t = Process(target=self._get_message, daemon=True) # returns none for some resason
 		t.start()
-		t.join(timeout=.1)
+		t.join()#timeout=.1)
 		try:
 			results = self.queue.get(False, 1)
 		except Exception as e:
 			print(e)
 			results = None
-		return results
+		if results is not None:
+			return results
 		#return self.messages[-1]
 
 	def get_messages(self): # recursive thread to listen to all messages
