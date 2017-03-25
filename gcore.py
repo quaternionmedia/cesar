@@ -4,7 +4,8 @@ from tkinter import Tk, Frame, Label, Canvas
 import matplotlib
 matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
 from matplotlib import pyplot as plt
-from multiprocessing import Process
+from multiprocessing import Process, Queue
+from threading import Thread#, Queue
 
 import osc
 
@@ -72,19 +73,33 @@ def task(thing, *args):
 
 
 def activateSoundBoard():
-	#t = task(q.server.wait_for_message)
-	#t.start()
-	#return t
-	while True:
-		mes = q.server.get_message()
 
-		#(clientsocket, address) = q.server.sock.accept()
-		#print('socket connected', clientsocket, address)
-		if mes is not None:
-			try:
-				exec(osc.oscParse(mes), globals())
-			except Exception as e:
-				print('osc exec error: ', e, mes)
+	def get(qu):
+		while True:
+			mes = q.server._get_message(qu)
+			#qu.put(mes)
+	def do(qu):
+		while True:
+			mes = qu.get()
+			if mes is not None:
+				try:
+					exec(osc.oscParse(mes), globals())
+				except Exception as e:
+					print('osc exec error: ', e, mes)
+
+	queue = Queue()
+
+	p = Thread(target=get, args=[queue])#, daemon=True)
+	p.start()
+
+	e = Thread(target=do, args=[queue])
+	e.start()
+	#return p
+
+
+
+
+	#m = queue.get()
 
 
 
@@ -106,10 +121,10 @@ class George(Magics):
 		#label.place(x=0,y=5,relheight=1,relwidth=1)
 		q = Qlab()
 		q.send('/version')
-		# v = Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		v = Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
 		#v = Video('/Users/peterkagstrom/Media/TV & Movies/Futurama - Seasons 1-7/Futurama - Season 1')
 		#v = Video('/Users/peterkagstrom/Dropbox/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/shot3_v11_H264.mov')
-		v = Video(0)
+		#v = Video(0)
 		try:
 			s = Sound()
 		except:
