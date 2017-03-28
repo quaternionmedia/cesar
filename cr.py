@@ -7,8 +7,8 @@ class Qlab:
 
 	def send(self, message='/go'):
 		self.client.send_message(message)
-		self.client.messages.append(None)
-		return self.client.get_message()
+		#self.client.messages.append(None)
+		#return self.client.get_message()
 	def cue(self, cue):
 		self.send('/cue/%s/start' % cue)
 	def select(self, select):

@@ -1,11 +1,13 @@
 from __future__ import print_function
 import networkx as nx
-from tkinter import Tk, Frame, Label, Canvas
+from tkinter import Tk, Frame, Label, Canvas, Entry, Button
 import matplotlib
 matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
 from matplotlib import pyplot as plt
 from multiprocessing import Process, Queue
 from threading import Thread#, Queue
+
+from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, line_cell_magic)
 
 import osc
 
@@ -14,10 +16,16 @@ import kerbal
 class Ion():
 	def __init__(self):
 		self.ion = nx.MultiDiGraph()
+		self.ion.add_node('parents')
+		self.ion.add_node('children')
+
+
 
 	def printIon(self):
 		for i in self.ion.nodes():
 			print(i)
+
+
 
 	def showIon(self, window):
 		global ionp, ionch, iong, ionf, canvas
@@ -57,7 +65,22 @@ class Ion():
 		ionf.bind('<Enter>', lambda e: ionf.config(bg='brown'))
 		ionf.bind('<Leave>', lambda e: ionf.config(bg='lavender'))
 
-from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, line_cell_magic)
+
+class Gui():
+	def __init__(self, _w, _h, _x, _y):
+		global win, ions, can
+		ions = []
+		win = Tk()
+		win.geometry(str(_w)+'x'+str(_h)+'+'+str(_x)+'+'+str(_y))
+		can = Canvas(win)
+		can.place(relheight=1,relwidth=1)
+		can.bind('<Key>', lambda e: self.cli)
+
+	def cli():
+		pass
+
+
+
 
 def resize(event):
 	w,h = event.width, event.height
@@ -108,6 +131,11 @@ def activateSoundBoard():
 # The class MUST call this class decorator at creation time
 @magics_class
 class George(Magics):
+
+	@line_magic
+	def gcore(self, line):
+		global gui
+		gui = Gui(800,600,2550,1230)
 
 	@line_magic
 	def cesar(self, line):
@@ -201,6 +229,45 @@ class George(Magics):
 		else:
 			kerbal.controlpanel()
 			return line, cell
+
+	@line_magic
+	def tentry(self, line):
+
+
+		master = Tk()
+
+		e = Entry(master)
+		e.pack()
+
+		e.focus_set()
+
+		def callback():
+			print(e.get())
+
+		b = Button(master, text="get", width=10, command=callback)
+		b.pack()
+
+		mainloop()
+		e = Entry(master, width=50)
+		e.pack()
+
+		text = e.get()
+		def makeentry(parent, caption, width=None, **options):
+			Label(parent, text=caption).pack(side=LEFT)
+			entry = Entry(parent, **options)
+			if width:
+				entry.config(width=width)
+			entry.pack(side=LEFT)
+			return entry
+
+		user = makeentry(parent, "User name:", 10)
+		password = makeentry(parent, "Password:", 10, show="*")
+		content = StringVar()
+		entry = Entry(parent, text=caption, textvariable=content)
+
+		text = content.get()
+		content.set(text)
+		return line
 
 
 # In order to actually use these magics, you must register them with a

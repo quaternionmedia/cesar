@@ -78,39 +78,6 @@ class Osc:
 		parts = list(filter(bool, raw.split('\x00')))
 		self.messages.append(parts)
 		queue.put(parts)
-		# for part in parts:
-		# 	try:
-		# 		self.last_message = json.loads(part)
-		# 	except json.decoder.JSONDecodeError:
-		# 		print(part)
-		# 		self.last_message = part
-		# 	self.messages.append(self.last_message)
-
-	def get_message(self): # gets one message
-		#self.last_message = None
-		t = Thread(target=self._get_message, args=[self.queue], daemon=True) # properly returns stuff
-		#t = Process(target=self._get_message, daemon=True) # returns none for some resason
-		t.start()
-		t.join()#timeout=.1)
-		try:
-			results = self.queue.get(False, 1)
-		except Exception as e:
-			print(e)
-			results = None
-		if results is not None:
-			return results
-		#return self.messages[-1]
-
-	def get_messages(self): # recursive Thread to listen to all messages
-		t = Thread(target=self._get_message, args=[self.queue], daemon=True)
-		t.start()
-		t.join()
-		print(self.queue.get()) # do stuff here
-		self.get_messages()
-
-	def manager(self):
-		t = Thread(target=self.get_messages, daemon=True)
-		t.start()
 
 
 class Client(Osc): # TCP SLIP osc connection
@@ -138,14 +105,3 @@ class Server(Osc):
 		#self.conn.listen(5)
 		self.messages = [None]
 		self.queue = Queue()
-		#self.manager()
-
-	# def wait_for_message(self):
-	# 	t = Thread(target=self._get_message, args=[self.queue], daemon=True)
-	# 	t.start()
-	# 	t.join()
-		# try:
-		# 	exec(oscParse(self.messages[-1]), globals())
-		# except Exception as e:
-		# 	print('osc exec error: ', e, oscParse(self.messages[-1]))
-		# self.wait_for_message()
