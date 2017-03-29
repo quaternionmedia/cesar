@@ -140,14 +140,3 @@ class Server(Osc):
 		#self.conn.listen(5)
 		self.messages = [None]
 		self.queue = Queue()
-		#self.manager()
-
-	# def wait_for_message(self):
-	# 	t = Thread(target=self._get_message, args=[self.queue], daemon=True)
-	# 	t.start()
-	# 	t.join()
-		# try:
-		# 	exec(oscParse(self.messages[-1]), globals())
-		# except Exception as e:
-		# 	print('osc exec error: ', e, oscParse(self.messages[-1]))
-		# self.wait_for_message()
