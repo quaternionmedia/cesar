@@ -3,7 +3,7 @@ from codecs import encode
 from socket import socket, AF_INET, SOCK_DGRAM, SOCK_STREAM, create_connection
 from pythonosc import osc_message_builder
 #from pythonosc import udp_client
-from threading import Thread
+from threading import Thread, Lock
 from multiprocessing import Process, Queue
 
 END = b'\xc0'
@@ -77,7 +77,9 @@ class Osc:
 		raw = data.decode('utf8')
 		parts = list(filter(bool, raw.split('\x00')))
 		self.messages.append(parts)
-		queue.put(parts)
+		self.lock = Lock()
+		with self.lock:
+			queue.put(parts)
 		# for part in parts:
 		# 	try:
 		# 		self.last_message = json.loads(part)

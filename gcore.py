@@ -4,8 +4,8 @@ from tkinter import Tk, Frame, Label, Canvas
 import matplotlib
 matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
 from matplotlib import pyplot as plt
-from multiprocessing import Process, Queue
-from threading import Thread#, Queue
+from multiprocessing import Process, Queue#, Lock
+from threading import Thread, Lock#, Queue
 
 import osc
 
@@ -79,11 +79,14 @@ def activateSoundBoard():
 			mes = q.server._get_message(qu)
 			#qu.put(mes)
 	def do(qu):
+		lock = Lock()
 		while True:
-			mes = qu.get()
+			with lock:
+				mes = qu.get()
 			if mes is not None:
 				try:
-					exec(osc.oscParse(mes), globals())
+					with lock:
+						exec(osc.oscParse(mes), globals())
 				except Exception as e:
 					print('osc exec error: ', e, mes)
 
