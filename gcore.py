@@ -112,6 +112,8 @@ def activateSoundBoard():
 						exec(osc.oscParse(mes), globals())
 				except Exception as e:
 					print('osc exec error: ', e, mes)
+					m = osc.oscParse(mes)
+					print('osc error parse: ', m)
 
 	queue = Queue()
 
@@ -161,7 +163,7 @@ class George(Magics):
 		except:
 			print('no sound module available')
 
-		#l = Lights()
+		l = Lights()
 
 		c = Canvas(show)
 		c.place(x=0,y=5,relheight=1,relwidth=1)

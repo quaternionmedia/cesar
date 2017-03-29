@@ -5,6 +5,7 @@ from pythonosc import osc_message_builder
 #from pythonosc import udp_client
 from threading import Thread, Lock
 from multiprocessing import Process, Queue
+from struct import unpack
 
 END = b'\xc0'
 ESC = b'\xdb'
@@ -12,7 +13,7 @@ ESC_END = b'\xdc'
 ESC_ESC = b'\xdd'
 NULL = b'\x00'
 
-commands = ['mix', 'mute', 'unmute']
+commands = ['mix', 'mute', 'unmute', 'z']
 
 def slip(packet):
 	encoded = END
@@ -35,47 +36,108 @@ def build(message, value=None):
 
 def oscParse(thing):
 	cmd = ''
-	#print('parsing thing: ', thing)
-	address = list(filter(bool, thing[0].split('/')))
-	#print('address: ', address)
-	l = len(address)
-	cmd = address[0]
+	print('parsing thing: ', thing)
+
+	address = list(filter(bool, thing.split(b'/')))
+	print('address: ', address)
+	# dec = address[0]#.decode('utf8')
+	# print('first = ', dec)
+	# l = len(address)
+	cmd = address[0].decode('utf8')
+	print('cmd = ', cmd)
+
+	#arguments = list(filter(bool, address[-1].split(b',', maxsplit = 1 )))
+	arguments = address[-1].partition(b',')
+	print('arguments = ', arguments)
+
 	if cmd in commands:
 		cmd = 's.' + cmd + '('
 		i = 0
-		for m in address:
-			if m == address[0]:
-				continue
-			elif m.__class__ is str:
-				cmd += '\'' + m + '\'' + ','
-			i += 1
-		for t in thing:
-			if t == thing[0]:
-				continue
-			elif t == ',i':
-				if len(thing[-1]) > 1:
-					total = 0
-					for h in thing[-1]:
-						total = ord(h)
-						print(h, total)
-					cmd += str(total)
-				else:
-					cmd += str(ord(thing[-1]))
-				break
-		cmd = cmd + ')'
-		#print('Parsed! ', cmd)
-		return cmd
-	#try:
-	#	j = json.loads(address[2])
+		cmd += '\'' + unPad(arguments[0]).decode('utf8') + '\'' + ','
+		if arguments[2].find(b'i') == 0:
+			#a = arguments[2].replace(b'i', b'', 1)
+			a = arguments[2][1:]
+			while a.find(b'\x00') == 0:
+				a = a[1:]
+			if len(a) > 1:
+				total = 0
+				for h in a:
+					total += ord(h)
+					print(h, total)
+				cmd += str(total)
+			else:
+				cmd += str(0)#ord(a))
+		# for m in address:
+		#
+		# 	if m == address[0]:
+		# 		continue
+		# 	elif m.__class__ is str:
+		# 		cmd += '\'' + m + '\'' + ','
+		# 	i += 1
+		# if thing[1].find(b'i') == 0 :
+		# 	if len(thing[-1]) > 1:
+		# 		total = 0
+		# 		for h in thing[-1]:
+		# 			total += ord(h)
+		# 			print(h, total)
+		# 		cmd += str(total)
+		# 	else:
+		# 		cmd += str(ord(thing[-1]))
+		elif arguments[2].find(b'f') == 0:
+			#a = arguments[2].replace(b'f', b'', 1)
+			a = arguments[2][1:]
+			#a = a.replace(b'\x00', b'', 1)
+			while a.find(b'\x00') == 0:
+				a = a[1:]
+			if len(a) > 4:
+				a = b'\x00' * (len(a) % 4) + a
+			print('a = ', a)
 
+			b = unpack('>%s' % ('f' * int(len(a) / 4) ), a)[0]
+			print('b = ', b)
+			cmd += str(b)
+
+
+			#cmd += str(ord(a))
+		cmd += ')'
+		print('Parsed! ', cmd)
+		return cmd
+
+def tcpParse(thing):
+	#print('stripping SLIP from: ', thing)
+	if thing.find(b'\xc0\xc0') >= 0:
+		things = list(filter(bool, thing.split(b'\xc0\xc0')))
+		parsed = []
+		for t in things:
+			raw = unSlip(t)
+			parsed.append(list(filter(bool, raw.split(b'\x00'))))
+		return parsed
+	else:
+		return unSlip(thing)
+
+def unSlip(thing):
+	if thing[1] == b'\xc0':
+		thing = thing[1:]
+	if thing[-1] == b'\xc0':
+		thing = thing[:-1]
+	return thing
+
+def unPad(thing):
+	return thing.replace(b'\x00', b'')
+
+# def unCode(thing):
+# 	try:
+# 		raw = thing.decode('utf8')
+# 	except Exception as e:
+# 		print(e)
+# 		raw = data.decode()
+# 	return raw
 
 class Osc:
-	def _get_message(self, queue):
+	def _get_message(self, queue): # get message and add it to queue
 		data, address = self.conn.recvfrom(8192)
 		#print('data = ', data, address)
-		data = data.replace(b'\xc0', b'')
-		raw = data.decode('utf8')
-		parts = list(filter(bool, raw.split('\x00')))
+		parts = tcpParse(data)
 		self.messages.append(parts)
 		self.lock = Lock()
 		with self.lock:
@@ -87,32 +149,25 @@ class Osc:
 		# 		print(part)
 		# 		self.last_message = part
 		# 	self.messages.append(self.last_message)
+	def get_message(self): # returns one message. Joins  until message is gotten.
+		data, address = self.conn.recvfrom(8192)
+		return tcpParse(data)
 
-	def get_message(self): # gets one message
-		#self.last_message = None
-		t = Thread(target=self._get_message, args=[self.queue], daemon=True) # properly returns stuff
-		#t = Process(target=self._get_message, daemon=True) # returns none for some resason
-		t.start()
-		t.join()#timeout=.1)
-		try:
-			results = self.queue.get(False, 1)
-		except Exception as e:
-			print(e)
-			results = None
-		if results is not None:
-			return results
-		#return self.messages[-1]
-
-	def get_messages(self): # recursive Thread to listen to all messages
-		t = Thread(target=self._get_message, args=[self.queue], daemon=True)
-		t.start()
-		t.join()
-		print(self.queue.get()) # do stuff here
-		self.get_messages()
-
-	def manager(self):
-		t = Thread(target=self.get_messages, daemon=True)
-		t.start()
+	#
+	# def get_message(self):
+	# 	#self.last_message = None
+	# 	t = Thread(target=self._get_message, args=[self.queue], daemon=True) # properly returns stuff
+	# 	#t = Process(target=self._get_message, daemon=True) # returns none for some resason
+	# 	t.start()
+	# 	t.join()#timeout=.1)
+	# 	try:
+	# 		results = self.queue.get(False, 1)
+	# 	except Exception as e:
+	# 		print(e)
+	# 		results = None
+	# 	if results is not None:
+	# 		return results
+	# 	#return self.messages[-1]
 
 
 class Client(Osc): # TCP SLIP osc connection
