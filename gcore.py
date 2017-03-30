@@ -4,8 +4,8 @@ from tkinter import Tk, Frame, Label, Canvas, Entry, Button
 import matplotlib
 matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
 from matplotlib import pyplot as plt
-from multiprocessing import Process, Queue
-from threading import Thread#, Queue
+from multiprocessing import Process, Queue#, Lock
+from threading import Thread, Lock#, Queue
 
 from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, line_cell_magic)
 
@@ -124,13 +124,18 @@ def activateSoundBoard():
 			mes = q.server._get_message(qu)
 			#qu.put(mes)
 	def get(qu):
+		lock = Lock()
 		while True:
-			mes = qu.get()
+			with lock:
+				mes = qu.get()
 			if mes is not None:
 				try:
-					exec(osc.oscParse(mes), globals())
+					with lock:
+						exec(osc.oscParse(mes), globals())
 				except Exception as e:
 					print('osc exec error: ', e, mes)
+					m = osc.oscParse(mes)
+					print('osc error parse: ', m)
 
 	queue = Queue()
 
@@ -180,7 +185,7 @@ class George(Magics):
 		except:
 			print('no sound module available')
 
-		#l = Lights()
+		l = Lights()
 
 		c = Canvas(show)
 		c.place(x=0,y=5,relheight=1,relwidth=1)
