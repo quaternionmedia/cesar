@@ -37,64 +37,55 @@ def build(message, value=None):
 def oscParse(thing):
 	cmd = ''
 	print('parsing thing: ', thing)
-
-	address = list(filter(bool, thing.split(b'/')))
-	print('address: ', address)
+	args = thing.partition(b',')
+	address = list(filter(bool, args[0].split(b'/')))
+	#print('address: ', address)
 	# dec = address[0]#.decode('utf8')
 	# print('first = ', dec)
 	# l = len(address)
 	cmd = address[0].decode('utf8')
-	print('cmd = ', cmd)
+	#print('cmd = ', cmd)
 
-	#arguments = list(filter(bool, address[-1].split(b',', maxsplit = 1 )))
-	arguments = address[-1].partition(b',')
-	print('arguments = ', arguments)
+	#args = list(filter(bool, address[-1].split(b',', maxsplit = 1 )))
+	#args = address[-1].partition(b',')
+	#print('args = ', args)
 
 	if cmd in commands:
 		cmd = 's.' + cmd + '('
-		i = 0
-		cmd += '\'' + unPad(arguments[0]).decode('utf8') + '\'' + ','
-		if arguments[2].find(b'i') == 0:
-			#a = arguments[2].replace(b'i', b'', 1)
-			a = arguments[2][1:]
-			while a.find(b'\x00') == 0:
-				a = a[1:]
-			if len(a) > 1:
+		#i = 0
+		cmd += '\'' + unPadBack(address[1]).decode('utf8') + '\'' + ','
+		print('address = ', address, cmd)
+		if args[2].find(b'i') == 0:
+			#a = args[2].replace(b'i', b'', 1)
+			a = unPadFront(args[2][1:])
+			print('working with ', a)
+			if a == b'':
+				cmd += str(0)
+
+			elif len(a) > 1:
 				total = 0
+				i = len(a) - 1
 				for h in a:
-					total += ord(h)
+					total += h * 256 ** i
 					print(h, total)
+					i -= 1
 				cmd += str(total)
 			else:
-				cmd += str(0)#ord(a))
-		# for m in address:
-		#
-		# 	if m == address[0]:
-		# 		continue
-		# 	elif m.__class__ is str:
-		# 		cmd += '\'' + m + '\'' + ','
-		# 	i += 1
-		# if thing[1].find(b'i') == 0 :
-		# 	if len(thing[-1]) > 1:
-		# 		total = 0
-		# 		for h in thing[-1]:
-		# 			total += ord(h)
-		# 			print(h, total)
-		# 		cmd += str(total)
-		# 	else:
-		# 		cmd += str(ord(thing[-1]))
-		elif arguments[2].find(b'f') == 0:
-			#a = arguments[2].replace(b'f', b'', 1)
-			a = arguments[2][1:]
+				cmd += str(ord(a))
+
+		elif args[2].find(b'f') == 0:
+			#a = args[2].replace(b'f', b'', 1)
+			a = unPadFront(args[2][1:])
 			#a = a.replace(b'\x00', b'', 1)
-			while a.find(b'\x00') == 0:
-				a = a[1:]
+
 			if len(a) > 4:
 				a = b'\x00' * (len(a) % 4) + a
-			print('a = ', a)
-
-			b = unpack('>%s' % ('f' * int(len(a) / 4) ), a)[0]
-			print('b = ', b)
+			#print('a = ', a)
+			if a == b'':
+				b = str(0)
+			else:
+				b = unpack('>%s' % ('f' * int(len(a) / 4) ), a)[0]
+			#print('b = ', b)
 			cmd += str(b)
 
 
@@ -122,8 +113,14 @@ def unSlip(thing):
 		thing = thing[:-1]
 	return thing
 
-def unPad(thing):
-	return thing.replace(b'\x00', b'')
+def unPadFront(thing):
+	while thing.find(b'\x00') == 0:
+		thing = thing[1:]
+	return thing
+def unPadBack(thing):
+	while thing[-1] == 0:
+		thing = thing[:-1]
+	return thing
 
 # def unCode(thing):
 # 	try:
