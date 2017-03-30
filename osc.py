@@ -131,21 +131,12 @@ def unPadBack(thing):
 # 	return raw
 
 class Osc:
-<<<<<<< HEAD
-	def _get_message(self, *queue):
-=======
-	def _get_message(self, queue): # get message and add it to queue
->>>>>>> 663d839cee052048d961e003890d178273c5ae88
-		data, address = self.conn.recvfrom(8192)
-		#print('data = ', data, address)
-		parts = tcpParse(data)
-		self.messages.append(parts)
-<<<<<<< HEAD
-		if queue:
-			queue.put(parts)
 
-=======
+	def _get_message(self, queue): # get message and add it to queue
 		self.lock = Lock()
+
+		data, address = self.conn.recvfrom(8192)
+		parts = tcpParse(data)
 		with self.lock:
 			queue.put(parts)
 		# for part in parts:
@@ -174,7 +165,6 @@ class Osc:
 	# 	if results is not None:
 	# 		return results
 	# 	#return self.messages[-1]
->>>>>>> 663d839cee052048d961e003890d178273c5ae88
 
 
 class Client(Osc): # TCP SLIP osc connection
@@ -186,6 +176,7 @@ class Client(Osc): # TCP SLIP osc connection
 		self.queue = Queue()
 		self.last_message = None
 		self.messages = [None]
+
 		#self.get_message()
 
 	def send_message(self, message, value=None):

@@ -184,8 +184,10 @@ class George(Magics):
 			s = Sound()
 		except:
 			print('no sound module available')
-
-		l = Lights()
+		try:
+			l = Lights()
+		except:
+			print('WARNING - NOT CONNECTED TO LIGHTING BOARD')
 
 		c = Canvas(show)
 		c.place(x=0,y=5,relheight=1,relwidth=1)
