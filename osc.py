@@ -70,14 +70,16 @@ def oscParse(thing):
 
 
 class Osc:
-	def _get_message(self, queue):
+	def _get_message(self, *queue):
 		data, address = self.conn.recvfrom(8192)
 		#print('data = ', data, address)
 		data = data.replace(b'\xc0', b'')
 		raw = data.decode('utf8')
 		parts = list(filter(bool, raw.split('\x00')))
 		self.messages.append(parts)
-		queue.put(parts)
+		if queue:
+			queue.put(parts)
+
 
 
 class Client(Osc): # TCP SLIP osc connection

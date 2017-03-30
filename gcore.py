@@ -94,14 +94,36 @@ def task(thing, *args):
 	t = Process(target=thing, args=args)
 	return t
 
+def background(func):#, *args):
+
+	def do(qu):
+		results = func(qu)
+		qu.put(results)
+	def get(qu):
+		while True:
+			mes = qu.get()
+			if mes is not None:
+				try:
+					exec(mes, globals())
+				except Exception as e:
+					print('exec error: ', e, mes)
+
+	queue = Queue()
+
+	p = Thread(target=do, args=[queue])#, daemon=True)
+	p.start()
+
+	m = Thread(target=get, args=[queue])
+	m.start()
+
 
 def activateSoundBoard():
 
-	def get(qu):
+	def do(qu):
 		while True:
 			mes = q.server._get_message(qu)
 			#qu.put(mes)
-	def do(qu):
+	def get(qu):
 		while True:
 			mes = qu.get()
 			if mes is not None:
@@ -112,10 +134,10 @@ def activateSoundBoard():
 
 	queue = Queue()
 
-	p = Thread(target=get, args=[queue])#, daemon=True)
+	p = Thread(target=do, args=[queue])#, daemon=True)
 	p.start()
 
-	e = Thread(target=do, args=[queue])
+	e = Thread(target=get, args=[queue])
 	e.start()
 	#return p
 
@@ -223,7 +245,14 @@ class George(Magics):
 	@line_cell_magic
 	def ksp(self, line, cell=None):
 		if cell is None:
-			kerbal.pilot()
+
+			global k, v, ap
+			k = kerbal
+			k.pilot()
+			v = kerbal.vessel
+			ap = v.auto_pilot
+
+
 
 			return line
 		else:
