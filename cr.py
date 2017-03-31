@@ -48,14 +48,12 @@ class Sound:
 		except:
 			self.input = self.backend.open_input()
 			self.output = self.backend.open_output()
-		# except Exception as e:
-		# 	self.input, self.output = None
 			print('WARNING - Not connected to sound board!!!')
 		self.header = b'\xF0\x00\x00\x1A\x50\x11\x01\x00\x00'
 		self.parser = mido.Parser()
 		self.last_message = None
 		self.messages = [None]
-		self.patches = { 'cesar':39, 'ruben':40, 'helen':42, 'naylor':34, 'naylor2':36, 'doc':34, 'sherrif':35,  'father':35, 'woman': 36, 'carlos':41, 'rfk':35, 'gray':34, 'leads':16, 'choir':17, 'band':19, 'fx':0, 'god':33, 'tomas': 32, 'usher': 32, 'old':32, 'dolores': 32, 'fred':34, 'jim':42, 'danny':32, 'charles':32, 'reporter': 32, 'maricella': 37, 'monica': 36, 'ernesto': 37 }
+		self.patches = { 'cesar':39, 'ruben':40, 'helen':42, 'naylor':34, 'naylor2':36, 'doc':34, 'sherrif':35,  'father':35, 'woman': 36, 'carlos':41, 'rfk':35, 'gray':34, 'leads':16, 'choir':17, 'band':19, 'fx':0, 'god':33, 'tomas': 32, 'usher': 32, 'old':32, 'dolores': 32, 'fred':34, 'jim':42, 'danny':32, 'charles':32, 'reporter': 32, 'maricella': 37, 'monica': 36, 'ernesto': 37, 'god':33 }
 	def patch(self, channel): #, *assignment):
 		# if assignment is not None:
 		# 	self.patches[channel] = assignment
@@ -120,7 +118,7 @@ class Sound:
 		t.join(timeout=.1)
 		#time.sleep(.3)
 		return self.messages[-1]
-	def z(self, channel, value):
+	def z(self, channel, *value):
 		print('doing z!!! ', channel, value)
 		return value
 

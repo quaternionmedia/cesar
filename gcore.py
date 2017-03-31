@@ -132,10 +132,10 @@ def activateSoundBoard():
 				try:
 					with lock:
 						exec(osc.oscParse(mes), globals())
-				except Exception as e:
-					print('osc exec error: ', e, mes)
+				except Exception as ex:
+					print('osc exec error: ', ex, mes)
 					m = osc.oscParse(mes)
-					print('osc error parse: ', m)
+					print('oscParse: ', m)
 
 	queue = Queue()
 
@@ -184,10 +184,10 @@ class George(Magics):
 			s = Sound()
 		except:
 			print('no sound module available')
-		try:
-			l = Lights()
-		except:
-			print('WARNING - NOT CONNECTED TO LIGHTING BOARD')
+		# try:
+		# 	l = Lights()
+		# except:
+		# 	print('WARNING - NOT CONNECTED TO LIGHTING BOARD')
 
 		c = Canvas(show)
 		c.place(x=0,y=5,relheight=1,relwidth=1)
