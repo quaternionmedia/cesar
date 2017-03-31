@@ -6,8 +6,9 @@ matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
 from matplotlib import pyplot as plt
 from multiprocessing import Process, Queue#, Lock
 from threading import Thread, Lock#, Queue
-
+import time
 from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, line_cell_magic)
+import ast
 
 import osc
 
@@ -94,27 +95,40 @@ def task(thing, *args):
 	t = Process(target=thing, args=args)
 	return t
 
-def background(func):#, *args):
+def background(func,*args):
 
-	def do(qu):
-		results = func(qu)
-		qu.put(results)
+	def do(qu,ars):
+		#f = compile(ast.parse(fn), '~/a','eval')
+		while True:
+			func(qu,ars)
+			#exec(f, globals())
+			time.sleep(.01)
 	def get(qu):
 		while True:
 			mes = qu.get()
 			if mes is not None:
-				try:
-					exec(mes, globals())
-				except Exception as e:
-					print('exec error: ', e, mes)
+				print(mes)
 
 	queue = Queue()
+
+	thread = Thread(target=do, args=[queue, args])
+	thread.start()
+	results = Thread(target=get, args=[queue])
+	results.start()
+	return thread, queue, results
+
+
+
+
+
 
 	p = Thread(target=do, args=[queue])#, daemon=True)
 	p.start()
 
 	m = Thread(target=get, args=[queue])
 	m.start()
+
+	return m,p,queue
 
 
 def activateSoundBoard():
@@ -145,7 +159,8 @@ def activateSoundBoard():
 	e = Thread(target=get, args=[queue])
 	e.start()
 	#return p
-
+def board():
+	background()
 
 
 
