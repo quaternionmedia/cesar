@@ -5,8 +5,9 @@ import matplotlib
 matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
 from matplotlib import pyplot as plt
 from multiprocessing import Process, Queue#, Lock
-from threading import Thread, Lock#, Queue
+from threading import Thread, Lock, Event#, Queue
 import time
+from sys import stderr
 from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, line_cell_magic)
 import ast
 
@@ -14,11 +15,36 @@ import osc
 
 import kerbal
 
-class Ion():
-	def __init__(self):
+class StoppableThread(Thread):
+	"""Thread class with a stop() method. The thread itself has to check
+	regularly for the stopped() condition."""
+
+	def __init__(self, l=None):
+		print( "base init", file=stderr )
+		super(StoppableThread, self).__init__()
+		self._stopper = Event()
+		self.logic = l
+
+	def stopit(self):
+		print( "base stop()", file=stderr )
+		self._stopper.set()
+
+	def stopped(self):
+		return self._stopper.is_set()
+
+class Ion(StoppableThread):
+	def __init__(self, logic=None, *args):
+		StoppableThread.__init__(self, logic)
 		self.ion = nx.MultiDiGraph()
 		self.ion.add_node('parents')
 		self.ion.add_node('children')
+
+	def runIon(self,*args):
+		print('thread running', file=stderr)
+		while not self.stopped():
+			# print('running',file=stderr)
+			pass
+		print('thread running', file=stderr)
 
 
 
@@ -83,6 +109,7 @@ class Gui():
 
 
 
+
 def resize(event):
 	w,h = event.width, event.height
 	#show.config(width=w, height=h)
@@ -97,6 +124,7 @@ def task(thing, *args):
 
 def background(func,*args):
 
+
 	def do(qu,ars):
 		#f = compile(ast.parse(fn), '~/a','eval')
 		while True:
@@ -107,15 +135,20 @@ def background(func,*args):
 		while True:
 			mes = qu.get()
 			if mes is not None:
-				print(mes)
+				# print(mes)
+				pass
 
 	queue = Queue()
 
-	thread = Thread(target=do, args=[queue, args])
-	thread.start()
-	results = Thread(target=get, args=[queue])
-	results.start()
+	# thread = Thread(target=do, args=[queue, args])
+	# thread.start()
+	# results = Thread(target=get, args=[queue])
+	# results.start()
+
+	thread = Ion(Thread(target=do, args=[queue, args]))
+	results = Ion(Thread(target=get, args=[queue]))
 	return thread, queue, results
+
 
 
 
@@ -268,11 +301,12 @@ class George(Magics):
 	def ksp(self, line, cell=None):
 		if cell is None:
 
-			global k, v, ap
+			global k, v, ap, ki
 			k = kerbal
 			k.pilot()
 			v = kerbal.vessel
 			ap = v.auto_pilot
+			ki = Ion()
 
 
 
