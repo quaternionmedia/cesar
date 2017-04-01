@@ -20,7 +20,7 @@ class StoppableThread(Thread):
 	regularly for the stopped() condition."""
 
 	def __init__(self, l=None):
-		print( "base init", file=stderr )
+		print(l, file=stderr )
 		super(StoppableThread, self).__init__()
 		self._stopper = Event()
 		self.logic = l
@@ -46,14 +46,9 @@ class Ion(StoppableThread):
 			pass
 		print('thread running', file=stderr)
 
-
-
 	def printIon(self):
 		for i in self.ion.nodes():
 			print(i)
-
-
-
 	def showIon(self, window):
 		global ionp, ionch, iong, ionf, canvas
 		#ion canvas
@@ -92,44 +87,10 @@ class Ion(StoppableThread):
 		ionf.bind('<Enter>', lambda e: ionf.config(bg='brown'))
 		ionf.bind('<Leave>', lambda e: ionf.config(bg='lavender'))
 
-
-class Gui():
-	def __init__(self, _w, _h, _x, _y):
-		global win, ions, can
-		ions = []
-		win = Tk()
-		win.geometry(str(_w)+'x'+str(_h)+'+'+str(_x)+'+'+str(_y))
-		can = Canvas(win)
-		can.place(relheight=1,relwidth=1)
-		can.bind('<Key>', lambda e: self.cli)
-
-	def cli():
-		pass
-
-
-
-
-
-def resize(event):
-	w,h = event.width, event.height
-	#show.config(width=w, height=h)
-	v.width, v.height = w, h
-	v.buffer = []
-	print('resizing to ', w, h)
-
-
-def task(thing, *args):
-	t = Process(target=thing, args=args)
-	return t
-
 def background(func,*args):
-
-
 	def do(qu,ars):
-		#f = compile(ast.parse(fn), '~/a','eval')
 		while True:
-			func(qu,ars)
-			#exec(f, globals())
+			qu.put(func(qu,ars))
 			time.sleep(.01)
 	def get(qu):
 		while True:
@@ -147,9 +108,7 @@ def background(func,*args):
 
 	thread = Ion(Thread(target=do, args=[queue, args]))
 	results = Ion(Thread(target=get, args=[queue]))
-	return thread, queue, results
-
-
+	return thread, results, queue
 
 
 
@@ -199,6 +158,29 @@ def board():
 
 	#m = queue.get()
 
+class Gui():
+	def __init__(self, _w, _h, _x, _y):
+		global win, ions, can
+		ions = []
+		win = Tk()
+		win.geometry(str(_w)+'x'+str(_h)+'+'+str(_x)+'+'+str(_y))
+		can = Canvas(win)
+		can.place(relheight=1,relwidth=1)
+		can.bind('<Key>', lambda e: self.cli)
+
+	def cli():
+		pass
+
+
+
+
+
+def resize(event):
+	w,h = event.width, event.height
+	#show.config(width=w, height=h)
+	v.width, v.height = w, h
+	v.buffer = []
+	print('resizing to ', w, h)
 
 
 # def
@@ -296,6 +278,15 @@ class George(Magics):
 		else:
 			print("Called as cell magic")
 			return line, cell
+
+	@line_magic
+	def properthread(self, line):
+		t = background(Ion(print(time.time())))
+		t[0]._stop()
+		t[0].start()
+
+		return line
+
 
 	@line_cell_magic
 	def ksp(self, line, cell=None):
