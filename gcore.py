@@ -4,8 +4,9 @@ from tkinter import Tk, Frame, Label, Canvas, Entry, Button
 import matplotlib
 matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
 from matplotlib import pyplot as plt
-from multiprocessing import Process, Queue#, Lock
-from threading import Thread, Lock, Event#, Queue
+#from multiprocessing import Process, Queue#, Lock
+from threading import Thread, Lock, Event
+from queue import Queue
 import time
 from sys import stderr
 from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, line_cell_magic)
@@ -137,7 +138,7 @@ def activateSoundBoard():
 			if mes is not None:
 				try:
 					with lock:
-						exec(osc.oscParse(mes), globals())
+						exec('s.' + osc.oscParse(mes), globals())
 				except Exception as ex:
 					print('osc exec error: ', ex, mes)
 					m = osc.oscParse(mes)
@@ -145,10 +146,10 @@ def activateSoundBoard():
 
 	queue = Queue()
 
-	p = Thread(target=do, args=[queue])#, daemon=True)
+	p = Thread(target=do, args=[queue], daemon=True)
 	p.start()
 
-	e = Thread(target=get, args=[queue])
+	e = Thread(target=get, args=[queue], daemon=True)
 	e.start()
 	#return p
 def board():
@@ -214,10 +215,10 @@ class George(Magics):
 			s = Sound()
 		except:
 			print('no sound module available')
-		# try:
-		# 	l = Lights()
-		# except:
-		# 	print('WARNING - NOT CONNECTED TO LIGHTING BOARD')
+		try:
+			l = Lights()
+		except:
+			print('WARNING - NOT CONNECTED TO LIGHTING BOARD')
 
 		c = Canvas(show)
 		c.place(x=0,y=5,relheight=1,relwidth=1)
