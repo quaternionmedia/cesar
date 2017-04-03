@@ -5,8 +5,9 @@ import matplotlib
 matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
 from matplotlib import pyplot as plt
 from multiprocessing import Process, Queue#, Lock
-from threading import Thread, Lock#, Queue
+from threading import Thread, Lock, Event#, Queue
 import time
+from sys import stderr
 from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, line_cell_magic)
 import ast
 
@@ -14,20 +15,40 @@ import osc
 
 import kerbal
 
-class Ion():
-	def __init__(self):
+class StoppableThread(Thread):
+	"""Thread class with a stop() method. The thread itself has to check
+	regularly for the stopped() condition."""
+
+	def __init__(self, l=None):
+		print(l, file=stderr )
+		super(StoppableThread, self).__init__()
+		self._stopper = Event()
+		self.logic = l
+
+	def stopit(self):
+		print( "base stop()", file=stderr )
+		self._stopper.set()
+
+	def stopped(self):
+		return self._stopper.is_set()
+
+class Ion(StoppableThread):
+	def __init__(self, logic=None, *args):
+		StoppableThread.__init__(self, logic)
 		self.ion = nx.MultiDiGraph()
 		self.ion.add_node('parents')
 		self.ion.add_node('children')
 
-
+	def runIon(self,*args):
+		print('thread running', file=stderr)
+		while not self.stopped():
+			# print('running',file=stderr)
+			pass
+		print('thread running', file=stderr)
 
 	def printIon(self):
 		for i in self.ion.nodes():
 			print(i)
-
-
-
 	def showIon(self, window):
 		global ionp, ionch, iong, ionf, canvas
 		#ion canvas
@@ -66,57 +87,28 @@ class Ion():
 		ionf.bind('<Enter>', lambda e: ionf.config(bg='brown'))
 		ionf.bind('<Leave>', lambda e: ionf.config(bg='lavender'))
 
-
-class Gui():
-	def __init__(self, _w, _h, _x, _y):
-		global win, ions, can
-		ions = []
-		win = Tk()
-		win.geometry(str(_w)+'x'+str(_h)+'+'+str(_x)+'+'+str(_y))
-		can = Canvas(win)
-		can.place(relheight=1,relwidth=1)
-		can.bind('<Key>', lambda e: self.cli)
-
-	def cli():
-		pass
-
-
-
-
-def resize(event):
-	w,h = event.width, event.height
-	#show.config(width=w, height=h)
-	v.width, v.height = w, h
-	v.buffer = []
-	print('resizing to ', w, h)
-
-
-def task(thing, *args):
-	t = Process(target=thing, args=args)
-	return t
-
 def background(func,*args):
-
 	def do(qu,ars):
-		#f = compile(ast.parse(fn), '~/a','eval')
 		while True:
-			func(qu,ars)
-			#exec(f, globals())
+			qu.put(func(qu,ars))
 			time.sleep(.01)
 	def get(qu):
 		while True:
 			mes = qu.get()
 			if mes is not None:
-				print(mes)
+				# print(mes)
+				pass
 
 	queue = Queue()
 
-	thread = Thread(target=do, args=[queue, args])
-	thread.start()
-	results = Thread(target=get, args=[queue])
-	results.start()
-	return thread, queue, results
+	# thread = Thread(target=do, args=[queue, args])
+	# thread.start()
+	# results = Thread(target=get, args=[queue])
+	# results.start()
 
+	thread = Ion(Thread(target=do, args=[queue, args]))
+	results = Ion(Thread(target=get, args=[queue]))
+	return thread, results, queue
 
 
 
@@ -166,6 +158,29 @@ def board():
 
 	#m = queue.get()
 
+class Gui():
+	def __init__(self, _w, _h, _x, _y):
+		global win, ions, can
+		ions = []
+		win = Tk()
+		win.geometry(str(_w)+'x'+str(_h)+'+'+str(_x)+'+'+str(_y))
+		can = Canvas(win)
+		can.place(relheight=1,relwidth=1)
+		can.bind('<Key>', lambda e: self.cli)
+
+	def cli():
+		pass
+
+
+
+
+
+def resize(event):
+	w,h = event.width, event.height
+	#show.config(width=w, height=h)
+	v.width, v.height = w, h
+	v.buffer = []
+	print('resizing to ', w, h)
 
 
 # def
@@ -264,15 +279,25 @@ class George(Magics):
 			print("Called as cell magic")
 			return line, cell
 
+	@line_magic
+	def properthread(self, line):
+		t = background(Ion(print(time.time())))
+		t[0]._stop()
+		t[0].start()
+
+		return line
+
+
 	@line_cell_magic
 	def ksp(self, line, cell=None):
 		if cell is None:
 
-			global k, v, ap
+			global k, v, ap, ki
 			k = kerbal
 			k.pilot()
 			v = kerbal.vessel
 			ap = v.auto_pilot
+			ki = Ion()
 
 
 
