@@ -269,8 +269,8 @@ class Tester:
 
     def __init__(self, root):
         self.top = tkinter.Toplevel(root)
-        self.canvas = tkinter.Canvas(self.top, width=100, height=100)
-        self.canvas.pack(fill="both", expand=1)
+        self.canvas = tkinter.Canvas(self.top)#, width=100, height=100)
+        self.canvas.grid(row=0, column=0, sticky='nsew')#fill="both", expand=1)
         self.canvas.dnd_accept = self.dnd_accept
 
     def dnd_accept(self, source, event):
@@ -302,7 +302,7 @@ class Tester:
 def test():
     root = tkinter.Tk()
     root.geometry("+1+1")
-    tkinter.Button(command=root.quit, text="Quit").pack()
+    tkinter.Button(command=root.quit, text="Quit").grid()
     t1 = Tester(root)
     t1.top.geometry("+1+60")
     t2 = Tester(root)

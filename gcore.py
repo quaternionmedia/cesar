@@ -12,6 +12,7 @@ from sys import stderr
 from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, line_cell_magic)
 import ast
 import editor
+import tktest
 
 import osc
 
@@ -368,7 +369,7 @@ class George(Magics):
 		g = Ion()
 		v = editor.Timeline('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
 		show = Tk()
-		show.geometry('1280x720+0+0')
+		show.geometry('1280x720+100+100')
 		#t = background(buf, showFrame)
 		c = Canvas(show)
 		c.place(x=0,y=5,relheight=1,relwidth=1)
@@ -376,15 +377,26 @@ class George(Magics):
 
 		#c.bind('<Configure>', resize)
 		control = Tk()
-		control.geometry('320x240+0+0')
+		con = tktest.Tester(control)
+		control.geometry('1320x240+0+240')
 		control.config(bg='darkgrey')
 		control.title('Control')
 		control.bind('<space>', v.play)
 		show.bind('<space>', v.play)
+		x = 0
+		icons = []
+		count = 0
+		for i in v.timeline:
+			l = i[2]-i[1]
+			icons.append(tktest.Icon(i))
+			icons[-1].attach(con.canvas, x, 10)
+			x += l
 		v.play()
 
 		return line
 
+def cb(event):
+	print(event)
 
 # In order to actually use these magics, you must register them with a
 # running IPython.  This code must be placed in a file that is loaded once

@@ -40,6 +40,8 @@ class Timeline():
 				else:
 					self.buffer.append(self.bufferFrame(len(self.buffer)))
 					self.playNextFrame()
+			else:
+				self.playing = False
 
 
 	def play(self, *args):
