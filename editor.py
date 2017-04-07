@@ -9,7 +9,8 @@ class Timeline():
 		self.playing = False
 		self.videos = {0:path}
 		self.video = [Video(self.videos[0])]
-		self.timeline = [(0,900,1000), (0,4000,4050), (0,8000,8100)]
+		#self.timeline = [(0,900,1000), (0,4000,4050), (0,8000,8100)]
+		self.timeline = [(0,600,650), (0,0,100), (0,500,550)]#,(50,500)]
 		self.fps = 24
 		self.duration = 1
 		self.time = 0

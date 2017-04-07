@@ -4,7 +4,8 @@ from tkinter import Tk, Frame, Label, Canvas, Entry, Button
 import matplotlib
 matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
 from matplotlib import pyplot as plt
-#from multiprocessing import Process, Queue#, Lock
+from multiprocessing import Manager
+from multiprocessing.managers import SyncManager, BaseManager
 from threading import Thread, Lock, Event
 from queue import Queue
 import time
@@ -20,14 +21,16 @@ import kerbal
 
 class Ion():
 	def __init__(self, logic=None, *args):
-		StoppableThread.__init__(self, logic)
+		#StoppableThread.__init__(self, logic)
 		self.ion = nx.MultiDiGraph()
 		self.ion.add_node('parents')
 		self.ion.add_node('children')
 
 		self._stopper = Event()
-		self.thread = Thread(target=self.run)
 		self.logic = logic
+		self.args = args
+		self.thread = Thread(target=self.run, daemon=True)
+		self.thread.start()
 
 	def stopit(self):
 		print( "base stop()", file=stderr )
@@ -37,7 +40,10 @@ class Ion():
 		return self._stopper.is_set()
 
 	def run(self):
-		logic(args)
+		if len(self.args) == 0:
+			self.logic()
+		else:
+			self.logic(self.args)
 
 	def runIon(self,*args):
 		print('thread running', file=stderr)
@@ -95,7 +101,7 @@ def showFrame(frame):
 	print('displaying frame', frame)
 	v.buffer.append(frame)
 
-def background(func, aft, *args):
+def background(func, *args):# aft, *args):
 	def do(qu,ars):
 		while True:
 			qu.put(func(qu,ars))
@@ -111,9 +117,9 @@ def background(func, aft, *args):
 	queue = Queue()
 
 	thread = Thread(target=do, args=[queue, args], daemon=True)
-	thread.start()
+	#thread.start()
 	results = Thread(target=get, args=[queue], daemon=True)
-	results.start()
+	#results.start()
 
 	#thread = Ion(Thread(target=do, args=[queue, args]))
 	#results = Ion(Thread(target=get, args=[queue]))
@@ -362,12 +368,13 @@ class George(Magics):
 
 	@line_magic
 	def timeline(self, line):
-		global v, show, control, g, t
-		g = Ion()
-		v = editor.Timeline('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		global v, show, control, g, t, c
+		#g = Ion()
+		#v = editor.Timeline('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		#v = editor.Timeline('/Users/peterkagstrom/Downloads/Captain.America.Civil.WAR.2016.1080p.HD.TC.AC3.x264-ETRG.mkv')
+		v = editor.Timeline('/Users/peterkagstrom/Dropbox/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/shot3_v11_H264.mov')
 		show = Tk()
 		show.geometry('1280x720+100+100')
-		#t = background(buf, showFrame)
 		c = Canvas(show)
 		c.place(x=0,y=5,relheight=1,relwidth=1)
 		v.assignWindow(c)
@@ -388,12 +395,71 @@ class George(Magics):
 			icons.append(tktest.Icon(i))
 			icons[-1].attach(con.canvas, x, 10)
 			x += l
+
+		t = background(buf)#, showFrame)
+
 		v.play()
 
 		return line
 
-def cb(event):
-	print(event)
+	@line_magic
+	def mana(self,line):
+		global man
+		man = Ion(manag)
+		return line
+
+	@line_magic
+	def ger(self,line):
+		global m1, m2
+		m1 = make_server_manager(51365,authkey=51365)
+		m1.start()
+		m2 = make_client_manager('127.0.0.1',53165,authkey=51365)
+def manag():
+	queue = Queue()
+	class QueueManager(BaseManager): pass
+	QueueManager.register('get_queue', callable=lambda:queue)
+	m = QueueManager(address=('', 50000), authkey=b'abracadabra')
+	s = m.get_server()
+	s.serve_forever()
+
+def make_server_manager(port, authkey):
+	""" Create a manager for the server, listening on the given port.
+		Return a manager object with get_job_q and get_result_q methods.
+	"""
+	job_q = Queue()
+	result_q = Queue()
+
+	# This is based on the examples in the official docs of multiprocessing.
+	# get_{job|result}_q return synchronized proxies for the actual Queue
+	# objects.
+	class JobQueueManager(SyncManager):
+		pass
+
+	JobQueueManager.register('get_job_q', callable=lambda: job_q)
+	JobQueueManager.register('get_result_q', callable=lambda: result_q)
+
+	manager = JobQueueManager(address=('', port), authkey=authkey)
+	manager.start()
+	print('Server started at port %s' % port)
+	return manager
+
+def make_client_manager(ip, port, authkey):
+	""" Create a manager for a client. This manager connects to a server on the
+		given address and exposes the get_job_q and get_result_q methods for
+		accessing the shared queues from the server.
+		Return a manager object.
+	"""
+	class ServerQueueManager(SyncManager):
+		pass
+
+	ServerQueueManager.register('get_job_q')
+	ServerQueueManager.register('get_result_q')
+
+	manager = ServerQueueManager(address=(ip, port), authkey=authkey)
+	manager.connect()
+
+	print('Client connected to %s:%s' % (ip, port))
+	return manager
 
 # In order to actually use these magics, you must register them with a
 # running IPython.  This code must be placed in a file that is loaded once
