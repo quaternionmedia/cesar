@@ -11,6 +11,7 @@ import time
 from sys import stderr
 from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, line_cell_magic)
 import ast
+import editor
 
 import osc
 
@@ -88,27 +89,36 @@ class Ion(StoppableThread):
 		ionf.bind('<Enter>', lambda e: ionf.config(bg='brown'))
 		ionf.bind('<Leave>', lambda e: ionf.config(bg='lavender'))
 
-def background(func,*args):
+def buf(qu, *args):
+	for i in range(v.getLength()):
+		with v.lock:
+			qu.put(v.bufferFrame(i))
+def showFrame(frame):
+	print('displaying frame', frame)
+	v.buffer.append(frame)
+
+def background(func, aft, *args):
 	def do(qu,ars):
 		while True:
 			qu.put(func(qu,ars))
-			time.sleep(.01)
+			#time.sleep(.01)
 	def get(qu):
 		while True:
 			mes = qu.get()
 			if mes is not None:
-				# print(mes)
-				pass
+				print(mes)
+				aft(mes)
+
 
 	queue = Queue()
 
-	# thread = Thread(target=do, args=[queue, args])
-	# thread.start()
-	# results = Thread(target=get, args=[queue])
-	# results.start()
+	thread = Thread(target=do, args=[queue, args], daemon=True)
+	thread.start()
+	results = Thread(target=get, args=[queue], daemon=True)
+	results.start()
 
-	thread = Ion(Thread(target=do, args=[queue, args]))
-	results = Ion(Thread(target=get, args=[queue]))
+	#thread = Ion(Thread(target=do, args=[queue, args]))
+	#results = Ion(Thread(target=get, args=[queue]))
 	return thread, results, queue
 
 
@@ -205,8 +215,12 @@ class George(Magics):
 		show = Tk()
 		#label = Label(show)
 		#label.place(x=0,y=5,relheight=1,relwidth=1)
-		q = Qlab()
-		q.send('/version')
+		try:
+
+			q = Qlab()
+			q.send('/version')
+		except:
+			print('Warning - Not connected to QLab!!!')
 		v = Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
 		#v = Video('/Users/peterkagstrom/Media/TV & Movies/Futurama - Seasons 1-7/Futurama - Season 1')
 		#v = Video('/Users/peterkagstrom/Dropbox/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/shot3_v11_H264.mov')
@@ -214,11 +228,12 @@ class George(Magics):
 		try:
 			s = Sound()
 		except:
-			print('no sound module available')
+			print('WARNING - No sound module available')
+
 		try:
 			l = Lights()
 		except:
-			print('WARNING - NOT CONNECTED TO LIGHTING BOARD')
+			print('Not connected to lighting board')
 
 		c = Canvas(show)
 		c.place(x=0,y=5,relheight=1,relwidth=1)
@@ -344,6 +359,30 @@ class George(Magics):
 
 		text = content.get()
 		content.set(text)
+		return line
+
+
+	@line_magic
+	def timeline(self, line):
+		global v, show, control, g, t
+		g = Ion()
+		v = editor.Timeline('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		show = Tk()
+		show.geometry('1280x720+0+0')
+		#t = background(buf, showFrame)
+		c = Canvas(show)
+		c.place(x=0,y=5,relheight=1,relwidth=1)
+		v.assignWindow(c)
+
+		#c.bind('<Configure>', resize)
+		control = Tk()
+		control.geometry('320x240+0+0')
+		control.config(bg='darkgrey')
+		control.title('Control')
+		control.bind('<space>', v.play)
+		show.bind('<space>', v.play)
+		v.play()
+
 		return line
 
 
