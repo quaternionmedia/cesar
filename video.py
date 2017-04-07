@@ -70,6 +70,12 @@ class Video:
 			ret, frame = self.video.read()
 			if ret:
 				self.buffer.append(self.convertImage(frame))
+	def _bufferFrame(self, fNum):
+			if self.frameNumber is not fNum:
+				self.seek(fNum)
+			ret, frame = self.video.read()
+			if ret:
+				return self.convertImage(frame)
 	def assignWindow(self, w):
 		self.label = Label(w)
 		self.label.grid(row=0, column=0, sticky='nsew')

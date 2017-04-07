@@ -124,7 +124,7 @@ class Sound:
 
 class Lights:
 	def __init__(self):
-		self.client = Client('192.168.1.38', 3032)
+		self.client = Client('127.0.0.1', 3032)
 	def cue(self, cue):
 		self.client.send_message('/eos/cue/%s/fire' % cue)
 	def get_cmd(self):

@@ -4,12 +4,15 @@ from tkinter import Tk, Frame, Label, Canvas, Entry, Button
 import matplotlib
 matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
 from matplotlib import pyplot as plt
-from multiprocessing import Process, Queue#, Lock
-from threading import Thread, Lock, Event#, Queue
+#from multiprocessing import Process, Queue#, Lock
+from threading import Thread, Lock, Event
+from queue import Queue
 import time
 from sys import stderr
 from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, line_cell_magic)
 import ast
+import editor
+import tktest
 
 import osc
 
@@ -84,27 +87,36 @@ class Ion():
 		ionf.bind('<Enter>', lambda e: ionf.config(bg='brown'))
 		ionf.bind('<Leave>', lambda e: ionf.config(bg='lavender'))
 
-def background(func,*args):
+def buf(qu, *args):
+	for i in range(v.getLength()):
+		with v.lock:
+			qu.put(v.bufferFrame(i))
+def showFrame(frame):
+	print('displaying frame', frame)
+	v.buffer.append(frame)
+
+def background(func, aft, *args):
 	def do(qu,ars):
 		while True:
 			qu.put(func(qu,ars))
-			time.sleep(.01)
+			#time.sleep(.01)
 	def get(qu):
 		while True:
 			mes = qu.get()
 			if mes is not None:
-				# print(mes)
-				pass
+				print(mes)
+				aft(mes)
+
 
 	queue = Queue()
 
-	thread = Thread(target=do, args=[queue, args])
+	thread = Thread(target=do, args=[queue, args], daemon=True)
 	thread.start()
-	results = Thread(target=get, args=[queue])
+	results = Thread(target=get, args=[queue], daemon=True)
 	results.start()
 
-	# thread = Ion(Thread(target=do, args=[queue, args]))
-	# results = Ion(Thread(target=get, args=[queue]))
+	#thread = Ion(Thread(target=do, args=[queue, args]))
+	#results = Ion(Thread(target=get, args=[queue]))
 	return thread, results, queue
 
 
@@ -134,7 +146,7 @@ def activateSoundBoard():
 			if mes is not None:
 				try:
 					with lock:
-						exec(osc.oscParse(mes), globals())
+						exec('s.' + osc.oscParse(mes), globals())
 				except Exception as ex:
 					print('osc exec error: ', ex, mes)
 					m = osc.oscParse(mes)
@@ -142,10 +154,10 @@ def activateSoundBoard():
 
 	queue = Queue()
 
-	p = Thread(target=do, args=[queue])#, daemon=True)
+	p = Thread(target=do, args=[queue], daemon=True)
 	p.start()
 
-	e = Thread(target=get, args=[queue])
+	e = Thread(target=get, args=[queue], daemon=True)
 	e.start()
 	#return p
 def board():
@@ -201,8 +213,12 @@ class George(Magics):
 		show = Tk()
 		#label = Label(show)
 		#label.place(x=0,y=5,relheight=1,relwidth=1)
-		q = Qlab()
-		q.send('/version')
+		try:
+
+			q = Qlab()
+			q.send('/version')
+		except:
+			print('Warning - Not connected to QLab!!!')
 		v = Video('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
 		#v = Video('/Users/peterkagstrom/Media/TV & Movies/Futurama - Seasons 1-7/Futurama - Season 1')
 		#v = Video('/Users/peterkagstrom/Dropbox/Cesar and Rubin/Audio & Video/Cesar and Ruben Qlab Oct-2011/video/shot3_v11_H264.mov')
@@ -210,11 +226,12 @@ class George(Magics):
 		try:
 			s = Sound()
 		except:
-			print('no sound module available')
-		# try:
-		# 	l = Lights()
-		# except:
-		# 	print('WARNING - NOT CONNECTED TO LIGHTING BOARD')
+			print('WARNING - No sound module available')
+
+		try:
+			l = Lights()
+		except:
+			print('Not connected to lighting board')
 
 		c = Canvas(show)
 		c.place(x=0,y=5,relheight=1,relwidth=1)
@@ -342,6 +359,41 @@ class George(Magics):
 		content.set(text)
 		return line
 
+
+	@line_magic
+	def timeline(self, line):
+		global v, show, control, g, t
+		g = Ion()
+		v = editor.Timeline('/Users/harpo/Movies/Proclaim2016 Tom edit.mp4')
+		show = Tk()
+		show.geometry('1280x720+100+100')
+		#t = background(buf, showFrame)
+		c = Canvas(show)
+		c.place(x=0,y=5,relheight=1,relwidth=1)
+		v.assignWindow(c)
+
+		#c.bind('<Configure>', resize)
+		control = Tk()
+		con = tktest.Tester(control)
+		control.geometry('1320x240+0+240')
+		control.config(bg='darkgrey')
+		control.title('Control')
+		control.bind('<space>', v.play)
+		show.bind('<space>', v.play)
+		x = 0
+		icons = []
+		count = 0
+		for i in v.timeline:
+			l = i[2]-i[1]
+			icons.append(tktest.Icon(i))
+			icons[-1].attach(con.canvas, x, 10)
+			x += l
+		v.play()
+
+		return line
+
+def cb(event):
+	print(event)
 
 # In order to actually use these magics, you must register them with a
 # running IPython.  This code must be placed in a file that is loaded once
