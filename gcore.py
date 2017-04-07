@@ -15,15 +15,16 @@ import osc
 
 import kerbal
 
-class StoppableThread(Thread):
-	"""Thread class with a stop() method. The thread itself has to check
-	regularly for the stopped() condition."""
+class Ion():
+	def __init__(self, logic=None, *args):
+		StoppableThread.__init__(self, logic)
+		self.ion = nx.MultiDiGraph()
+		self.ion.add_node('parents')
+		self.ion.add_node('children')
 
-	def __init__(self, l=None):
-		print(l, file=stderr )
-		super(StoppableThread, self).__init__()
 		self._stopper = Event()
-		self.logic = l
+		self.thread = Thread(target=self.run)
+		self.logic = logic
 
 	def stopit(self):
 		print( "base stop()", file=stderr )
@@ -32,12 +33,8 @@ class StoppableThread(Thread):
 	def stopped(self):
 		return self._stopper.is_set()
 
-class Ion(StoppableThread):
-	def __init__(self, logic=None, *args):
-		StoppableThread.__init__(self, logic)
-		self.ion = nx.MultiDiGraph()
-		self.ion.add_node('parents')
-		self.ion.add_node('children')
+	def run(self):
+		logic(args)
 
 	def runIon(self,*args):
 		print('thread running', file=stderr)
@@ -101,13 +98,13 @@ def background(func,*args):
 
 	queue = Queue()
 
-	# thread = Thread(target=do, args=[queue, args])
-	# thread.start()
-	# results = Thread(target=get, args=[queue])
-	# results.start()
+	thread = Thread(target=do, args=[queue, args])
+	thread.start()
+	results = Thread(target=get, args=[queue])
+	results.start()
 
-	thread = Ion(Thread(target=do, args=[queue, args]))
-	results = Ion(Thread(target=get, args=[queue]))
+	# thread = Ion(Thread(target=do, args=[queue, args]))
+	# results = Ion(Thread(target=get, args=[queue]))
 	return thread, results, queue
 
 
