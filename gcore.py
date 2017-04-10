@@ -403,6 +403,27 @@ class George(Magics):
 		return line
 
 	@line_magic
+	def igui(self, line):
+		global control, icons
+		control = Tk()
+		gui = tktest.Tester(control)
+		gui.top.geometry('800x1000+0+0')
+		icons = []
+		y = 0
+
+		for l in globals():
+			icons.append(tktest.Icon(l))
+			#icons[-1].attach(gui.canvas, 10, y)
+			#y += 20
+
+		redraw(icons, gui)
+		
+	@line_magic
+	def cgcore(self, line):
+
+		return line
+
+	@line_magic
 	def mana(self,line):
 		global man
 		man = Ion(manag)
@@ -460,6 +481,16 @@ def make_client_manager(ip, port, authkey):
 
 	print('Client connected to %s:%s' % (ip, port))
 	return manager
+
+def redraw(things, gui):#=tktest.Tester(control)):
+	icons = []
+	y = 0
+
+	for i in things:
+		icons.append(tktest.Icon(i))
+		icons[-1].attach(gui.canvas, 10, y)
+		y += 20
+
 
 # In order to actually use these magics, you must register them with a
 # running IPython.  This code must be placed in a file that is loaded once
