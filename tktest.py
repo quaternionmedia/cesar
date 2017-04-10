@@ -134,10 +134,10 @@ class DndHandler:
 		self.initial_button = button = event.num
 		self.initial_widget = widget = event.widget
 		self.release_pattern = "<B%d-ButtonRelease-%d>" % (button, button)
-		self.save_cursor = widget['cursor'] or ""
+		self.save_cursor = 'cross'#widget['cursor'] or "c"
 		widget.bind(self.release_pattern, self.on_release)
 		widget.bind("<Motion>", self.on_motion)
-		widget['cursor'] = "hand2"
+		widget['cursor'] = "cross"
 
 	def __del__(self):
 		root = self.root
@@ -225,7 +225,16 @@ class Icon:
 		self.label = label
 		self.id = id
 		label.bind("<ButtonPress>", self.press)
-		label.bind("<ButtonRelease>", self.release)
+		label.bind("<ButtonRelease-1>", self.release)
+		label.bind('<Double-Button-1>', self.fire)
+
+	def fire(self,*args):
+		try:
+			print('bang', args)
+		except Exception as e:
+			print(e)
+		else:
+			pass
 
 	def detach(self):
 		canvas = self.canvas

@@ -19,8 +19,10 @@ import osc
 
 import kerbal
 
+ions = []
+
 class Ion():
-	def __init__(self, logic=None, *args):
+	def __init__(self, logic, *args):
 		#StoppableThread.__init__(self, logic)
 		self.ion = nx.MultiDiGraph()
 		self.ion.add_node('parents')
@@ -31,6 +33,7 @@ class Ion():
 		self.args = args
 		self.thread = Thread(target=self.run, daemon=True)
 		self.thread.start()
+		ions.append(self)
 
 	def stopit(self):
 		print( "base stop()", file=stderr )
@@ -40,10 +43,11 @@ class Ion():
 		return self._stopper.is_set()
 
 	def run(self):
-		if len(self.args) == 0:
-			self.logic()
-		else:
-			self.logic(self.args)
+		pass
+		# if len(self.args) == 0:
+		# 	self.logic()
+		# else:
+		# 	self.logic(self.args)
 
 	def runIon(self,*args):
 		print('thread running', file=stderr)
@@ -183,7 +187,7 @@ class Gui():
 		can.place(relheight=1,relwidth=1)
 		can.bind('<Key>', lambda e: self.cli)
 
-	def cli():
+	def cli(event):
 		pass
 
 
@@ -197,7 +201,8 @@ def resize(event):
 	v.buffer = []
 	print('resizing to ', w, h)
 
-
+def wcha(event):
+	print(event)
 # def
 
 # The class MUST call this class decorator at creation time
@@ -299,14 +304,6 @@ class George(Magics):
 			print("Called as cell magic")
 			return line, cell
 
-	@line_magic
-	def properthread(self, line):
-		t = background(Ion(print(time.time())))
-		t[0]._stop()
-		t[0].start()
-
-		return line
-
 
 	@line_cell_magic
 	def ksp(self, line, cell=None):
@@ -403,21 +400,35 @@ class George(Magics):
 		return line
 
 	@line_magic
-	def igui(self, line):
+	def ggui(self, line):
 		global control, icons
+		_w = 800
+		_h = 1000
+		_x = 0
+		_y = 0
 		control = Tk()
+		control.title('gGui')
+		control.bind('<Configure>', wcha)
 		gui = tktest.Tester(control)
-		gui.top.geometry('800x1000+0+0')
+		gui.top.geometry('%sx%s+%s+%s' %(_w,_h,_x,_y))
 		icons = []
-		y = 0
+		__y = 0
+		__x = 10
 
 		for l in globals():
-			icons.append(tktest.Icon(l))
-			#icons[-1].attach(gui.canvas, 10, y)
-			#y += 20
+			icons.append(tktest.Icon(Ion(l).logic))
+			icons[-1].attach(gui.canvas, __x, __y)
+			if(__y > _h):
+				__x += 100
+				__y = 0
+			else: __y += 20
 
-		redraw(icons, gui)
-		
+		#redraw(icons, gui)
+
+
+
+
+
 	@line_magic
 	def cgcore(self, line):
 
