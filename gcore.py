@@ -18,6 +18,7 @@ import tktest
 import osc
 
 import kerbal
+icons = []
 
 ions = []
 
@@ -31,8 +32,8 @@ class Ion():
 		self._stopper = Event()
 		self.logic = logic
 		self.args = args
-		self.thread = Thread(target=self.run, daemon=True)
-		self.thread.start()
+		#self.thread = Thread(target=self.run, daemon=True)
+		#self.thread.start()
 		ions.append(self)
 
 	def stopit(self):
@@ -43,11 +44,13 @@ class Ion():
 		return self._stopper.is_set()
 
 	def run(self):
-		pass
-		# if len(self.args) == 0:
-		# 	self.logic()
-		# else:
-		# 	self.logic(self.args)
+		#pass
+		if self.logic.__class__ == str:
+			return exec((self.logic + '()'), globals())
+		elif len(self.args) == 0:
+			return self.logic()
+		else:
+			return self.logic(self.args)
 
 	def runIon(self,*args):
 		print('thread running', file=stderr)
@@ -175,24 +178,6 @@ def board():
 
 
 
-	#m = queue.get()
-
-class Gui():
-	def __init__(self, _w, _h, _x, _y):
-		global win, ions, can
-		ions = []
-		win = Tk()
-		win.geometry(str(_w)+'x'+str(_h)+'+'+str(_x)+'+'+str(_y))
-		can = Canvas(win)
-		can.place(relheight=1,relwidth=1)
-		can.bind('<Key>', lambda e: self.cli)
-
-	def cli(event):
-		pass
-
-
-
-
 
 def resize(event):
 	w,h = event.width, event.height
@@ -201,8 +186,7 @@ def resize(event):
 	v.buffer = []
 	print('resizing to ', w, h)
 
-def wcha(event):
-	print(event)
+
 # def
 
 # The class MUST call this class decorator at creation time
@@ -314,7 +298,7 @@ class George(Magics):
 			k.pilot()
 			v = kerbal.vessel
 			ap = v.auto_pilot
-			ki = Ion()
+			ki = Ion('ki')
 
 
 
@@ -401,27 +385,91 @@ class George(Magics):
 
 	@line_magic
 	def ggui(self, line):
-		global control, icons
+		global control, loadin, reloadin, gui, reflow
 		_w = 800
 		_h = 1000
 		_x = 0
 		_y = 0
 		control = Tk()
-		control.title('gGui')
-		control.bind('<Configure>', wcha)
 		gui = tktest.Tester(control)
 		gui.top.geometry('%sx%s+%s+%s' %(_w,_h,_x,_y))
-		icons = []
-		__y = 0
-		__x = 10
 
-		for l in globals():
-			icons.append(tktest.Icon(Ion(l).logic))
-			icons[-1].attach(gui.canvas, __x, __y)
-			if(__y > _h):
-				__x += 100
-				__y = 0
-			else: __y += 20
+		def wcha(e):
+			# _w = e.x
+			# _h = e.y
+			#reloadin(locals())
+			print('wcha', e)
+			# reflow()
+			#icons = []
+			#loadin(globals())
+			# print(e)
+			# gui.top.geometry('%sx%s+%s+%s' %(e.x,e.y,_x,_y))
+
+		control.title('gGui')
+		# control.bind('<Configure>', lambda e: print('wcha', e))
+		gui.top.bind('<ButtonPress>', lambda e: print('Pressed', e))
+		gui.top.bind('<Configure>', wcha)
+		gui.top.bind('<ButtonRelease>', lambda e: print('Let go',e))
+		gui.top.bind()
+
+		def loadin(_i):
+			#icons = []
+			__y = 0
+			__x = 10
+			for i in _i:# if i not in icons:
+				icons.append(tktest.Icon(i))
+				icons[-1].attach(gui.canvas, __x, __y)
+				print(i, gui.top.winfo_height())
+				if(__y > gui.top.winfo_height()):
+					__x += 100
+					__y = 0
+				else: __y += 20
+
+		def reloadin(_i):
+			# icons = []
+			__x = icons[-1].label.winfo_x()
+			__y = icons[-1].label.winfo_y()
+			labels = []
+			xy = {}
+			for i in icons:
+				labels.append(i.name)
+				xy[i.name] = (i.label.winfo_x(), i.label.winfo_y())
+			for i in [x for x in _i if x not in labels]:
+				if i is not None:
+					icons.append(tktest.Icon(i))
+
+					if(__y > gui.top.winfo_height()):
+						__x += 100
+						__y = 0
+					else: __y += 20
+					icons[-1].attach(gui.canvas, __x, __y)
+					xy[i] = (icons[-1].label.winfo_x(), icons[-1].label.winfo_y())
+			print(xy)
+
+		def reflow():
+			__y = 0
+			__x = 10
+			for i in icons:
+				if(__y > gui.top.winfo_height()):
+					__x += 100
+					__y = 0
+				else: __y += 20
+				i.attach(gui.canvas, __x, __y)
+				print(i, __x, __y)
+
+		#loadin(globals())
+
+		# icons = []
+		# __y = 0
+		# __x = 10
+		#
+		# for l in globals():
+		# 	icons.append(tktest.Icon(Ion(l).logic))
+		# 	icons[-1].attach(gui.canvas, __x, __y)
+		# 	if(__y > _h):
+		# 		__x += 100
+		# 		__y = 0
+		# 	else: __y += 20
 
 		#redraw(icons, gui)
 
@@ -493,14 +541,6 @@ def make_client_manager(ip, port, authkey):
 	print('Client connected to %s:%s' % (ip, port))
 	return manager
 
-def redraw(things, gui):#=tktest.Tester(control)):
-	icons = []
-	y = 0
-
-	for i in things:
-		icons.append(tktest.Icon(i))
-		icons[-1].attach(gui.canvas, 10, y)
-		y += 20
 
 
 # In order to actually use these magics, you must register them with a

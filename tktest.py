@@ -101,7 +101,7 @@ active; it will never call dnd_commit().
 
 
 import tkinter
-
+from gcore import Ion
 
 # The factory function
 
@@ -205,9 +205,10 @@ class DndHandler:
 # ----------------------------------------------------------------------
 # The rest is here for testing and demonstration purposes only!
 
-class Icon:
+class Icon(Ion):
 
 	def __init__(self, name):
+		self.ion = Ion(name)
 		self.name = name
 		self.canvas = self.label = self.id = None
 
@@ -229,8 +230,9 @@ class Icon:
 		label.bind('<Double-Button-1>', self.fire)
 
 	def fire(self,*args):
+		print('bang', args)
 		try:
-			print('bang', args)
+			self.ion.run()
 		except Exception as e:
 			print(e)
 		else:
