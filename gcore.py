@@ -6,6 +6,7 @@ matplotlib.use("TkAgg") # Extremely important. Don't know why. Do not move.
 from matplotlib import pyplot as plt
 from multiprocessing import Manager
 from multiprocessing.managers import SyncManager, BaseManager
+import subprocess
 from threading import Thread, Lock, Event
 from queue import Queue
 import time
@@ -22,8 +23,12 @@ icons = []
 
 ions = []
 
+def AAAAA():
+	a = 6
+	print(globals())
+
 class Ion():
-	def __init__(self, logic, *args):
+	def __init__(self, logic=None, *args):
 		#StoppableThread.__init__(self, logic)
 		self.ion = nx.MultiDiGraph()
 		self.ion.add_node('parents')
@@ -44,61 +49,15 @@ class Ion():
 		return self._stopper.is_set()
 
 	def run(self):
-		#pass
 		if self.logic.__class__ == str:
-			return exec((self.logic + '()'), globals())
+			return exec(self.logic + '()', globals(), locals())
+			# print(o)
+			#return exec(self.logic + '()')
+			# Ion(background(self.logic))
 		elif len(self.args) == 0:
 			return self.logic()
 		else:
 			return self.logic(self.args)
-
-	def runIon(self,*args):
-		print('thread running', file=stderr)
-		while not self.stopped():
-			# print('running',file=stderr)
-			pass
-		print('thread running', file=stderr)
-
-	def printIon(self):
-		for i in self.ion.nodes():
-			print(i)
-	def showIon(self, window):
-		global ionp, ionch, iong, ionf, canvas
-		#ion canvas
-		canvas = Canvas(window, bg='grey', takefocus=True)
-		def drag(event):
-			newx = event.x/2
-			newy = event.y/2
-			canvas.place(x=newx,y=newy)#, anchor='center')
-			print(event, newx, newy)
-
-
-
-		canvas.bind('<Enter>', lambda e: canvas.config(bg='dimgrey'))
-		canvas.bind('<Leave>', lambda e: canvas.config(bg='grey'))
-		canvas.bind('<B1-Motion>', drag)
-		canvas.place(relx=0.5, rely=0.5, relheight=1, relwidth=1, anchor='center')
-
-		#parent canvas
-		ionp = Label(control, bg='plum')
-		ionp.place(relx=0.5, rely=0, relheight=0.1, relwidth=0.1)
-		ionp.bind('<Enter>', lambda e: ionp.config(bg='orchid'))
-		ionp.bind('<Leave>', lambda e: ionp.config(bg='plum'))
-		#children canvas
-		ionch = Canvas(canvas, bg='blue')
-		ionch.place(relx=0.5, rely=1, relheight=0.1, relwidth=0.1)
-		ionch.bind('<Enter>', lambda e: ionch.config(bg='lightblue'))
-		ionch.bind('<Leave>', lambda e: ionch.config(bg='blue'))
-		#generator canvas
-		iong = Canvas(canvas, bg='lightgreen')
-		iong.place(relx=0, rely=.5, relheight=0.1, relwidth=0.1)
-		iong.bind('<Enter>', lambda e: iong.config(bg='green'))
-		iong.bind('<Leave>', lambda e: iong.config(bg='lightgreen'))
-		#function canvas
-		ionf = Canvas(canvas, bg='lavender')
-		ionf.place(relx=1, rely=.5, relheight=0.1, relwidth=0.1)
-		ionf.bind('<Enter>', lambda e: ionf.config(bg='brown'))
-		ionf.bind('<Leave>', lambda e: ionf.config(bg='lavender'))
 
 def buf(qu, *args):
 	for i in range(v.getLength()):
@@ -192,11 +151,6 @@ def resize(event):
 # The class MUST call this class decorator at creation time
 @magics_class
 class George(Magics):
-
-	@line_magic
-	def gcore(self, line):
-		global gui
-		gui = Gui(800,600,2550,1230)
 
 	@line_magic
 	def cesar(self, line):
@@ -386,11 +340,12 @@ class George(Magics):
 	@line_magic
 	def ggui(self, line):
 		global control, loadin, reloadin, gui, reflow
-		_w = 800
-		_h = 1000
-		_x = 0
+		_w = 853
+		_h = 1555
+		_x = 2440
 		_y = 0
 		control = Tk()
+		control.geometry('320x240+3414+1060')
 		gui = tktest.Tester(control)
 		gui.top.geometry('%sx%s+%s+%s' %(_w,_h,_x,_y))
 
@@ -404,12 +359,14 @@ class George(Magics):
 			#loadin(globals())
 			# print(e)
 			# gui.top.geometry('%sx%s+%s+%s' %(e.x,e.y,_x,_y))
-
-		control.title('gGui')
+		gui.top.title('gGui')
+		control.title('gGui control')
 		# control.bind('<Configure>', lambda e: print('wcha', e))
 		gui.top.bind('<ButtonPress>', lambda e: print('Pressed', e))
 		gui.top.bind('<Configure>', wcha)
 		gui.top.bind('<ButtonRelease>', lambda e: print('Let go',e))
+
+		control.bind('<Configure>', wcha)
 		gui.top.bind()
 
 		def loadin(_i):

@@ -232,8 +232,9 @@ class Icon(Ion):
 	def fire(self,*args):
 		print('bang', args)
 		try:
-			self.ion.run()
+			print(self.ion.run())
 		except Exception as e:
+
 			print(e)
 		else:
 			pass
