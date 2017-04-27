@@ -15,7 +15,12 @@ from IPython.core.magic import (Magics, magics_class, line_magic, cell_magic, li
 import ast
 import editor
 import tktest
-
+from pprint import pprint
+import sys
+from concurrent import futures
+from glog import glog
+import os
+import gsys
 import osc
 
 import kerbal
@@ -25,39 +30,38 @@ ions = []
 
 def AAAAA():
 	a = 6
-	print(globals())
+	pprint(globals())
 
 class Ion():
 	def __init__(self, logic=None, *args):
-		#StoppableThread.__init__(self, logic)
 		self.ion = nx.MultiDiGraph()
 		self.ion.add_node('parents')
 		self.ion.add_node('children')
+		self.ion.add_edge(self, self.ion.nodes_iter(), logic)
 
-		self._stopper = Event()
 		self.logic = logic
 		self.args = args
-		#self.thread = Thread(target=self.run, daemon=True)
-		#self.thread.start()
-		ions.append(self)
+		ions.append(self.ion)
 
-	def stopit(self):
-		print( "base stop()", file=stderr )
-		self._stopper.set()
-
-	def stopped(self):
-		return self._stopper.is_set()
+	def test(self):
+		ex = futures.ProcessPoolExecutor(max_workers=8)
+		results = ex.map(self.run, self.logic)
+		for n, pid in results:
+			print('ran task {} in process {}'.format(n, pid))
 
 	def run(self):
 		if self.logic.__class__ == str:
-			return exec(self.logic + '()', globals(), locals())
-			# print(o)
-			#return exec(self.logic + '()')
-			# Ion(background(self.logic))
+			print('eval: ', eval(self.logic, globals(), locals()))
+			exec(self.logic + '()', globals(), locals())
+			exec(self.logic, globals(), locals())
+
+		# Ion(background(self.logic))
 		elif len(self.args) == 0:
 			return self.logic()
 		else:
 			return self.logic(self.args)
+
+
 
 def buf(qu, *args):
 	for i in range(v.getLength()):
@@ -145,8 +149,95 @@ def resize(event):
 	v.buffer = []
 	print('resizing to ', w, h)
 
+def gui():
+		global control, loadin, reloadin, gui, reflow, drawicons
+		_w = 853
+		_h = 685
+		_x = 2440
+		_y = 0
+		control = Tk()
+		# control.geometry('320x240+3414+1060')
+		gui = tktest.Tester(control)
+		gui.top.geometry('%sx%s+%s+%s' %(_w,_h,_x,_y))
+		#
+		# def wcha(e):
+		# 	reflow()
 
-# def
+		gui.top.title('gGui')
+		# control.title('gGui control')
+		# control.bind('<Configure>', lambda e: print('wcha', e))
+		gui.top.bind('<ButtonPress>', lambda e: print('Pressed', e))
+		# gui.top.bind('<Configure>', lambda e: reflow())
+		gui.top.bind('<ButtonRelease>', lambda e: print('Let go',e))
+		gui.top.bind('r', lambda e: reflow())
+
+		# control.bind('<Configure>', wcha)
+		gui.top.bind()
+
+
+		def loadin(_i):
+			#icons = []
+			__y = 0
+			__x = 10
+			for i in _i:# if i not in icons:
+				icons.append(tktest.Icon(i))
+				icons[-1].attach(gui.canvas, __x, __y)
+
+				# print(i, gui.top.winfo_height())
+				if(__y > gui.top.winfo_height()):
+					__x += 100
+					__y = 0
+				else: __y += 20
+
+		def reloadin(_i):
+			# icons = []
+			__x = icons[-1].label.winfo_x()
+			__y = icons[-1].label.winfo_y()
+			labels = []
+			xy = {}
+			for i in icons:
+				labels.append(i.name)
+				xy[i.name] = (i.label.winfo_x(), i.label.winfo_y())
+			for i in [x for x in _i if x not in labels]:
+				if i is not None:
+					icons.append(tktest.Icon(i))
+
+					if(__y > gui.top.winfo_height()):
+						__x += 100
+						__y = 0
+					else: __y += 20
+					icons[-1].attach(gui.canvas, __x, __y)
+					xy[i] = (icons[-1].label.winfo_x(), icons[-1].label.winfo_y())
+			# print(xy)
+
+		def reflow():
+			__y = 0
+			__x = 10
+			for i in icons:
+				if(__y > gui.top.winfo_height()):
+					__x += 100
+					__y = 0
+				else: __y += 20
+				i.attach(gui.canvas, __x, __y)
+				# print(i, __x, __y)
+
+
+		def drawicons():
+			x = 0
+			y = 0
+			for _i in icons:
+				_x = 0
+				_y = 0
+				_i.attach(gui.canvas, 500, 500)
+				for e in _i.ion.ion.edges():
+					l = gui.canvas.create_line(10, 10, 200, 200)
+
+
+		loadin(globals())
+		loadin(ions)
+
+
+
 
 # The class MUST call this class decorator at creation time
 @magics_class
@@ -225,7 +316,8 @@ class George(Magics):
 		"my line magic"
 		print("Full access to the main IPython object:", self.shell)
 		print("Variables in the user namespace:", list(self.shell.user_ns.keys()))
-		return line
+		kys = self.shell.user_ns.keys()
+		return line, kys
 
 	@cell_magic
 	def cmagic(self, line, cell):
@@ -339,105 +431,10 @@ class George(Magics):
 
 	@line_magic
 	def ggui(self, line):
-		global control, loadin, reloadin, gui, reflow
-		_w = 853
-		_h = 1555
-		_x = 2440
-		_y = 0
-		control = Tk()
-		control.geometry('320x240+3414+1060')
-		gui = tktest.Tester(control)
-		gui.top.geometry('%sx%s+%s+%s' %(_w,_h,_x,_y))
-
-		def wcha(e):
-			# _w = e.x
-			# _h = e.y
-			#reloadin(locals())
-			print('wcha', e)
-			# reflow()
-			#icons = []
-			#loadin(globals())
-			# print(e)
-			# gui.top.geometry('%sx%s+%s+%s' %(e.x,e.y,_x,_y))
-		gui.top.title('gGui')
-		control.title('gGui control')
-		# control.bind('<Configure>', lambda e: print('wcha', e))
-		gui.top.bind('<ButtonPress>', lambda e: print('Pressed', e))
-		gui.top.bind('<Configure>', wcha)
-		gui.top.bind('<ButtonRelease>', lambda e: print('Let go',e))
-
-		control.bind('<Configure>', wcha)
-		gui.top.bind()
-
-		def loadin(_i):
-			#icons = []
-			__y = 0
-			__x = 10
-			for i in _i:# if i not in icons:
-				icons.append(tktest.Icon(i))
-				icons[-1].attach(gui.canvas, __x, __y)
-				print(i, gui.top.winfo_height())
-				if(__y > gui.top.winfo_height()):
-					__x += 100
-					__y = 0
-				else: __y += 20
-
-		def reloadin(_i):
-			# icons = []
-			__x = icons[-1].label.winfo_x()
-			__y = icons[-1].label.winfo_y()
-			labels = []
-			xy = {}
-			for i in icons:
-				labels.append(i.name)
-				xy[i.name] = (i.label.winfo_x(), i.label.winfo_y())
-			for i in [x for x in _i if x not in labels]:
-				if i is not None:
-					icons.append(tktest.Icon(i))
-
-					if(__y > gui.top.winfo_height()):
-						__x += 100
-						__y = 0
-					else: __y += 20
-					icons[-1].attach(gui.canvas, __x, __y)
-					xy[i] = (icons[-1].label.winfo_x(), icons[-1].label.winfo_y())
-			print(xy)
-
-		def reflow():
-			__y = 0
-			__x = 10
-			for i in icons:
-				if(__y > gui.top.winfo_height()):
-					__x += 100
-					__y = 0
-				else: __y += 20
-				i.attach(gui.canvas, __x, __y)
-				print(i, __x, __y)
-
-		#loadin(globals())
-
-		# icons = []
-		# __y = 0
-		# __x = 10
-		#
-		# for l in globals():
-		# 	icons.append(tktest.Icon(Ion(l).logic))
-		# 	icons[-1].attach(gui.canvas, __x, __y)
-		# 	if(__y > _h):
-		# 		__x += 100
-		# 		__y = 0
-		# 	else: __y += 20
-
-		#redraw(icons, gui)
-
-
-
-
-
-	@line_magic
-	def cgcore(self, line):
-
+		gui()
 		return line
+
+
 
 	@line_magic
 	def mana(self,line):
