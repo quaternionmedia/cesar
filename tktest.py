@@ -220,7 +220,7 @@ class Icon(Ion):
 			self.detach()
 		if not canvas:
 			return
-		label = tkinter.Label(canvas, text=self.name)
+		label = tkinter.Label(canvas, text=self.name, fg='white', bg='black', font='Helvetica 10')
 		id = canvas.create_window(x, y, window=label, anchor="nw")
 		self.canvas = canvas
 		self.label = label
@@ -232,9 +232,9 @@ class Icon(Ion):
 	def fire(self,*args):
 		print('bang', args)
 		try:
+
 			print(self.ion.run())
 		except Exception as e:
-
 			print(e)
 		else:
 			pass
@@ -282,7 +282,8 @@ class Icon(Ion):
 class Tester:
 
 	def __init__(self, root):
-		self.top = tkinter.Toplevel(root)
+		#self.top = tkinter.Toplevel(root)
+		self.top = root
 		self.canvas = tkinter.Canvas(self.top)#, width=100, height=100)
 		self.canvas.place(relx=0.5, rely=0.5, relheight=1, relwidth=1, anchor='center')# sticky='nsew')#fill="both", expand=1)
 		self.canvas.dnd_accept = self.dnd_accept
