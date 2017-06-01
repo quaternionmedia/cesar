@@ -16,6 +16,7 @@ done
 
 wget https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tgz
 tar xvzf Python-3.6.1.tgz
+rm Python-3.6.1.tgz
 cd Python-3.6.1
 ./configure --enable-optimizations
 make
