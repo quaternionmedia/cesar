@@ -341,7 +341,7 @@ class George(Magics):
 
 			global k, v, ap, ki
 			k = kerbal
-			k.pilot()
+			k.pilot(addr='192.168.1.64')
 			v = kerbal.vessel
 			ap = v.auto_pilot
 			ki = Ion('ki')
