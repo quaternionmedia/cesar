@@ -2,7 +2,7 @@ g/*
 *.mp4
 *.mp3
 *.mkv
-
+grommit/.crossbar/node.pid
 #config.py
 uploads/*
 backups/*
